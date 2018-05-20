@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="filterChoices">
+        <item>Nearest neighbour</item>
+        <item>Bilinear</item>
+        <item>Bilinear mipmapping</item>
+        <item>Trilinear mipmapping</item>
+        <item>Anisotropic mipmapping</item>
+    </string-array>
+    <string name="app_name">Taking the Next Step</string>
+    <string name="chooseTextureFilter">Choose Texture Filter</string>
+    <string name="disableAa">Disable AA</string>
+    <string name="enableAa">Enable AA</string>
+    <string name="noAnisotropicFiltering">Your GPU does not support anisotropic filtering!</string>
+    <string name="textureFilterChooser">Texture Filters</string>
+</resources>

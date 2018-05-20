@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "F:\\OpenGL\\androidstudio_opengl\\skybox\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 43,
+                    "endOffset": 94
+                },
+                "from": {
+                    "file": "F:\\OpenGL\\androidstudio_opengl\\skybox\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 456,
+                        "endColumn": 43,
+                        "endOffset": 495
+                    }
+                }
+            }
+        ]
+    }
+]

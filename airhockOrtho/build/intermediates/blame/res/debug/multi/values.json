@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "F:\\OpenGL\\androidstudio_opengl\\AirHockeyOrtho\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 47,
+                    "endOffset": 98
+                },
+                "from": {
+                    "file": "F:\\OpenGL\\androidstudio_opengl\\AirHockeyOrtho\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 456,
+                        "endColumn": 47,
+                        "endOffset": 499
+                    }
+                }
+            }
+        ]
+    }
+]
