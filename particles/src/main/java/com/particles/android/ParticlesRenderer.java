@@ -28,6 +28,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.opengl.GLSurfaceView.Renderer;
 
+import com.particles.android.objects.ParticleFireworksExplosion;
 import com.particles.android.objects.ParticleShooter;
 import com.particles.android.objects.ParticleSystem;
 import com.particles.android.programs.ParticleShaderProgram;
@@ -36,23 +37,24 @@ import com.particles.android.util.Geometry.Vector;
 import com.particles.android.util.MatrixHelper;
 import com.particles.android.util.TextureHelper;
 
+import java.util.Random;
+
 public class ParticlesRenderer implements Renderer {
     private final Context context;
 
     private final float[] projectionMatrix = new float[16];    
     private final float[] viewMatrix = new float[16];
     private final float[] viewProjectionMatrix = new float[16];
-    /*
     // Maximum saturation and value.
-    private final float[] hsv = {0f, 1f, 1f};*/
+    private final float[] hsv = {0f, 1f, 1f};
     
     private ParticleShaderProgram particleProgram;      
     private ParticleSystem particleSystem;
     private ParticleShooter redParticleShooter;
     private ParticleShooter greenParticleShooter;
     private ParticleShooter blueParticleShooter;
-    /*private ParticleFireworksExplosion particleFireworksExplosion;
-    private Random random;*/
+    private ParticleFireworksExplosion particleFireworksExplosion;
+    private Random random;
     private long globalStartTime;
     private int texture;
 
@@ -75,23 +77,7 @@ public class ParticlesRenderer implements Renderer {
         
         final float angleVarianceInDegrees = 5f; 
         final float speedVariance = 1f;
-        
-        /*
-        redParticleShooter = new ParticleShooter(
-            new Point(-1f, 0f, 0f), 
-            particleDirection,                
-            Color.rgb(255, 50, 5));
-        
-        greenParticleShooter = new ParticleShooter(
-            new Point(0f, 0f, 0f), 
-            particleDirection,
-            Color.rgb(25, 255, 25));
-        
-        blueParticleShooter = new ParticleShooter(
-            new Point(1f, 0f, 0f), 
-            particleDirection,
-            Color.rgb(5, 50, 255));     
-        */
+
         redParticleShooter = new ParticleShooter(
             new Point(-1f, 0f, 0f), 
             particleDirection,                
@@ -112,10 +98,8 @@ public class ParticlesRenderer implements Renderer {
             Color.rgb(5, 50, 255),            
             angleVarianceInDegrees, 
             speedVariance); 
-        /*
         particleFireworksExplosion = new ParticleFireworksExplosion();
-        
-        random = new Random();  */
+        random = new Random();
         
         texture = TextureHelper.loadTexture(context, R.drawable.particle_texture);
     }
@@ -136,30 +120,23 @@ public class ParticlesRenderer implements Renderer {
     @Override
     public void onDrawFrame(GL10 glUnused) {        
         glClear(GL_COLOR_BUFFER_BIT);
-        
         float currentTime = (System.nanoTime() - globalStartTime) / 1000000000f;
         
         redParticleShooter.addParticles(particleSystem, currentTime, 5);
         greenParticleShooter.addParticles(particleSystem, currentTime, 5);              
         blueParticleShooter.addParticles(particleSystem, currentTime, 5);
-        /*
         if (random.nextFloat() < 0.02f) {
             hsv[0] = random.nextInt(360);
-            
             particleFireworksExplosion.addExplosion(
                 particleSystem, 
-                new Vector(
+                new Point(
                     -1f + random.nextFloat() * 2f, 
                      3f + random.nextFloat() / 2f,
                     -1f + random.nextFloat() * 2f), 
                 Color.HSVToColor(hsv), 
                 globalStartTime);                              
-        }    */            
-        
+        }
         particleProgram.useProgram();
-        /*
-        particleProgram.setUniforms(viewProjectionMatrix, currentTime);
-         */
         particleProgram.setUniforms(viewProjectionMatrix, currentTime, texture);
         particleSystem.bindData(particleProgram);
         particleSystem.draw(); 

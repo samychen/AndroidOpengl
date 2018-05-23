@@ -60,15 +60,18 @@ public class AirHockeyRenderer implements Renderer {
     private int texture;
 
     private boolean malletPressed = false;
-    private Point blueMalletPosition;    
-    
+    private boolean malletPressed2 = false;
+    private Point blueMalletPosition;
+    private Point redMalletPosition;
+
     private final float leftBound = -0.5f;
     private final float rightBound = 0.5f;
     private final float farBound = -0.8f;
     private final float nearBound = 0.8f;
     
     private Point previousBlueMalletPosition;
-    
+    private Point previousRedMalletPosition;
+
     private Point puckPosition;
     private Vector puckVector;
 
@@ -77,21 +80,26 @@ public class AirHockeyRenderer implements Renderer {
     }
 
     public void handleTouchPress(float normalizedX, float normalizedY) {
-        
+        //二维点转换为三维直线
         Ray ray = convertNormalized2DPointToRay(normalizedX, normalizedY);
-
         // Now test if this ray intersects with the mallet by creating a
         // bounding sphere that wraps the mallet.
+        //创建一个与mallet相同大小的包围球
         Sphere malletBoundingSphere = new Sphere(new Point(
                 blueMalletPosition.x, 
                 blueMalletPosition.y, 
                 blueMalletPosition.z),
             mallet.height / 2f);
-
+        Sphere malletBoundingSphere2 = new Sphere(new Point(
+                redMalletPosition.x,
+                redMalletPosition.y,
+                redMalletPosition.z),
+                mallet.height/2f);
         // If the ray intersects (if the user touched a part of the screen that
         // intersects the mallet's bounding sphere), then set malletPressed =
-        // true.
+        // true.计算射线与包围圈的距离
         malletPressed = Geometry.intersects(malletBoundingSphere, ray);
+        malletPressed2 = Geometry.intersects(malletBoundingSphere2, ray);
     }
     
     private Ray convertNormalized2DPointToRay(
@@ -100,12 +108,12 @@ public class AirHockeyRenderer implements Renderer {
         // coordinates. We'll pick a point on the near and far planes, and draw a
         // line between them. To do this transform, we need to first multiply by
         // the inverse matrix, and then we need to undo the perspective divide.
-        final float[] nearPointNdc = {normalizedX, normalizedY, -1, 1};
+        final float[] nearPointNdc = {normalizedX, normalizedY, -1, 1};//w分量暂且设为1
         final float[] farPointNdc =  {normalizedX, normalizedY,  1, 1};
         
         final float[] nearPointWorld = new float[4];
         final float[] farPointWorld = new float[4];
-
+        //将两点与逆矩阵相乘，得到世界坐标中的位置，相乘后，两点实际上就含有反转的w值，因为投影矩阵的意义就是创建不同的w值，以便透视除法可以发挥它的作用
         multiplyMV(
             nearPointWorld, 0, invertedViewProjectionMatrix, 0, nearPointNdc, 0);
         multiplyMV(
@@ -115,6 +123,7 @@ public class AirHockeyRenderer implements Renderer {
         // matrix, so the W value that we end up is actually the *inverse* of
         // what the projection matrix would create. By dividing all 3 components
         // by W, we effectively undo the hardware perspective divide.
+        //撤销透视除法的影响
         divideByW(nearPointWorld);
         divideByW(farPointWorld);
 
@@ -138,22 +147,17 @@ public class AirHockeyRenderer implements Renderer {
 
     
     public void handleTouchDrag(float normalizedX, float normalizedY) {
-        
         if (malletPressed) {
             Ray ray = convertNormalized2DPointToRay(normalizedX, normalizedY);
             // Define a plane representing our air hockey table.
             Plane plane = new Plane(new Point(0, 0, 0), new Vector(0, 1, 0));
             // Find out where the touched point intersects the plane
             // representing our table. We'll move the mallet along this plane.
+            //计算出相交点
             Point touchedPoint = Geometry.intersectionPoint(ray, plane);
             // Clamp to bounds                        
-                        
-            previousBlueMalletPosition = blueMalletPosition;            
-            /*
-            blueMalletPosition =
-                new Point(touchedPoint.x, mallet.height / 2f, touchedPoint.z);
-            */
-            // Clamp to bounds            
+            previousBlueMalletPosition = blueMalletPosition;
+            //添加边界限制
             blueMalletPosition = new Point(
                 clamp(touchedPoint.x, 
                       leftBound + mallet.radius, 
@@ -162,16 +166,27 @@ public class AirHockeyRenderer implements Renderer {
                 clamp(touchedPoint.z, 
                       0f + mallet.radius, 
                       nearBound - mallet.radius));            
-            
             // Now test if mallet has struck the puck.
             float distance = 
                 Geometry.vectorBetween(blueMalletPosition, puckPosition).length();
-            
             if (distance < (puck.radius + mallet.radius)) {
                 // The mallet has struck the puck. Now send the puck flying
                 // based on the mallet velocity.
                 puckVector = Geometry.vectorBetween(
                     previousBlueMalletPosition, blueMalletPosition);                
+            }
+        } else if (malletPressed2){
+            Ray ray = convertNormalized2DPointToRay(normalizedX, normalizedY);
+            Plane plane = new Plane(new Point(0, 0, 0), new Vector(0, 1, 0));
+            Point touchedPoint = Geometry.intersectionPoint(ray, plane);
+            previousRedMalletPosition = redMalletPosition;
+            redMalletPosition = new Point(
+                    clamp(touchedPoint.x,leftBound + mallet.radius,rightBound - mallet.radius),
+                    mallet.height / 2f,
+                    clamp(touchedPoint.z,farBound + mallet.radius,0f - mallet.radius));
+            float distance2 = Geometry.vectorBetween(redMalletPosition,puckPosition).length();
+            if (distance2 < (puck.radius + mallet.radius)){
+                puckVector = Geometry.vectorBetween(previousRedMalletPosition,redMalletPosition);
             }
         }
     }
@@ -189,6 +204,7 @@ public class AirHockeyRenderer implements Renderer {
         puck = new Puck(0.06f, 0.02f, 32);
         
         blueMalletPosition = new Point(0f, mallet.height / 2f, 0.4f);
+        redMalletPosition = new Point(0f, mallet.height / 2f, -0.4f);
         puckPosition = new Point(0f, puck.height / 2f, 0f);
         puckVector = new Vector(0f, 0f, 0f);
 
@@ -221,7 +237,7 @@ public class AirHockeyRenderer implements Renderer {
         if (puckPosition.x < leftBound + puck.radius
          || puckPosition.x > rightBound - puck.radius) {
             puckVector = new Vector(-puckVector.x, puckVector.y, puckVector.z);
-            puckVector = puckVector.scale(0.9f);
+            puckVector = puckVector.scale(0.9f);//碰撞损耗
         }        
         if (puckPosition.z < farBound + puck.radius
          || puckPosition.z > nearBound - puck.radius) {
@@ -235,13 +251,14 @@ public class AirHockeyRenderer implements Renderer {
             clamp(puckPosition.z, farBound + puck.radius, nearBound - puck.radius)
         );
         
-        // Friction factor
+        // Friction factor摩擦阻尼
         puckVector = puckVector.scale(0.99f);
 
         // Update the viewProjection matrix, and create an inverted matrix for
         // touch picking.
         multiplyMM(viewProjectionMatrix, 0, projectionMatrix, 0,
             viewMatrix, 0);
+        //创建逆矩阵
         invertM(invertedViewProjectionMatrix, 0, viewProjectionMatrix, 0);
 
         // Draw the table.
@@ -252,7 +269,7 @@ public class AirHockeyRenderer implements Renderer {
         table.draw();
 
         // Draw the mallets.
-        positionObjectInScene(0f, mallet.height / 2f, -0.4f);
+        positionObjectInScene(redMalletPosition.x, redMalletPosition.y, redMalletPosition.z);
         colorProgram.useProgram();
         colorProgram.setUniforms(modelViewProjectionMatrix, 1f, 0f, 0f);
         mallet.bindData(colorProgram);
