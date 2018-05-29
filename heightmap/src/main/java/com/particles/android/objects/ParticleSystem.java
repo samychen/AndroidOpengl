@@ -50,17 +50,14 @@ public class ParticleSystem {
         final int particleOffset = nextParticle * TOTAL_COMPONENT_COUNT;
         int currentOffset = particleOffset;        
         nextParticle++;
-        
         if (currentParticleCount < maxParticleCount) {
             currentParticleCount++;
         }
-        
         if (nextParticle == maxParticleCount) {
             // Start over at the beginning, but keep currentParticleCount so
             // that all the other particles still get drawn.
             nextParticle = 0;
         }  
-
         particles[currentOffset++] = position.x;
         particles[currentOffset++] = position.y;
         particles[currentOffset++] = position.z;

@@ -35,9 +35,9 @@ import com.airhockey.android.util.TextureHelper;
 public class AirHockeyRenderer implements Renderer {
     private final Context context;
 
-    private final float[] projectionMatrix = new float[16];
+    private final float[] projectionMatrix = new float[16];//创造三维效果
     private final float[] modelMatrix = new float[16];
-    private final float[] viewMatrix = new float[16];//视图矩阵，模型矩阵的扩展，使得每个物体效果都一样，相当于相机作用
+    private final float[] viewMatrix = new float[16];//视图矩阵相当于相机，预先把许多变化处理成单个矩阵
     private final float[] viewProjectionMatrix = new float[16];
     private final float[] modelViewProjectionMatrix = new float[16];
 
@@ -70,13 +70,12 @@ public class AirHockeyRenderer implements Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 glUnused, int width, int height) {
-        // Set the OpenGL viewport to fill the entire surface.
         glViewport(0, 0, width, height);
         MatrixHelper.perspectiveM(projectionMatrix, 45, (float) width
             / (float) height, 1f, 10f);
+        //设置相机观看方向
         setLookAtM(viewMatrix, 0, 0f, 1.2f, 2.2f, 0f, 0f, 0f, 0f, 1f, 0f);
     }
-
 
     @Override
     public void onDrawFrame(GL10 glUnused) {
@@ -118,6 +117,7 @@ public class AirHockeyRenderer implements Renderer {
         // The table is defined in terms of X & Y coordinates, so we rotate it
         // 90 degrees to lie flat on the XZ plane.
         setIdentityM(modelMatrix, 0);
+        //不需要再次执行translateM，视图矩阵viewMatrix使桌子对我们可见了
         rotateM(modelMatrix, 0, -90f, 1f, 0f, 0f);
         multiplyMM(modelViewProjectionMatrix, 0, viewProjectionMatrix,
             0, modelMatrix, 0);

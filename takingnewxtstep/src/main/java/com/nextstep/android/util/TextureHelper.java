@@ -89,7 +89,6 @@ public class TextureHelper {
         
         // Load the bitmap into the bound texture.
         texImage2D(GL_TEXTURE_2D, 0, bitmap, 0);
-
         // Note: Following code may cause an error to be reported in the
         // ADB log as follows: E/IMGSRV(20095): :0: HardwareMipGen:
         // Failed to generate texture mipmap levels (error=3)
@@ -97,17 +96,13 @@ public class TextureHelper {
         // 0). If this happens, just squash the source image to be
         // square. It will look the same because of texture coordinates,
         // and mipmap generation will work.
-
         glGenerateMipmap(GL_TEXTURE_2D);
-
         // Recycle the bitmap, since its data has been loaded into
         // OpenGL.
         bitmap.recycle();
-
         // Unbind from the texture.
         glBindTexture(GL_TEXTURE_2D, 0);
-
-        return textureObjectIds[0];        
+        return textureObjectIds[0];
     }        
     
     /**

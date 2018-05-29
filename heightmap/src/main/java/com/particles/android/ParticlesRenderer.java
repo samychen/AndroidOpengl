@@ -85,13 +85,11 @@ public class ParticlesRenderer implements Renderer {
     public void handleTouchDrag(float deltaX, float deltaY) {
         xRotation += deltaX / 16f;
         yRotation += deltaY / 16f;
-        
         if (yRotation < -90) {
             yRotation = -90;
         } else if (yRotation > 90) {
             yRotation = 90;
         } 
-        
         // Setup view matrix
         updateViewMatrices();        
     }
@@ -101,7 +99,6 @@ public class ParticlesRenderer implements Renderer {
         rotateM(viewMatrix, 0, -yRotation, 1f, 0f, 0f);
         rotateM(viewMatrix, 0, -xRotation, 0f, 1f, 0f);
         System.arraycopy(viewMatrix, 0, viewMatrixForSkybox, 0, viewMatrix.length);
-        
         // We want the translation to apply to the regular view matrix, and not
         // the skybox.
         translateM(viewMatrix, 0, 0, -1.5f, -5f);
@@ -110,8 +107,8 @@ public class ParticlesRenderer implements Renderer {
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);  
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
+        glEnable(GL_DEPTH_TEST);//打开深度缓冲区功能,如果片段比已经存在的片段更近，就绘制它，否则丢弃
+        glEnable(GL_CULL_FACE);//剔除，关闭两面绘制
         
         heightmapProgram = new HeightmapShaderProgram(context);
         heightmap = new Heightmap(((BitmapDrawable)context.getResources()
@@ -134,24 +131,20 @@ public class ParticlesRenderer implements Renderer {
             Color.rgb(255, 50, 5),            
             angleVarianceInDegrees, 
             speedVariance);
-        
         greenParticleShooter = new ParticleShooter(
             new Point(0f, 0f, 0f), 
             particleDirection,
             Color.rgb(25, 255, 25),            
             angleVarianceInDegrees, 
             speedVariance);
-        
         blueParticleShooter = new ParticleShooter(
             new Point(1f, 0f, 0f), 
             particleDirection,
             Color.rgb(5, 50, 255),            
             angleVarianceInDegrees, 
             speedVariance); 
-                
         particleTexture = TextureHelper.loadTexture(context, R.drawable.particle_texture);
-
-        skyboxTexture = TextureHelper.loadCubeMap(context, 
+        skyboxTexture = TextureHelper.loadCubeMap(context,
             new int[] { R.drawable.left, R.drawable.right,
                         R.drawable.bottom, R.drawable.top, 
                         R.drawable.front, R.drawable.back});
@@ -174,8 +167,8 @@ public class ParticlesRenderer implements Renderer {
         /*
         glClear(GL_COLOR_BUFFER_BIT);
          */
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);                
-                
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//告诉OpenGL新帧上要清空深度缓冲
+        //注意绘制顺序
         drawHeightmap();
         drawSkybox();        
         drawParticles();
@@ -195,7 +188,8 @@ public class ParticlesRenderer implements Renderer {
     private void drawSkybox() {   
         setIdentityM(modelMatrix, 0);
         updateMvpMatrixForSkybox();
-                
+        //https://blog.csdn.net/junzia/article/details/52820177
+        //改变深度测试算法。默认情况下使用GL_LESS，新片段比任何已存在片段近或者比远平面近，就让他通过测试。改为GL_LEQUAL，新片段与已存在片段相比较接近或者二者在同等距离处，就让他通过测试
         glDepthFunc(GL_LEQUAL); // This avoids problems with the skybox itself getting clipped.
         skyboxProgram.useProgram();
         skyboxProgram.setUniforms(modelViewProjectionMatrix, skyboxTexture);
@@ -206,15 +200,13 @@ public class ParticlesRenderer implements Renderer {
    
     private void drawParticles() {        
         float currentTime = (System.nanoTime() - globalStartTime) / 1000000000f;
-        
         redParticleShooter.addParticles(particleSystem, currentTime, 1);
         greenParticleShooter.addParticles(particleSystem, currentTime, 1);              
         blueParticleShooter.addParticles(particleSystem, currentTime, 1);              
-        
         setIdentityM(modelMatrix, 0);
         updateMvpMatrix();
         
-        glDepthMask(false);
+        glDepthMask(false);//在保持深度测试的同时禁用深度更新，粒子将针对地面进行测试，但其测试结果不会被写入深度缓冲区，这样就不会彼此遮挡了
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE);
         

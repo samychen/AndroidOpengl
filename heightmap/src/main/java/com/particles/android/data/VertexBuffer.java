@@ -24,7 +24,6 @@ import java.nio.FloatBuffer;
 
 public class VertexBuffer {
     private final int bufferId;
-    
     public VertexBuffer(float[] vertexData) {
         // Allocate a buffer.
         final int buffers[] = new int[1];
@@ -33,22 +32,22 @@ public class VertexBuffer {
             throw new RuntimeException("Could not create a new vertex buffer object.");
         }
         bufferId = buffers[0];
-        
-        // Bind to the buffer. 
+        // Bind to the buffer.
         glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-        
-        // Transfer data to native memory.        
+        // Transfer data to native memory.
         FloatBuffer vertexArray = ByteBuffer
             .allocateDirect(vertexData.length * BYTES_PER_FLOAT)
             .order(ByteOrder.nativeOrder())
             .asFloatBuffer()
             .put(vertexData);
         vertexArray.position(0);
-        
-        // Transfer data from native memory to the GPU buffer.              
+        // Transfer data from native memory to the GPU buffer.
+        //定点缓冲区对象target应该设为GL_ARRAY_BUFFER，索引缓冲区对象应该设为GL_ELEMTNT_ARRAY_BUFFER
+        //GL_STATIC_DRAW这个对象只会被绘制一次，但会经常使用
+        //GL_STREAM_DRAW这个对象只会被绘制一次，并且不用经常使用
+        //GL_DYNAMIC_DRAW这个对象会被修改和使用多次
         glBufferData(GL_ARRAY_BUFFER, vertexArray.capacity() * BYTES_PER_FLOAT,
             vertexArray, GL_STATIC_DRAW);                      
-         
         // IMPORTANT: Unbind from the buffer when we're done with it.
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         // We let vertexArray go out of scope, but it won't be released

@@ -48,10 +48,12 @@ public class Heightmap {
         final int[] pixels = new int[width * height];                
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
         bitmap.recycle();
-        
+        //生成顶点数据
         final float[] heightmapVertices = 
             new float[width * height * POSITION_COMPONENT_COUNT];        
-        int offset = 0;      
+        int offset = 0;
+        //位图像素转化为高度图数据
+        //位图在内存中布局方式就是这样的，一行一行读取像素更有效率。像素偏移值 = 当前行 * 高度 + 当前列
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 // The heightmap will lie flat on the XZ plane and centered
@@ -61,7 +63,7 @@ public class Heightmap {
                 // red color to determine the height.
                 final float xPosition = ((float)col / (float)(width - 1)) - 0.5f;
                 final float yPosition = 
-                    (float)Color.red(pixels[(row * height) + col]) / (float)255;
+                    (float)Color.red(pixels[(row * height) + col]) / (float)255;//像素偏移值 = 当前行 * 高度 + 当前列
                 final float zPosition = ((float)row / (float)(height - 1)) - 0.5f;                                                
                 
                 heightmapVertices[offset++] = xPosition;
@@ -71,23 +73,25 @@ public class Heightmap {
         }
         return heightmapVertices;        
     }
+    //计算索引的数量
     private int calculateNumElements() {
         // There should be 2 triangles for every group of 4 vertices, so a
         // heightmap of, say, 10x10 pixels would have 9x9 groups, with 2
         // triangles per group and 3 vertices per triangle for a total of (9 x 9
         // x 2 x 3) indices.
+        //针对高度图中4个顶点构成的组，生成2个三角形，每个三角形有3个索引，总共需要6个索引。通过(width-1) * (height-1)计算出需要的组数，然后 x 2 x 3计算出索引数
         return (width - 1) * (height - 1) * 2 * 3;
     }
     
     /**
      * Create an index buffer object for the vertices to wrap them together into
      * triangles, creating indices based on the width and height of the
-     * heightmap.
+     * heightmap.生成索引
      */
     private short[] createIndexData() {
         final short[] indexData = new short[numElements];
         int offset = 0;
-            
+        //位图的索引组数为(width-1)*(heitht-1)
         for (int row = 0; row < height - 1; row++) {
             for (int col = 0; col < width - 1; col++) {
                 // Note: The (short) cast will end up underflowing the number
@@ -110,7 +114,6 @@ public class Heightmap {
                 indexData[offset++] = bottomRightIndexNum;
             }
         }
-        
         return indexData;
     }
     public void bindData(HeightmapShaderProgram heightmapProgram) {  

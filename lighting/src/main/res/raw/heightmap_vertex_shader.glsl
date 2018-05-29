@@ -1,6 +1,6 @@
 // uniform mat4 u_Matrix;
 uniform mat4 u_MVMatrix;
-uniform mat4 u_IT_MVMatrix;
+uniform mat4 u_IT_MVMatrix;//倒置矩阵的转置
 uniform mat4 u_MVPMatrix;
 
 
@@ -41,7 +41,7 @@ void main()
     // for more information)).
     
     vec3 scaledNormal = a_Normal;
-    scaledNormal.y *= 10.0;
+    scaledNormal.y *= 10.0;绘制高度图时，使用扩展高度10倍，宽度100倍，也即是宽度高于高度的10倍，法线也就不对了。我们需要按相反方式缩放法线，使得他的高度高于他宽度的10倍
     scaledNormal = normalize(scaledNormal);
     
     float diffuse = max(dot(scaledNormal, u_VectorToLight), 0.0);

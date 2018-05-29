@@ -202,20 +202,19 @@ public class AirHockeyRenderer implements Renderer {
                 -1f, 1f);
         } 
         */
+        //投影
         MatrixHelper.perspectiveM(projectionMatrix, 45, (float) width
             / (float) height, 1f, 10f);
         
-        /*
+        //将模型矩阵置为单位矩阵
         setIdentityM(modelMatrix, 0);
-        translateM(modelMatrix, 0, 0f, 0f, -2f);
-        */
-        
-        setIdentityM(modelMatrix, 0);
-        
-        translateM(modelMatrix, 0, 0f, 0f, -2.5f);        
+        //投影矩阵视椎体从z=-1开始,到z=-10结束,桌子默认从z=0位置开始，所以需要移动到视椎体内
+        translateM(modelMatrix, 0, 0f, 0f, -2.5f);
+        //让桌子看起来有立体感
         rotateM(modelMatrix, 0, -60f, 1f, 0f, 0f);
         
         final float[] temp = new float[16];
+        //临时矩阵存储投影矩阵和模型矩阵的结果
         multiplyMM(temp, 0, projectionMatrix, 0, modelMatrix, 0);        
         System.arraycopy(temp, 0, projectionMatrix, 0, temp.length);
     }
