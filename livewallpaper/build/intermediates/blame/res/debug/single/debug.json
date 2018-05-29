@@ -1,102 +1,102 @@
 [
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_bottom.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\bottom.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_bottom.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\night_bottom.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_back.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\back.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_right.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\night_right.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_particle_texture.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\particle_texture.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_top.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\night_top.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_back.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\night_back.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_particle_texture.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\particle_texture.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\xml_wallpaper.xml.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\xml\\wallpaper.xml"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\raw_skybox_vertex_shader.glsl.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\raw\\skybox_vertex_shader.glsl"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_wallpaper.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-xhdpi\\ic_wallpaper.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_front.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\night_front.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\raw_particle_fragment_shader.glsl.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\raw\\particle_fragment_shader.glsl"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_wallpaper.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-xhdpi\\ic_wallpaper.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_back.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\night_back.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_left.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\night_left.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\raw_heightmap_vertex_shader.glsl.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\raw\\heightmap_vertex_shader.glsl"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_left.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\left.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_left.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\night_left.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\raw_heightmap_vertex_shader.glsl.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\raw\\heightmap_vertex_shader.glsl"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\raw_skybox_fragment_shader.glsl.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\raw\\skybox_fragment_shader.glsl"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\raw_particle_vertex_shader.glsl.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\raw\\particle_vertex_shader.glsl"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_front.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\front.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_heightmap.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\heightmap.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_bottom.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\bottom.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\raw_particle_fragment_shader.glsl.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\raw\\particle_fragment_shader.glsl"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_right.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\right.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\raw_heightmap_fragment_shader.glsl.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\raw\\heightmap_fragment_shader.glsl"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_right.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\night_right.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_right.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\right.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\xml_wallpaper.xml.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\xml\\wallpaper.xml"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\raw_skybox_fragment_shader.glsl.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\raw\\skybox_fragment_shader.glsl"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_heightmap.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\heightmap.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_front.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\front.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_top.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\top.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_top.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\night_top.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_launcher.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\raw_heightmap_fragment_shader.glsl.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\raw\\heightmap_fragment_shader.glsl"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_left.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\left.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_top.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\top.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_front.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\night_front.png"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_launcher.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\raw_particle_vertex_shader.glsl.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\raw\\particle_vertex_shader.glsl"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_night_bottom.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-nodpi\\night_bottom.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\raw_skybox_vertex_shader.glsl.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\raw\\skybox_vertex_shader.glsl"
     },
     {
-        "merged": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
-        "source": "F:\\OpenGL\\androidstudio_opengl\\LiveWallpaper\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
+        "merged": "H:\\workspace\\AndroidOpengl\\livewallpaper\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi_back.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\livewallpaper\\src\\main\\res\\drawable-nodpi\\back.png"
     }
 ]

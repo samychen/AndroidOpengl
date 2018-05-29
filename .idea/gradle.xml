@@ -8,11 +8,23 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/NativeGLESView" />
+            <option value="$PROJECT_DIR$/NativeGLESViewWithEGL" />
+            <option value="$PROJECT_DIR$/OpenGLES_FBO" />
+            <option value="$PROJECT_DIR$/OpenGLES_LoadObj" />
+            <option value="$PROJECT_DIR$/OpenGLShatterAnim" />
+            <option value="$PROJECT_DIR$/OpenGlES_Blend" />
+            <option value="$PROJECT_DIR$/OpenGlES_Circle" />
+            <option value="$PROJECT_DIR$/OpenGlES_Illumination" />
+            <option value="$PROJECT_DIR$/OpenGlES_StencilTest" />
+            <option value="$PROJECT_DIR$/OpenGlES_Texture" />
+            <option value="$PROJECT_DIR$/OpenGlES_Texture2" />
             <option value="$PROJECT_DIR$/airhock3D" />
             <option value="$PROJECT_DIR$/airhockOrtho" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/heightmap" />
             <option value="$PROJECT_DIR$/improvedmallet" />
+            <option value="$PROJECT_DIR$/learnopengles" />
             <option value="$PROJECT_DIR$/lighting" />
             <option value="$PROJECT_DIR$/livewallpaper" />
             <option value="$PROJECT_DIR$/particles" />

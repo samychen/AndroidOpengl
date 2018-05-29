@@ -3,11 +3,23 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidOpengl.iml" filepath="$PROJECT_DIR$/AndroidOpengl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NativeGLESView/NativeGLESView.iml" filepath="$PROJECT_DIR$/NativeGLESView/NativeGLESView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NativeGLESViewWithEGL/NativeGLESViewWithEGL.iml" filepath="$PROJECT_DIR$/NativeGLESViewWithEGL/NativeGLESViewWithEGL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGLES_FBO/OpenGLES_FBO.iml" filepath="$PROJECT_DIR$/OpenGLES_FBO/OpenGLES_FBO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGLES_LoadObj/OpenGLES_LoadObj.iml" filepath="$PROJECT_DIR$/OpenGLES_LoadObj/OpenGLES_LoadObj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGLShatterAnim/OpenGLShatterAnim.iml" filepath="$PROJECT_DIR$/OpenGLShatterAnim/OpenGLShatterAnim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGlES_Blend/OpenGlES_Blend.iml" filepath="$PROJECT_DIR$/OpenGlES_Blend/OpenGlES_Blend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGlES_Circle/OpenGlES_Circle.iml" filepath="$PROJECT_DIR$/OpenGlES_Circle/OpenGlES_Circle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGlES_Illumination/OpenGlES_Illumination.iml" filepath="$PROJECT_DIR$/OpenGlES_Illumination/OpenGlES_Illumination.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGlES_StencilTest/OpenGlES_StencilTest.iml" filepath="$PROJECT_DIR$/OpenGlES_StencilTest/OpenGlES_StencilTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGlES_Texture/OpenGlES_Texture.iml" filepath="$PROJECT_DIR$/OpenGlES_Texture/OpenGlES_Texture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenGlES_Texture2/OpenGlES_Texture2.iml" filepath="$PROJECT_DIR$/OpenGlES_Texture2/OpenGlES_Texture2.iml" />
       <module fileurl="file://$PROJECT_DIR$/airhock3D/airhock3D.iml" filepath="$PROJECT_DIR$/airhock3D/airhock3D.iml" />
       <module fileurl="file://$PROJECT_DIR$/airhockOrtho/airhockOrtho.iml" filepath="$PROJECT_DIR$/airhockOrtho/airhockOrtho.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/heightmap/heightmap.iml" filepath="$PROJECT_DIR$/heightmap/heightmap.iml" />
       <module fileurl="file://$PROJECT_DIR$/improvedmallet/improvedmallet.iml" filepath="$PROJECT_DIR$/improvedmallet/improvedmallet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/learnopengles/learnopengles.iml" filepath="$PROJECT_DIR$/learnopengles/learnopengles.iml" />
       <module fileurl="file://$PROJECT_DIR$/lighting/lighting.iml" filepath="$PROJECT_DIR$/lighting/lighting.iml" />
       <module fileurl="file://$PROJECT_DIR$/livewallpaper/livewallpaper.iml" filepath="$PROJECT_DIR$/livewallpaper/livewallpaper.iml" />
       <module fileurl="file://$PROJECT_DIR$/particles/particles.iml" filepath="$PROJECT_DIR$/particles/particles.iml" />

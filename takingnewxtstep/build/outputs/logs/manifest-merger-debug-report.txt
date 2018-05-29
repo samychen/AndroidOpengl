@@ -1,59 +1,59 @@
 -- Merging decision tree log ---
 manifest
-ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:10:1-33:12
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:10:1-33:12
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:10:1-33:12
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:10:1-33:12
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:10:1-33:12
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:10:1-33:12
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:10:1-33:12
+ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:10:1-33:12
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:10:1-33:12
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:10:1-33:12
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:10:1-33:12
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:10:1-33:12
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:10:1-33:12
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:10:1-33:12
 	package
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:11:5-35
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:11:5-35
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:13:5-30
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:13:5-30
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:10:11-69
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:10:11-69
 	android:versionCode
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:12:5-28
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:12:5-28
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
 uses-sdk
-ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:15:5-17:41
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:15:5-17:41
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:15:5-17:41
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:15:5-17:41
-INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:15:5-17:41
+ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:15:5-17:41
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:15:5-17:41
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:15:5-17:41
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:15:5-17:41
+INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:15:5-17:41
 	android:targetSdkVersion
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:17:9-38
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:17:9-38
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:16:9-35
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
-		INJECTED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:16:9-35
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml
 application
-ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:19:5-31:19
+ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:19:5-31:19
 	android:label
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:21:9-41
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:21:9-41
 	android:icon
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:20:9-45
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:20:9-45
 activity#com.nextstep.android.ParticlesActivity
-ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:22:9-30:20
+ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:22:9-30:20
 	android:label
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:24:13-45
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:24:13-45
 	android:name
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:23:13-46
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:23:13-46
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:25:13-29:29
+ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:25:13-29:29
 action#android.intent.action.MAIN
-ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:26:17-69
+ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:26:17-69
 	android:name
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:26:25-66
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:26:25-66
 category#android.intent.category.LAUNCHER
-ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:28:17-77
+ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:28:17-77
 	android:name
-		ADDED from F:\OpenGL\androidstudio_opengl\TakingTheNextStep\app\src\main\AndroidManifest.xml:28:27-74
+		ADDED from H:\workspace\AndroidOpengl\takingnewxtstep\src\main\AndroidManifest.xml:28:27-74

@@ -1,1 +1,1 @@
-[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":1},"outputFile":{"path":"F:\\OpenGL\\androidstudio_opengl\\AirHockeyWithImprovedMallets\\app\\build\\intermediates\\manifests\\full\\debug\\AndroidManifest.xml"},"properties":{"packageId":"com.airhockey.android","split":""}}]
+[{"outputType":{"type":"MERGED_MANIFESTS"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":1},"path":"AndroidManifest.xml","properties":{"packageId":"com.airhockey.android","split":"","minSdkVersion":"10"}}]
