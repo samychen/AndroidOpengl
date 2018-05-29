@@ -384,10 +384,7 @@ learnopengles/build/intermediates/symbols/
 learnopengles/build/intermediates/tmp/
 learnopengles/build/intermediates/transforms/externalLibsDexMerger/debug/0/
 learnopengles/build/tmp/
-learnopenglescpp/CMakeLists.txt
-learnopenglescpp/build.gradle
-learnopenglescpp/build/
-learnopenglescpp/src/
+
 lighting/build/generated/res/
 lighting/build/generated/source/aidl/
 lighting/build/generated/source/rs/
