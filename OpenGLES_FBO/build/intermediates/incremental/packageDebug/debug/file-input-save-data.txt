@@ -1,0 +1,11 @@
+#Internal package file, do not edit.
+#Tue May 29 15:12:28 CST 2018
+1.base=H\:\\workspace\\AndroidOpengl\\OpenGLES_FBO\\build\\intermediates\\assets\\debug
+0.baseType=DIRECTORY
+1.baseType=DIRECTORY
+count=2
+1.set=ASSET
+0.path=classes.dex
+0.set=DEX
+0.base=H\:\\workspace\\AndroidOpengl\\OpenGLES_FBO\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+1.path=obj.obj

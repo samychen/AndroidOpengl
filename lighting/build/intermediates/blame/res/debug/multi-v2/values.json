@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "H:\\workspace\\AndroidOpengl\\lighting\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "map": [
+                {
+                    "source": "H:\\workspace\\AndroidOpengl\\lighting\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "466",
+                        "endColumns": "45",
+                        "endOffsets": "507"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "45",
+                        "endOffsets": "96"
+                    }
+                }
+            ]
+        }
+    ]
+}

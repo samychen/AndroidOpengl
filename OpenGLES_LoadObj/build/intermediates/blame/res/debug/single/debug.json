@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_t3.jpg.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\src\\main\\res\\drawable-hdpi\\t3.jpg"
+    },
+    {
+        "merged": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_icon.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\src\\main\\res\\drawable-ldpi\\icon.png"
+    },
+    {
+        "merged": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_icon.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\src\\main\\res\\drawable-hdpi\\icon.png"
+    },
+    {
+        "merged": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_icon.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\src\\main\\res\\drawable-mdpi\\icon.png"
+    },
+    {
+        "merged": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_t2.jpg.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\src\\main\\res\\drawable-hdpi\\t2.jpg"
+    },
+    {
+        "merged": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_t1.png.flat",
+        "source": "H:\\workspace\\AndroidOpengl\\OpenGLES_LoadObj\\src\\main\\res\\drawable-hdpi\\t1.png"
+    }
+]

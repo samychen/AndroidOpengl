@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="H:\workspace\AndroidOpengl\OpenGlES_Illumination\src\main\assets"/><source path="H:\workspace\AndroidOpengl\OpenGlES_Illumination\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="H:\workspace\AndroidOpengl\OpenGlES_Illumination\src\debug\assets"/></dataSet></merger>

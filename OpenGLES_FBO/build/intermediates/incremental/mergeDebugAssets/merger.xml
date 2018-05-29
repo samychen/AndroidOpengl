@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="H:\workspace\AndroidOpengl\OpenGLES_FBO\src\main\assets"><file name="obj.obj" path="H:\workspace\AndroidOpengl\OpenGLES_FBO\src\main\assets\obj.obj"/></source><source path="H:\workspace\AndroidOpengl\OpenGLES_FBO\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="H:\workspace\AndroidOpengl\OpenGLES_FBO\src\debug\assets"/></dataSet></merger>

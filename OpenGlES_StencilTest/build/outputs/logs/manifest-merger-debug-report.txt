@@ -1,0 +1,110 @@
+-- Merging decision tree log ---
+manifest
+ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:2:1-27:12
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\b64768fcef441899624782248137616c\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\c21a08528a0a93dc683adc73cb70499c\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\ae8353f832ddb51f105e8a97909c4c08\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\08742aa056f1af8c705506b932d9b932\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\3032cef91d6bf13ee8c1e62853562da5\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\d73f18b196048d20d3941835b0980444\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\9e85a03027977b6fe3bf382866a28673\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\d309fba6e6b7755238945485e6b35e93\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\be7b04095fc4ee4e4a70ee0c492bf623\AndroidManifest.xml:17:1-27:12
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:2:1-27:12
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:2:1-27:12
+	package
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:3:5-47
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:5:5-30
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:4:5-28
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+uses-sdk
+ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:7:5-9:41
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:7:5-9:41
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\b64768fcef441899624782248137616c\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\b64768fcef441899624782248137616c\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\c21a08528a0a93dc683adc73cb70499c\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\c21a08528a0a93dc683adc73cb70499c\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\ae8353f832ddb51f105e8a97909c4c08\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\ae8353f832ddb51f105e8a97909c4c08\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\08742aa056f1af8c705506b932d9b932\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\08742aa056f1af8c705506b932d9b932\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\3032cef91d6bf13ee8c1e62853562da5\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\3032cef91d6bf13ee8c1e62853562da5\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\d73f18b196048d20d3941835b0980444\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\d73f18b196048d20d3941835b0980444\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\9e85a03027977b6fe3bf382866a28673\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\9e85a03027977b6fe3bf382866a28673\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\d309fba6e6b7755238945485e6b35e93\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\d309fba6e6b7755238945485e6b35e93\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\be7b04095fc4ee4e4a70ee0c492bf623\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\be7b04095fc4ee4e4a70ee0c492bf623\AndroidManifest.xml:21:5-23:58
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:7:5-9:41
+INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:7:5-9:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\b64768fcef441899624782248137616c\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:9:9-38
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:8:9-35
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+		INJECTED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml
+application
+ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:11:5-25:19
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\b64768fcef441899624782248137616c\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.1.aar\b64768fcef441899624782248137616c\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\c21a08528a0a93dc683adc73cb70499c\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.1.aar\c21a08528a0a93dc683adc73cb70499c\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\ae8353f832ddb51f105e8a97909c4c08\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.1.aar\ae8353f832ddb51f105e8a97909c4c08\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\08742aa056f1af8c705506b932d9b932\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.1.aar\08742aa056f1af8c705506b932d9b932\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\3032cef91d6bf13ee8c1e62853562da5\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.1.aar\3032cef91d6bf13ee8c1e62853562da5\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\d73f18b196048d20d3941835b0980444\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.1.aar\d73f18b196048d20d3941835b0980444\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\9e85a03027977b6fe3bf382866a28673\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.1.aar\9e85a03027977b6fe3bf382866a28673\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\d309fba6e6b7755238945485e6b35e93\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.1.aar\d309fba6e6b7755238945485e6b35e93\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\be7b04095fc4ee4e4a70ee0c492bf623\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\000\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.1.aar\be7b04095fc4ee4e4a70ee0c492bf623\AndroidManifest.xml:25:5-20
+	android:label
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:14:9-41
+	android:icon
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:13:9-45
+	android:allowBackup
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:12:9-35
+	android:theme
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:15:9-40
+activity#com.example.opengles_stenciltest.MainActivity
+ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:16:9-24:20
+	android:label
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:18:13-45
+	android:name
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:17:13-73
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:19:13-23:29
+action#android.intent.action.MAIN
+ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:20:17-69
+	android:name
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:20:25-66
+category#android.intent.category.LAUNCHER
+ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:22:17-77
+	android:name
+		ADDED from H:\workspace\AndroidOpengl\OpenGlES_StencilTest\src\main\AndroidManifest.xml:22:27-74
