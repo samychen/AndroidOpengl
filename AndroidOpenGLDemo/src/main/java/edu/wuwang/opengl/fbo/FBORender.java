@@ -75,6 +75,7 @@ public class FBORender implements GLSurfaceView.Renderer {
             GLES20.glViewport(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
             mFilter.setTextureId(fTexture[0]);//剩下的fTexure[0]设置为
             mFilter.draw();
+            //读取处理后的图片像素
             GLES20.glReadPixels(0, 0, mBitmap.getWidth(), mBitmap.getHeight(), GLES20.GL_RGBA,
                 GLES20.GL_UNSIGNED_BYTE, mBuffer);
             if(mCallback!=null){

@@ -77,7 +77,8 @@ public class BlendActivity extends BaseActivity implements GLSurfaceView.Rendere
         mGLView.setEGLConfigChooser(8,8,8,8,16,8);
         mGLView.setRenderer(this);
         mGLView.getHolder().setFormat(PixelFormat.TRANSPARENT);
-        mGLView.setZOrderOnTop(true);
+        //这个函数必须在窗口被添加到窗口管理器之前设置https://blog.csdn.net/u013068887/article/details/72729174
+        mGLView.setZOrderOnTop(true);//设置透明,当场景中有多个SurfaceView的时候，上层的SurfaceView可能会被下层的遮挡，这个时候需要使用setZOrderOnTop(true)或者setZOrderMediaOverlay(true)来控制SurfaceView的显示层次
         mGLView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
         mEqua.setText(equaStr[nEquaIndex]);
