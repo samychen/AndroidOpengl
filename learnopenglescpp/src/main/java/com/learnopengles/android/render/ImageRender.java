@@ -26,7 +26,16 @@ public class ImageRender implements GLSurfaceView.Renderer{
     public static native void nativeSurfaceChange(int width, int height);
 
     public static native void nativeDrawFrame();
+    public static native void nativeRender(float norX,float norY);
 
+    public void handleTouchPress(float normalizedX, float normalizedY) {
+        nativeRender(normalizedX, normalizedY);
+//        nativeDrawFrame();
+    }
+    public void handleTouchDrag(float normalizedX, float normalizedY) {
+        nativeRender(normalizedX, normalizedY);
+//        nativeDrawFrame();
+    }
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         AssetManager assetManager = mActivity.getAssets();

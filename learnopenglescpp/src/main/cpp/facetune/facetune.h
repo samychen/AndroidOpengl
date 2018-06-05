@@ -7,6 +7,8 @@
 
 #include <GLES2/gl2.h>
 #include <graphics/Matrix.h>
+#include <include/tcomdef.h>
+#include <include/beautitune.h>
 
 class facetune {
 
@@ -21,6 +23,11 @@ public:
     void change(int width, int height);
 
     void draw();
+
+    void createFrameBuffer();
+    void releaseFrameBuffer();
+    int renderCenter( FPOINT center,TFloat radius);
+    int releaseEffect();
 private:
 
     GLsizei mWidth;
@@ -35,9 +42,14 @@ private:
     GLuint mPositionHandle;
     GLuint mTextureUniformHandle;
     GLuint mTextureCoordinateHandle;
-    GLuint mTextureDataHandle;
-
+    GLuint srcTexure;//srcTexure
+    GLuint dstTexure;//dstTexure
+    GLuint fFrame ;
+    GLuint fRender;
     GLuint mPointProgramHandle;
+
+    void* TuneEngine;
+    TByte *ImgBuf;
 
 };
 
