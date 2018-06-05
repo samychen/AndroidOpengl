@@ -26,12 +26,10 @@ public class MyRenderer implements GLSurfaceView.Renderer{
 		nativeInit(vetexShaderStr, fragmentShaderStr);
 	}
 
-
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		nativeDraw(mAngleX, mAngleY);
 	}
-
 
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {

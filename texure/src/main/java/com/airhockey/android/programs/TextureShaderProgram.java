@@ -55,7 +55,7 @@ public class TextureShaderProgram extends ShaderProgram {
 
         // Tell the texture uniform sampler to use this texture in the shader by
         // telling it to read from texture unit 0.
-        glUniform1i(uTextureUnitLocation, 0);//使用纹理单元保存纹理
+        glUniform1i(uTextureUnitLocation, 0);//????????????????
     }
 
     public int getPositionAttributeLocation() {

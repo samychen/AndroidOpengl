@@ -34,7 +34,7 @@ Java_com_example_weiersyuan_nativeglesview_MyRenderer_nativeDraw(JNIEnv *env, jc
      */
     glm::mat4 mvpMatrix = projection * view/* * module*/;
     float *mvp = (float *) glm::value_ptr(mvpMatrix);
-    // TODO
+    // TODO]
     mShape.draw(mvp);
 
 }
