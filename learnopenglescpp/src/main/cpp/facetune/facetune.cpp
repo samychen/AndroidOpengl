@@ -42,8 +42,9 @@ facetune::facetune() {
     mModelMatrix = NULL;
     mProjectionMatrix = NULL;
     mMVPMatrix = NULL;
-    fFrame = NULL;
-    fRender = NULL;
+    fFrame = 0;
+//    fRender = 0;
+    TuneEngine = NULL;
     mPositionHandle = 0;
     mPointProgramHandle = 0;
 }
@@ -66,14 +67,7 @@ void facetune::create() {
     mModelMatrix = new Matrix();
     mMVPMatrix = new Matrix();
     srcTexure = GLUtils::loadTexture("texture/bumpy_bricks_public_domain.jpg");
-    glGenTextures(1, &dstTexure);
-    glBindTexture(GL_TEXTURE_2D, dstTexure);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-    createFrameBuffer();
+
     float eyeX = 0.0f;
     float eyeY = 0.0f;
     float eyeZ = 1.5f;
@@ -88,15 +82,17 @@ void facetune::create() {
 void facetune::createFrameBuffer(){
     glGenFramebuffers(1, &fFrame);
     glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
-
-    glGenRenderbuffers(1, &fRender);
-    glBindRenderbuffer(GL_RENDERBUFFER, fRender);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, mWidth, mHeight);
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    glGenTextures(1, &dstTexure);
+    glBindTexture(GL_TEXTURE_2D, dstTexure);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, dstTexure, 0);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-                              GL_RENDERBUFFER, fRender);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if(status != GL_FRAMEBUFFER_COMPLETE)
+        LOGE( "FBO Initialization Failed.");
 }
 void facetune::change(int width, int height) {
     mWidth = width;
@@ -116,7 +112,8 @@ int facetune::renderCenter(FPOINT center, TFloat radius) {
     BTType ProType;
     if (!TuneEngine)
     {
-        ProType = Smooth;// Smooth; TeethWhite;
+        LOGE("init");
+        ProType = TeethWhite;// Smooth; TeethWhite;
         nRes = BeautiTune_Init(&TuneEngine,mWidth,mHeight, ProType);
         if (nRes)
         {
@@ -130,19 +127,22 @@ int facetune::renderCenter(FPOINT center, TFloat radius) {
     }
     //3.响应每次涂抹动作，单次涂抹产生的参数有（center，radius），擦除动作也会产生同样的参数
     TypePara Para = { 0,Paint };
-    if (ProType == TeethWhite)
+    if (ProType == Detail)
     {
+        LOGE("TeethWhite");
         Para.BsWork = Paint;//涂抹还是擦除
         nRes = BeautiTune_Process(TuneEngine, mTextureUniformHandle, dstTexure, &center, 15.0f,&Para, ImgBuf);
     }
     else if (ProType == Smooth)
     {
-        Para.IsMoreSmooth = 0;//是否需要更强的模糊
+        LOGE("Smooth");
+        Para.IsMoreSmooth = 1;//是否需要更强的模糊
         Para.BsWork = Paint;
         nRes = BeautiTune_Process(TuneEngine, mTextureUniformHandle, dstTexure, &center, 15.0f,&Para, ImgBuf);
     }
     else if (ProType == Detail)
     {
+        LOGE("Detail");
         Para.BsWork = Paint;
         nRes = BeautiTune_Process(TuneEngine, mTextureUniformHandle, dstTexure, &center, 15.0f, &Para, ImgBuf);
     }
@@ -159,18 +159,15 @@ int facetune::releaseEffect() {
     }
 }
 void facetune::draw() {
+    //render To Texure
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    createFrameBuffer();
     glUseProgram(mPointProgramHandle);
     mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
     mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
     mTextureUniformHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
     mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
-
-    glBindTexture(GL_TEXTURE_2D, srcTexure);
-
-    glActiveTexture(GL_TEXTURE0);
-    glUniform1i(mTextureUniformHandle, 0);
     glVertexAttribPointer(
             mPositionHandle,
             POSITION_DATA_SIZE,
@@ -193,8 +190,18 @@ void facetune::draw() {
     mMVPMatrix->multiply(*mViewMatrix, *mModelMatrix);
     mMVPMatrix->multiply(*mProjectionMatrix, *mMVPMatrix);
     glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, mMVPMatrix->mData);
+    glBindTexture(GL_TEXTURE_2D, srcTexure);
+    glUniform1i(mTextureUniformHandle, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    //render TO window
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, dstTexure);
+    glUniform1i(mTextureUniformHandle, 0);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+    glDeleteTextures(1, &dstTexure);
+    glDeleteFramebuffers(1, &fFrame);
 }
 facetune *facetuneobj;
 
@@ -228,7 +235,8 @@ Java_com_learnopengles_android_render_ImageRender_nativeRender(JNIEnv *env,
                                                                       jclass type,
                                                                       jfloat x, jfloat y) {
     if (facetuneobj) {
-        facetuneobj->renderCenter({x,y},15.0f);
+        int ret=facetuneobj->renderCenter({x,y},15.0f);
+        LOGE("ret=%d",ret);
     }
 }
 extern "C"

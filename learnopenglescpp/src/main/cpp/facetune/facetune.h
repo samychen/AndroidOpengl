@@ -45,7 +45,7 @@ private:
     GLuint srcTexure;//srcTexure
     GLuint dstTexure;//dstTexure
     GLuint fFrame ;
-    GLuint fRender;
+//    GLuint fRender;
     GLuint mPointProgramHandle;
 
     void* TuneEngine;
