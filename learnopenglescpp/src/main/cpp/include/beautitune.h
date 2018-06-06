@@ -21,7 +21,7 @@
 #  error "The compiler is not supported."
 #endif
 
-typedef enum BTType { TeethWhite, Smooth, Detail } TuneType;
+typedef enum BTType { TeethWhite, Smooth, Detail,Reshape } TuneType;
 typedef enum BSWork {Paint,Erase} BrushWork;
 typedef struct _tag_fpoint_bttune
 {
@@ -31,8 +31,9 @@ typedef struct _tag_fpoint_bttune
 
 typedef struct _process_para
 {
-	TInt32 IsMoreSmooth;
+	TInt32    IsMoreSmooth;
 	BrushWork BsWork;
+	FPOINT    ShapeStart, ShapeEnd;
 }TypePara;
 #ifdef _cplusplus
 extern "C"{

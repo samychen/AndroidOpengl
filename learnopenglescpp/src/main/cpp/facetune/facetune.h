@@ -40,7 +40,8 @@ private:
 
     GLuint mMVPMatrixHandle;
     GLuint mPositionHandle;
-    GLuint mTextureUniformHandle;
+    GLuint grayProgram;
+    GLuint mTextureLocation;
     GLuint mTextureCoordinateHandle;
     GLuint srcTexure;//srcTexure
     GLuint dstTexure;//dstTexure
@@ -48,7 +49,7 @@ private:
 //    GLuint fRender;
     GLuint mPointProgramHandle;
 
-    void* TuneEngine;
+    THandle TuneEngine;
     TByte *ImgBuf;
 
 };

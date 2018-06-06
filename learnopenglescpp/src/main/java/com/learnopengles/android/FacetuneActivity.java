@@ -7,6 +7,7 @@ import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,7 +17,7 @@ import com.learnopengles.android.render.ImageRender;
 public class FacetuneActivity extends Activity {
 
     private GLSurfaceView mGLSurfaceView;
-
+    private static final String TAG = "FacetuneActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +36,10 @@ public class FacetuneActivity extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event != null) {
-                    final float normalizedX =
-                            (event.getX() / (float) v.getWidth()) * 2 - 1;
-                    final float normalizedY =
-                            -((event.getY() / (float) v.getHeight()) * 2 - 1);
+                    final float normalizedX =event.getX();
+//                            (event.getX() / (float) v.getWidth()) * 2 - 1;
+                    final float normalizedY =event.getY();
+//                            -((event.getY() / (float) v.getHeight()) * 2 - 1);
 
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         mGLSurfaceView.queueEvent(new Runnable() {

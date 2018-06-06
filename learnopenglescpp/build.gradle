@@ -1,7 +1,11 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'bugly'
 def platformVersion = 18    //openGLES 3 min Version
-
+bugly {
+    appId = '633c8ddb77' // 注册时分配的App ID
+    appKey = 'a81825cb-81f4-4f9f-91a9-0c765e12abde' // 注册时分配的App Key
+    debug = true
+}
 android {
     compileSdkVersion 27
 
@@ -9,7 +13,17 @@ android {
         applicationId "com.learnopengles.android.cpp"
         minSdkVersion 21
         targetSdkVersion 27
-
+        publishNonDefault true
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                jniDebuggable false
+            }
+            debug {
+                jniDebuggable true
+            }
+        }
         externalNativeBuild {
             cmake {
                 cppFlags "-frtti -fexceptions"
@@ -17,6 +31,9 @@ android {
                 arguments "-DANDROID_PLATFORM_LEVEL=${platformVersion}",
                         '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=gnustl_static'
             }
+        }
+        ndk {
+            abiFilters 'armeabi-v7a'
         }
     }
 
@@ -30,4 +47,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.0.2'
+    compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }
