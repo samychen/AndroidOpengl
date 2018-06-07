@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Learn OpenGL ES Tutorials</string>
+    <string name="app_name">facetune</string>
     <string name="toc">Table of Contents</string>
     <string name="tocHeader">Welcome to the Learn OpenGL ES tutorials! Please visit the website at: http://www.learnopengles.com/</string>
     <string name="lesson_one">Lesson One: Getting Started</string>

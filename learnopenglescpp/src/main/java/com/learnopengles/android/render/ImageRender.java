@@ -17,19 +17,26 @@ public class ImageRender implements GLSurfaceView.Renderer{
     }
 
     private Activity mActivity;
-
-    public ImageRender(Activity activity) {
+    private int picwidth,picheight;
+    private String picpath;
+    public ImageRender(Activity activity,int height,int heitht,String picpath) {
         mActivity = activity;
+        this.picwidth = height;
+        this.picheight = heitht;
+        this.picpath = picpath;
     }
-    public static native void nativeSurfaceCreate(AssetManager assetManager);
+    public static native void nativeSurfaceCreate(AssetManager assetManager,int width,int height,String picpath);
 
     public static native void nativeSurfaceChange(int width, int height);
 
     public static native void nativeDrawFrame();
+    public static native void nativereleaseEffect(int type);
     public static native void nativeRender(float norX,float norY);
 
+    public void releaseEffect(int type){
+        nativereleaseEffect(type);
+    }
     public void handleTouchPress(float normalizedX, float normalizedY) {
-
         nativeRender(normalizedX, normalizedY);
     }
     public void handleTouchDrag(float normalizedX, float normalizedY) {
@@ -38,7 +45,7 @@ public class ImageRender implements GLSurfaceView.Renderer{
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         AssetManager assetManager = mActivity.getAssets();
-        nativeSurfaceCreate(assetManager);
+        nativeSurfaceCreate(assetManager,picwidth,picheight,picpath);
     }
 
     @Override

@@ -25,9 +25,24 @@ public:
     void draw();
 
     void createFrameBuffer();
+
     void releaseFrameBuffer();
+
     int renderCenter( FPOINT center,TFloat radius);
+
     int releaseEffect();
+
+    int copyBuffer();
+
+    BTType ProType;
+    int initEffect;
+    BSWork bsWork;
+    int hasEffect;
+    int isMoreSmooth;
+    int picwidth;
+    int picheight;
+    int radius;
+    char *picpath;
 private:
 
     GLsizei mWidth;
@@ -43,10 +58,9 @@ private:
     GLuint grayProgram;
     GLuint mTextureLocation;
     GLuint mTextureCoordinateHandle;
-    GLuint srcTexure;//srcTexure
-    GLuint dstTexure;//dstTexure
+    GLuint srcTexure;
+    GLuint dstTexure;
     GLuint fFrame ;
-//    GLuint fRender;
     GLuint mPointProgramHandle;
 
     THandle TuneEngine;
