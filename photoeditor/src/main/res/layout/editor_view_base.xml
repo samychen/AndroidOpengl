@@ -1,0 +1,114 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    >
+    
+    <RelativeLayout
+        android:id="@+id/editor_display_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/main_bg"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="80dp"
+        >
+        <com.cam001.photoeditor.beauty.HelpedDisplayView
+            android:id="@+id/editor_display_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"    />
+   
+        <RelativeLayout 
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:id="@+id/editor_button_ba"
+        	android:layout_alignParentRight="true"
+        	android:layout_alignParentTop="true"
+        	android:layout_marginTop="90dp"
+        	android:layout_marginRight="20dp"
+        	android:background="@drawable/resume_btn_select" >
+        <TextView
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerHorizontal="true"
+        	android:layout_centerVertical="true"
+         />
+        </RelativeLayout>
+        <TextView 
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:id="@+id/editor_label_ba"
+        	android:layout_marginTop="90dp"
+        	android:layout_marginLeft="25dp"
+        	android:textSize="18sp"
+        	android:visibility="gone" />
+        
+        <RelativeLayout 
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:id="@+id/editor_button_face"
+        	android:layout_alignParentRight="true"
+        	android:layout_alignParentTop="true"
+        	android:layout_marginTop="20dp"
+        	android:layout_marginRight="20dp"
+        	android:background="@drawable/resume_btn_select"
+        	android:visibility="gone" >
+        <TextView
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerHorizontal="true"
+        	android:layout_centerVertical="true"
+        	android:textSize="@dimen/compare_text_size"
+        	 />
+        </RelativeLayout>
+    </RelativeLayout>
+
+	<FrameLayout         
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editor_panel_top"> 
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editor_panel_bottom"> 
+    </FrameLayout>
+    
+    <ImageView
+        android:id="@+id/logo_icon_image"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ucamera_icon_logo"
+         android:layout_above="@+id/editor_panel_bottom"
+         android:layout_alignParentRight="true"
+         android:layout_marginBottom="18dp"
+         android:layout_marginRight="15dp"
+         android:visibility="gone"
+         />
+    
+    <RelativeLayout
+        android:id="@+id/editor_panel_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+          <TextView 
+             android:id="@+id/editor_bar_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        android:textColor="#99ffffff"
+        android:textSize="32sp"
+        android:visibility="gone"
+            />
+    </RelativeLayout>
+    
+     <RelativeLayout
+        android:id="@+id/editor_share_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:visibility="gone">
+    </RelativeLayout>
+     
+</merge>

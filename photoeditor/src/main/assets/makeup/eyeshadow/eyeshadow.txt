@@ -1,0 +1,49 @@
+[
+{"ratio":0,"color":"#0b69cb","ini":"featuremodel/eyeshadow/1.ini","flashratio":50
+	, "thumb": "none.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/37.ini","flashratio":50
+	, "thumb": "37_1.png"},
+{"ratio":50,"color":"#dd7b02#087a4b","ini":"featuremodel/eyeshadow/2.ini","flashratio":50
+	, "thumb": "bingyanglanlv.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/40.ini","flashratio":50
+	, "thumb": "40_1.png"},
+{"ratio":20,"color":"#e9da67#5220b1","ini":"featuremodel/eyeshadow/19.ini","flashratio":25
+	, "thumb": "shangxiashuangse.png"} ,
+{"ratio":20,"color":"#8cc0ce#c196db","ini":"featuremodel/eyeshadow/14.ini","flashratio":50
+	, "thumb": "meizhuang.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/45.ini","flashratio":50
+	, "thumb": "45_1.png"},
+{"ratio":35,"color":"#442616#361608#995028","ini":"featuremodel/eyeshadow/7.ini","flashratio":50
+	, "thumb": "yanxunzhuang.png"},
+
+{"ratio":58,"color":"#0b69cb","ini":"featuremodel/eyeshadow/1.ini","flashratio":50
+	, "thumb": "qingxinhaiyangzhuang.png"},
+{"ratio":72,"color":"","ini":"featuremodel/eyeshadow/36.ini","flashratio":50
+	, "thumb": "36_1.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/38.ini","flashratio":50
+	, "thumb": "38_1.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/39.ini","flashratio":50
+	, "thumb": "39_1.png"},
+{"ratio":20,"color":"#dac6b9#e35962#361708","ini":"featuremodel/eyeshadow/3.ini","flashratio":0
+	, "thumb": "taohuayanzhuang.png"},
+{"ratio":68,"color":"","ini":"featuremodel/eyeshadow/41.ini","flashratio":50
+	, "thumb": "41_1.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/42.ini","flashratio":50
+	, "thumb": "42_1.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/43.ini","flashratio":50
+	, "thumb": "43_1.png"},
+{"ratio":50,"color":"","ini":"featuremodel/eyeshadow/44.ini","flashratio":50
+	, "thumb": "44_1.png"},
+{"ratio":20,"color":"#452716#fdB69f","ini":"featuremodel/eyeshadow/11.ini","flashratio":50
+	, "thumb": "eyeshadow12.png"},	
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/46.ini","flashratio":50
+	, "thumb": "46_1.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/47.ini","flashratio":50
+	, "thumb": "47_1.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/48.ini","flashratio":50
+	, "thumb": "48_1.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/49.ini","flashratio":50
+	, "thumb": "49_1.png"},
+{"ratio":60,"color":"","ini":"featuremodel/eyeshadow/50.ini","flashratio":50
+	, "thumb": "50_1.png"}
+]

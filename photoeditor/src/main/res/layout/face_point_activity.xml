@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_bg" >
+
+    <RelativeLayout
+        android:id="@+id/face_panel_top"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/main_bar_bg"
+        >
+
+        <ImageView
+            android:id="@+id/face_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/back_select" />
+
+        <TextView
+            android:id="@+id/face_label_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/main_btn_normal"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/face_panel_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+      >
+
+        <RelativeLayout
+            android:id="@+id/face_button_done"
+        	android:layout_width="150dp"
+       		android:layout_height="wrap_content"
+       		android:layout_margin="10dp"
+            android:background="@drawable/resume_btn_select"
+            android:layout_centerInParent="true">
+        <TextView
+        	android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/main_btn_normal"
+            android:textSize="18dp" />
+    	</RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/face_display_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/face_panel_bottom"
+        android:layout_below="@id/face_panel_top" >
+
+        <ImageView
+            android:id="@+id/face_display_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="matrix" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/face_help"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/face_panel_bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+       >
+
+        <TextView
+            android:id="@+id/face_label_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:textColor="@color/main_btn_normal"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

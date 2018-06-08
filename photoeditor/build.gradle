@@ -1,0 +1,36 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion '26.0.2'
+
+    defaultConfig {
+        applicationId "com.cam001.faceeditor"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.umeng.analytics:umeng-analytics:5.4.1'
+    compile files('libs/umeng-update-v2.4.2.jar')
+//    compile files('libs/CYAnalyticV1.1.1.inter_out.jar')
+    compile files('libs/facebooksdk.jar')
+    compile files('libs/libammsdk.jar')
+    compile files('libs/mframework.jar')
+    compile files('libs/mta-sdk-1.0.0.jar')
+    compile files('libs/open_sdk2.2.jar')
+    compile files('libs/ShareSDK-Core-2.3.8.jar')
+    compile files('libs/ShareSDK-Twitter-2.3.8.jar')
+    compile files('libs/weiboSDK2.1_130712.jar')
+}

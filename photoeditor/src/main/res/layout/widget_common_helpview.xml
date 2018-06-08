@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#99000000">
+    
+    <RelativeLayout 
+          android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
+    <ImageView
+        android:id="@+id/helpview_image"
+         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/qudou_help_icon"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView 
+        android:id="@+id/helpview_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/qudou_txt"
+        android:layout_below="@+id/helpview_image"
+        android:textColor="@color/main_btn_normal"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="12dp"
+        android:textSize="18sp"/>
+</RelativeLayout>
+</RelativeLayout>

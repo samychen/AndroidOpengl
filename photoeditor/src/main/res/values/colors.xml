@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_bar_bg">#101010</color>
+    <color name="main_bg">#393939</color>
+    <color name="main_btn_pressed">#f05164</color>
+    <color name="main_btn_normal">#ffffff</color>
+    <color name="bg_dialog_window">#B3000000</color>
+    <color name="bg_dialog_black">#212121</color>
+
+    <color name="color_makeupcate_press">#fc6487</color>
+</resources>

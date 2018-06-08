@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:makeup="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/makeuprt_layout_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg" >
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/main_bar_bg"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="12dp"
+            android:drawableLeft="@drawable/back_select"
+            android:gravity="center_vertical"
+            android:src="@drawable/back_select"
+            />
+
+        <ImageView
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:gravity="center_vertical"
+            android:src="@drawable/main_sure_select" />
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:fillViewport="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <GridView
+                android:id="@+id/gridview_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/main_bar_bg"
+                android:gravity="center_horizontal"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none" >
+            </GridView>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <com.cam001.widget.ScaledImageView
+        android:id="@+id/imageview_original"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_layout"
+        android:layout_below="@id/top"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+       />
+
+    <RelativeLayout
+        android:id="@+id/edit_cate_viewgroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_layout"
+        android:layout_centerHorizontal="true"
+        android:gravity="bottom|center_horizontal" >
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/logo_icon_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/ucamera_icon_logo" />
+
+    <ImageView
+        android:id="@+id/compare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="102dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/compare_select" />
+
+    <ImageView
+        android:id="@+id/adjustpoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/compare"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/adjustp_select" />
+
+    <com.cam001.service.AdView 
+        android:id="@+id/adview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top" />
+</RelativeLayout>

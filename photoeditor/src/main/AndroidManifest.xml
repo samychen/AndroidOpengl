@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cam001.photoeditor"
+    android:versionCode="1"
+    android:versionName="1.0.1_20150714" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:name="com.cam001.photoeditor.MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
+        <activity
+            android:name="com.cam001.photoeditor.RotateActivity"
+            android:theme="@style/FullScreen"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cam001.photoeditor.StartActivity"
+            android:theme="@style/FullScreen"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cam001.photoeditor.MainActivity"
+            android:theme="@style/FullScreen"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cam001.photoeditor.FilterActivity"
+            android:theme="@style/FullScreen"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.cam001.photoeditor.AdjustActivity"
+            android:theme="@style/FullScreen"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.cam001.photoeditor.CropActivity"
+            android:theme="@style/FullScreen"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cam001.photoeditor.PhotoDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cam001.photoeditor.PhotoDelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cam001.photoeditor.ShareActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".BeautyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MakeupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cam001.photoeditor.makeup.point.EyePointActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cam001.photoeditor.makeup.point.TsFacePointActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen"
+            android:parentActivityName="com.cam001.photoeditor.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cam001.photoeditor.BaseActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.cam001.service.NetworkReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:process="com.cam001.service"
+            android:name="com.cam001.service.MainService"
+            android:enabled="true" />
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="548a5e34fd98c5763900032b" >
+        </meta-data>
+
+    </application>
+
+</manifest>

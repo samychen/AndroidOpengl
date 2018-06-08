@@ -1,0 +1,7 @@
+main.cpp : 结合特征点实现彩妆主函数,代码中有注释
+
+cosmetic.cpp ：彩妆若干效果的封装
+
+modeldata.cpp ：资源的载入以及解密
+
+featuremodel：  资源文件夹

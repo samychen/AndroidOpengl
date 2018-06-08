@@ -1,0 +1,8 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" 
+   android:oneshot="false">
+
+  <item android:drawable="@drawable/face_point_help11" android:duration="500" />
+  <item android:drawable="@drawable/face_point_help12" android:duration="500" />
+  <item android:drawable="@drawable/face_point_help13" android:duration="500" />
+  <item android:drawable="@drawable/face_point_help14" android:duration="500" />
+  </animation-list>

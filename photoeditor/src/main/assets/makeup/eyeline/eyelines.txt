@@ -1,0 +1,14 @@
+[
+{"ratio":0,"color":"#592970","upperini":"featuremodel/eyeline_upper/eyeline_upper_2.ini",
+	"lowerini":"featuremodel/eyeline_lower/eyeline.ini", "thumb": "none.png"},
+{"ratio":40,"color":"#592970","upperini":"featuremodel/eyeline_upper/eyeline_upper_2.ini",
+	"lowerini":"featuremodel/eyeline_lower/eyeline.ini", "thumb": "01.png"},
+{"ratio":40,"color":"#592970","upperini":"featuremodel/eyeline_upper/eyeline_upper_4.ini",
+	"lowerini":"featuremodel/eyeline_lower/eyeline_lower_4.ini", "thumb": "02.png"},
+{"ratio":52,"color":"#493a37","upperini":"featuremodel/eyeline_upper/eyeline_upper_4.ini",
+	"lowerini":"featuremodel/eyeline_lower/eyeline_lower_6.ini", "thumb": "03.png"},
+{"ratio":20,"color":"#257470","upperini":"featuremodel/eyeline_upper/eyeline_upper_4.ini",
+	"lowerini":"featuremodel/eyeline_lower/eyeline_lower.ini", "thumb": "04.png"},
+{"ratio":40,"color":"#592970","upperini":"featuremodel/eyeline_upper/eyeline_upper_3.ini",
+	"lowerini":"featuremodel/eyeline_lower/eyeline.ini", "thumb": "05.png"}
+]

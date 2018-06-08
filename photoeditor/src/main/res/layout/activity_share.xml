@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <ImageView
+        android:id="@+id/iv_photo"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        />
+
+        <RelativeLayout
+            android:id="@+id/bottom_icon_rl"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_dialog_black" >
+            <ImageView 
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#545454"
+                />
+            <TextView
+                android:id="@+id/bottom_cancel_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/common_cancel"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+            <GridView
+                android:id="@+id/share_item_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="14.66dp"
+                android:paddingTop="14.66dp"
+                android:layout_above="@+id/bottom_icon_rl"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"
+                android:background="@color/bg_dialog_black"
+                >
+            </GridView>
+        <RelativeLayout
+            android:id="@+id/empty_area_rl"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/share_item_grid"
+            android:background="@android:color/transparent" >
+        </RelativeLayout>
+
+
+
+</RelativeLayout>

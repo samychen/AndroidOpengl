@@ -1,0 +1,44 @@
+LOCAL_PATH :=$(call my-dir)
+
+#*****************************************#
+include $(CLERA_VARS)
+LOCAL_MODULE :=JniBitmapOperationsLibrary
+LOCAL_MODULE_FILENAME :=libJniBitmapOperationsLibrary
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+	LOCAL_LDFLAGS := \
+            $(LOCAL_PATH)/lib/armeabi-v7a/libjpegts.a \
+            $(LOCAL_PATH)/lib/armeabi-v7a/libpng.a \
+            $(LOCAL_PATH)/lib/armeabi-v7a/libz.so
+endif
+
+ifeq ($(TARGET_ARCH_ABI), armeabi)
+   LOCAL_LDFLAGS := \
+            $(LOCAL_PATH)/lib/arm/libjpeg.so \
+            $(LOCAL_PATH)/lib/arm/libpng.a \
+            $(LOCAL_PATH)/lib/arm/libz.so
+endif
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/inc\
+	$(LOCAL_PATH)/../../../ucam/SProduct/external/jpeg \
+     $(LOCAL_PATH)/../../../ucam/SProduct/external/libpng \
+     $(LOCAL_PATH)/../../../ucam/SProduct/external/zlib \
+     $(LOCAL_PATH)/../../../ucam/SProduct/frameworks/base/native/include
+#LOCAL_CFLAGS += -fpermissive
+LOCAL_SRC_FILES :=\
+	JpegUtils.cpp \
+	jPoint.cpp\
+	BGRNV21.c\
+	debug.cpp\
+	image-util.cpp\
+	imageprocess.cpp\
+	TSJpeg.cpp\
+	TSAlgorithm.cpp\
+	TSDl.cpp\
+	CpuABI.cpp
+LOCAL_LDLIBS += -llog -ljnigraphics -lGLESv2 -lGLESv1_CM  -ldl
+LOCAL_CFLAGS := -fpermissive
+LOCAL_STATIC_LIBRARIES := cpufeatures
+LOCAL_SHARED_LIBRARIES := libdl
+LOCAL_PRELINK_MODULE := false
+include $(BUILD_SHARED_LIBRARY)
+$(call import-module,android/cpufeatures)

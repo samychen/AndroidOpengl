@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="#232323" >
+    
+    <TextView 
+         android:id="@+id/editor_deblemish_text"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="@dimen/editor_deblemish_marginleft"
+         android:layout_centerVertical="true"
+         android:textSize="16sp"
+         android:text = "@string/deblemish_size_hint"
+         android:textColor="@android:color/white"
+        />
+    
+       <SeekBar
+    		android:id = "@+id/editor_deblemish_seekbar"
+    		android:layout_centerVertical="true" 
+			android:layout_toRightOf="@id/editor_deblemish_text"
+			android:layout_marginLeft = "@dimen/editor_deblemish_marginleft"
+		    android:paddingLeft="@dimen/editor_deblemish_seekbar_paddingleft"
+		    android:paddingRight="@dimen/editor_deblemish_seekbar_paddingright"
+			android:paddingTop="@dimen/editor_deblemish_seekbar_paddingtop"
+    		android:max="100"
+			android:layout_width="210dp" 
+			android:layout_height="40dp"
+			android:progress="100"
+			android:background="@drawable/seek_background"
+			android:progressDrawable="@drawable/transparent"
+			android:thumb="@drawable/seekbar_thumb5" >
+		</SeekBar>
+		
+       <RelativeLayout 
+            android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@+id/editor_deblemish_seekbar"
+           >
+          
+           <ImageView
+        android:id="@+id/editor_deblemish_undobn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/deblemish_back_select" 
+        />
+            <ImageView 
+               android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/editor_deblemish_undobn"
+        android:layout_centerVertical="true"
+        android:src="@drawable/seek_line"
+               />
+       </RelativeLayout>
+		
+
+</RelativeLayout>

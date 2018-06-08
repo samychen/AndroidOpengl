@@ -1,0 +1,41 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="FullScreen" parent="android:Theme.NoTitleBar.Fullscreen">
+    </style>
+
+    <style name="SeekBar.GRID.EFFECT" parent="android:Widget.SeekBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/seekbar_progress</item>
+        <item name="android:indeterminateDrawable">@drawable/seekbar_progress</item>
+        <item name="android:minHeight">0dip</item>
+        <item name="android:maxHeight">1dip</item>
+        <item name="android:paddingLeft">5.66dip</item>
+        <item name="android:paddingRight">8.66dip</item>
+        <item name="android:thumb">@drawable/seekbar_thumb</item>
+        <item name="android:thumbOffset">16.3dip</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="Theme_dialog" parent="android:Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        　<item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+
+    <style name="BalloonSeekbar" parent="android:Widget.SeekBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/seekbar_red_progress</item>
+        <item name="android:indeterminateDrawable">@drawable/seekbar_red_progress</item>
+        <item name="android:minHeight">4dip</item>
+        <item name="android:maxHeight">4dip</item>
+        <item name="android:paddingLeft">15dip</item>
+        <item name="android:paddingRight">15dip</item>
+        <item name="android:thumbOffset">15dip</item>
+        <item name="android:focusable">true</item>
+        <item name="android:thumb">@drawable/seekbar_thumb_select</item>
+    </style>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_dialog_window"
+    >
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_dialog_black"
+        android:layout_centerInParent="true"
+        >
+<ListView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:divider="@android:color/transparent"
+    android:listSelector="@android:color/transparent"
+    android:background="@android:color/transparent"
+    android:id="@+id/detail_list"
+    android:layout_marginTop="10dp"
+    ></ListView>
+
+    <RelativeLayout
+        android:id="@+id/detail_close_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/detail_list"
+        android:layout_marginTop="15dp"
+        >
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#565656"
+            />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/dialog_close"
+           android:textColor="@color/color_textview"
+           android:textSize="18sp"
+           android:layout_centerInParent="true"
+           android:gravity="center"
+           />
+    </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

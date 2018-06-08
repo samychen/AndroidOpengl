@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+     
+    <RelativeLayout
+        android:layout_width="278dp"
+        android:layout_height="wrap_content"
+         android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+        android:background="#212121"
+        android:layout_centerInParent="true"
+         >
+
+       <RelativeLayout 
+        android:id="@+id/title_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
+        <TextView
+            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_centerVertical="true"
+        android:text="@string/update_title_txt"
+            />
+        <ImageView 
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            />
+    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/message_rl"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_rl"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" >
+
+            <RelativeLayout
+                android:id="@+id/update_msg_ll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/update_version_ll"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/update_version"
+                        android:textColor="@android:color/white"
+                        android:textSize="14.6sp" />
+
+                    <TextView
+                        android:id="@+id/update_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="x.xx.xxx"
+                        android:textColor="@android:color/white"
+                        android:textSize="14.6sp" />
+                </LinearLayout>
+
+                <!-- <LinearLayout
+                     android:id="@+id/update_size_ll"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:orientation="horizontal" 
+                    android:layout_marginTop="8.66dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/update_size"
+                        android:textColor="@android:color/white"
+                        android:textSize="14.6sp" />
+
+                    <TextView
+                        android:id="@+id/update_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="x.xx.xxx"
+                        android:textColor="@android:color/white"
+                        android:textSize="14.6sp" />
+                </LinearLayout> -->
+                <ScrollView 
+                     android:layout_width="fill_parent"
+                    android:layout_height="145dp"
+                     android:layout_marginTop="6.66dp"
+                     android:paddingBottom="5dp"
+                     android:scrollbars="vertical"
+                     android:layout_below="@+id/update_version_ll"
+                    >
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4.0"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/update_exitor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp" />
+                </LinearLayout>
+                </ScrollView>
+            </RelativeLayout>
+        </RelativeLayout>
+        
+         <LinearLayout
+        android:id="@+id/bottom_ll"
+        android:layout_width="fill_parent"
+       android:layout_height="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/message_rl"
+        android:orientation="horizontal" >
+        	<RelativeLayout 
+    	    android:id="@+id/confirm_button_cancel"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_weight="1.0"
+    		android:layout_marginRight="10dp"
+    		>
+    		<TextView
+    		     android:id="@+id/cancel_txt" 
+    			android:layout_width="fill_parent"
+    			android:layout_height="fill_parent"
+                android:textColor="@color/color_textview"
+                android:textSize="12sp"
+    			android:text="@string/common_cancel"
+                android:gravity="center"
+    			android:layout_centerInParent="true"/>
+    	</RelativeLayout>
+    	<RelativeLayout 
+    	    android:id="@+id/confirm_button_confirm"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_weight="1.0"
+    		android:layout_marginLeft="10dp"
+    		>
+    		<TextView 
+    		    android:id="@+id/sure_txt"
+    			android:layout_width="fill_parent"
+    			android:layout_height="fill_parent"
+                android:textColor="@color/color_textview"
+                android:textSize="12sp"
+                android:gravity="center"
+    			android:text="@string/dialog_btn_sure"
+    			android:layout_centerInParent="true"/>
+    	</RelativeLayout>
+  </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

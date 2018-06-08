@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg" >
+
+    <com.cam001.photoeditor.makeup.point.FacePointView
+        android:id="@+id/facepoint_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/face_point_glance_frame"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="70dp" >
+
+        <com.cam001.photoeditor.makeup.point.GlanceView
+            android:id="@+id/glance_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp" />
+
+        <ImageView
+            android:layout_width="97dp"
+            android:layout_height="97dp"
+            android:src="@drawable/shiyitukuang" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/main_bar_bg"
+        >
+
+        <ImageView
+            android:id="@+id/facepoint_ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/sure_opter_select" />
+
+        <ImageView
+            android:id="@+id/facepoint_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/cancel_opter_select" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/main_bar_bg"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/btn_origin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/maincate_select"
+            android:drawableTop="@drawable/adjust_full_select"
+            android:gravity="center_horizontal"
+            android:text="@string/points_face"
+            android:textColor="@color/makeupbtn_txt_select"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/btn_leye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/maincate_select"
+            android:drawableTop="@drawable/adjust_zuoyan_select"
+            android:gravity="center_horizontal"
+            android:text="@string/points_lefteye"
+            android:textColor="@color/makeupbtn_txt_select"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/btn_reye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/maincate_select"
+            android:drawableTop="@drawable/adjust_youyan_select"
+            android:gravity="center_horizontal"
+            android:text="@string/points_righteye"
+            android:textColor="@color/makeupbtn_txt_select"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/btn_nose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/maincate_select"
+            android:drawableTop="@drawable/adjust_nose_select"
+            android:gravity="center_horizontal"
+            android:text="@string/points_nose"
+            android:textColor="@color/makeupbtn_txt_select"
+            android:layout_gravity="center_vertical"
+            />
+
+        <TextView
+            android:id="@+id/btn_mouth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/maincate_select"
+            android:drawableTop="@drawable/adjust_mouth_select"
+            android:gravity="center_horizontal"
+            android:text="@string/points_mouth"
+            android:textColor="@color/makeupbtn_txt_select"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

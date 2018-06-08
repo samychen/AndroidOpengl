@@ -1,0 +1,144 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    >
+
+    <RelativeLayout
+        android:id="@+id/top_adjust_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/main_bar_bg">
+
+        <ImageView
+            android:id="@+id/btn_adjust_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
+            android:src="@drawable/back_select" />
+
+        <ImageView
+            android:id="@+id/btn_adjust_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="2dp"
+            android:src="@drawable/main_sure_select" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:id="@+id/bottom_adjust_ll"
+        android:background="@color/main_bar_bg"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            >
+            <ImageView
+                android:id="@+id/brightness_icon_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/brightness_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_centerVertical="true"
+                />
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seek_adjust_brightness"
+            android:layout_toRightOf="@+id/brightness_icon_image"
+            android:layout_centerVertical="true"
+            style="@style/SeekBar.GRID.EFFECT"
+            android:layout_marginRight="20dp"
+            android:progress="50"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            >
+        <ImageView
+            android:id="@+id/saturation_icon_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/saturation_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            />
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seek_adjust_saturation"
+            android:layout_toRightOf="@+id/saturation_icon_image"
+            android:layout_centerVertical="true"
+            style="@style/SeekBar.GRID.EFFECT"
+            android:layout_marginRight="20dp"
+            android:progress="50"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            >
+            <ImageView
+                android:id="@+id/contrast_icon_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/contrast_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_centerVertical="true"
+                />
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seek_adjust_contrast"
+            android:layout_toRightOf="@+id/contrast_icon_image"
+            android:layout_centerVertical="true"
+            style="@style/SeekBar.GRID.EFFECT"
+            android:layout_marginRight="20dp"
+            android:progress="50"/> />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.cam001.widget.AdjustImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/img_adjust"
+        android:layout_below="@+id/top_adjust_rl"
+        android:layout_above="@+id/bottom_adjust_ll"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tip_txt"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        android:textColor="#99ffffff"
+        />
+
+    <com.cam001.service.AdView
+        android:id="@+id/adview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_adjust_rl" />
+</RelativeLayout>

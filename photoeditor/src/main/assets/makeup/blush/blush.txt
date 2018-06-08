@@ -1,0 +1,9 @@
+[
+{"ratio":0,"color":"#f8adc4","ini":"featuremodel/blush/1.ini", "thumb": "none.png"},
+{"ratio":30,"color":"#f8adc4","ini":"featuremodel/blush/1.ini", "thumb": "01.png"},
+{"ratio":40,"color":"#ea9da5","ini":"featuremodel/blush/1.ini", "thumb": "02.png"},
+{"ratio":15,"color":"#fe3b5d","ini":"featuremodel/blush/2.ini", "thumb": "03.png"},
+{"ratio":40,"color":"#f8adc4","ini":"featuremodel/blush/2.ini", "thumb": "04.png"},
+{"ratio":40,"color":"#ea9da5","ini":"featuremodel/blush/2.ini", "thumb": "05.png"},
+{"ratio":40,"color":"#f78469#eb9e8e","ini":"featuremodel/blush/4.ini", "thumb": "05.png"}
+]

@@ -1,0 +1,11 @@
+[
+{"ratio":0,"color":"#f688dc","ini" :"featuremodel/lipstick/1.ini","glossratio":0, "thumb": "none.png"},
+{"ratio":25,"color":"#eb8300","ini" :"featuremodel/lipstick/1.ini","glossratio":20, "thumb": "07.png"},
+{"ratio":23,"color":"#ed6e7d","ini":"featuremodel/lipstick/1.ini","glossratio":16, "thumb": "02.png"},
+{"ratio":21,"color":"#ee6869","ini":"featuremodel/lipstick/1.ini","glossratio":18, "thumb": "03.png"},
+{"ratio":24,"color":"#f36289","ini":"featuremodel/lipstick/1.ini","glossratio":20, "thumb": "04.png"},
+{"ratio":19,"color":"#d8697e","ini":"featuremodel/lipstick/1.ini","glossratio":20, "thumb": "05.png"},
+{"ratio":21,"color":"#be0e27","ini":"featuremodel/lipstick/1.ini","glossratio":36, "thumb": "06.png"},
+{"ratio":25,"color":"#f2c57d","ini":"featuremodel/lipstick/1.ini","glossratio":17, "thumb": "08.png"},
+{"ratio":20,"color":"#f688dc","ini" :"featuremodel/lipstick/1.ini","glossratio":15, "thumb": "01.png"}
+]

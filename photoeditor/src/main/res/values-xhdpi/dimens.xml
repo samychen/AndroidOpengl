@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources> 
+  
+    <!-- 以下是main.xml的配置项 -->
+   
+    <dimen name="camera_item_width">204.0px</dimen>
+    <dimen name="camera_item_height">171.0px</dimen>
+    <dimen name="gallery_item_width">200.0px</dimen> 
+    <dimen name="gallery_item_height">196.0px</dimen> 
+    
+     <!-- 以下是makeup.xml -->
+    <dimen name="template_height">160.0px</dimen>
+    <dimen name="template_topMargin">10.0px</dimen>
+    <dimen name="template_itemheight">86.0px</dimen>
+    <dimen name="template_itemWidth">130.0px</dimen>
+    <dimen name="item_leftmargin">8.0px</dimen>
+    
+   
+    
+    <dimen name="scrollView_width">400px</dimen>
+    <dimen name="scrollView_height">80.0px</dimen>
+    <dimen name="scrollView_height2">80.0px</dimen>
+    <dimen name="scrollView_leftPadding">40.0px</dimen>
+     <dimen name="scrollView_RightPadding">30.0px</dimen>
+    <dimen name="scrollView_topPadding">15.0px</dimen>
+    <dimen name="scrollView_topPadding2">15.0px</dimen>
+    <dimen name="scrollView_bottomPadding">15.0px</dimen>
+    <dimen name="scrollView_textSize">16.0sp</dimen>
+    <dimen name="scrollLayout_rightMargin">15.0px</dimen>
+    <dimen name="scrollLayout_BottomMargin">180.0px</dimen>
+    <dimen name="scrollView_margin">10.0px</dimen>
+    <dimen name="scrollView_TextPaddingLeft">10.0px</dimen>
+    <dimen name="scrollView_TextPaddingRight">60.0px</dimen>
+    <dimen name="scallLayout_Width">600px</dimen>
+    
+    
+     <!-- 以下是祛斑 -->
+    <dimen name="editor_deblemish_undobn_leftmargin">10dp</dimen>
+    <dimen name="editor_deblemish_textsize">20sp</dimen>
+    <dimen name="editor_deblemish_marginleft">10dp</dimen>
+    <dimen name="editor_deblemish_seekbar_marginleft">5dp</dimen>
+    <dimen name="editor_deblemish_seekbar_paddingleft">16.67dp</dimen>
+    <dimen name="editor_deblemish_seekbar_paddingright">16dp</dimen>
+    <dimen name="editor_deblemish_seekbar_paddingtop">8.5dp</dimen>
+    
+    
+</resources>

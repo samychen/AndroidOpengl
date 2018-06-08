@@ -1,0 +1,182 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:selfportrait="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="80dp"
+    android:background="#232323">
+    
+<HorizontalScrollView 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_centerVertical="true"
+    android:scrollbars="none"
+    >
+	<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical">
+
+    <Button
+        android:id="@+id/editor_button_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="load" 
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/editor_button_crop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="crop"
+        android:visibility="gone" />
+    
+  <com.cam001.photoeditor.MainItem
+        android:id="@+id/editor_button_facewhiten"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        selfportrait:image="@drawable/editor_main_btn_whiten"
+        android:layout_weight="1.0"
+        android:layout_marginLeft="10dp"
+        selfportrait:textColor="@color/color_red_textview"
+        selfportrait:text="@string/edt_lbl_white"/>
+  
+  <com.cam001.photoeditor.MainItem
+        android:id="@+id/editor_button_facesoften"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        selfportrait:image="@drawable/edit_btn_skin_soft_select"
+        android:layout_weight="1.0"
+        selfportrait:textColor="@color/color_red_textview"
+        selfportrait:text="@string/edt_lbl_soften"/>
+  
+  <com.cam001.photoeditor.MainItem
+        android:id="@+id/editor_button_facecolor"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        selfportrait:image="@drawable/edit_btn_skin_color_select"
+        android:layout_weight="1.0"
+        selfportrait:textColor="@color/color_red_textview"
+        selfportrait:text="@string/edt_lbl_color"/>
+    
+    <com.cam001.photoeditor.MainItem
+        android:id="@+id/editor_button_facetrim"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        selfportrait:image="@drawable/editor_main_btn_trim"
+        android:layout_weight="1.0"
+        selfportrait:textColor="@color/color_red_textview"
+        selfportrait:text="@string/edt_lbl_facetrim"/>
+    
+    <com.cam001.photoeditor.MainItem
+        android:id="@+id/editor_button_enlargeeyes"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        selfportrait:image="@drawable/editor_main_btn_eyes"
+        android:layout_weight="1.0"
+        selfportrait:textColor="@color/color_red_textview"
+        selfportrait:text="@string/edt_lbl_enlargeeyes"/>
+     <!--  
+    <com.thundersoft.hz.selfportrait.editor.MainItem
+        android:id="@+id/editor_button_eyebag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:layout_marginRight="12.66dp"
+        selfportrait:image="@drawable/editor_main_btn_eyes"
+        selfportrait:text="@string/eye_bag"/>
+   
+    <com.thundersoft.hz.selfportrait.editor.MainItem
+        android:id="@+id/editor_button_eyecircle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:layout_marginRight="12.66dp"
+        selfportrait:image="@drawable/editor_main_btn_eyes"
+        selfportrait:text="@string/eye_bag1"/>-->
+        
+  <!--  <com.thundersoft.hz.selfportrait.editor.MainItem
+        android:id="@+id/editor_button_brighteyes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        selfportrait:image="@drawable/edit_btn_eye_shine_select"
+        android:layout_weight="1.0"
+        android:layout_marginRight="10dp"
+        selfportrait:text="@string/eye_bag2"/> --> 
+    
+    <com.cam001.photoeditor.MainItem
+        android:id="@+id/editor_button_deblemish"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        selfportrait:image="@drawable/editor_main_btn_deblemish"
+        android:layout_weight="1.0"
+        selfportrait:textColor="@color/color_red_textview"
+        selfportrait:text="@string/edt_lbl_deblemish"/>
+    
+    <com.cam001.photoeditor.MainItem
+        android:id="@+id/editor_button_more"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        selfportrait:image="@drawable/edit_add_more_select"
+        android:layout_weight="1.0"
+        android:layout_marginRight="10dp"
+        selfportrait:textColor="@color/color_red_textview"
+        selfportrait:text="@string/sns_label_more"/>
+    
+<!-- 
+    <com.thundersoft.hz.selfportrait.editor.MainItem
+        android:id="@+id/editor_button_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:layout_marginRight="12.66dp"
+        selfportrait:image="@drawable/editor_main_btn_filter"
+        selfportrait:text="@string/edt_lbl_filter"/>
+
+    <com.thundersoft.hz.selfportrait.editor.MainItem
+        android:id="@+id/editor_button_stamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:layout_marginRight="12.66dp"
+        selfportrait:image="@drawable/editor_main_btn_stamp"
+        selfportrait:text="@string/edt_lbl_stamp"/>
+
+       <com.thundersoft.hz.selfportrait.editor.MainItem
+        android:id="@+id/editor_button_mosaic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:layout_marginRight="12.66dp"
+        selfportrait:image="@drawable/editor_main_btn_mosaic"
+        selfportrait:text="@string/edt_lbl_mosaic"
+        />
+       
+    <com.thundersoft.hz.selfportrait.editor.MainItem
+        android:id="@+id/editor_button_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:layout_marginRight="12.66dp"
+        selfportrait:image="@drawable/editor_main_btn_frame"
+        selfportrait:text="@string/edt_lbl_frame"/>
+        
+    <com.thundersoft.hz.selfportrait.editor.MainItem
+        android:id="@+id/editor_button_magazine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:layout_marginRight="6.66dp"
+        selfportrait:image="@drawable/editor_main_btn_magazine"
+        selfportrait:text="@string/edt_lbl_magazine" 
+        android:visibility="gone"/>
+        -->    
+</LinearLayout>
+</HorizontalScrollView>
+
+<ImageView 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:visibility="gone"/>
+</RelativeLayout>

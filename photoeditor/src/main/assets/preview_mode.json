@@ -1,0 +1,20 @@
+
+[
+ 
+ {"mode":"cateyes","param":[{"ratio":30,"color":"#f78469","ini":"featuremodel/blush/blush_default.ini"},
+							{"ratio":20,"color":"#f688dc","ini":"featuremodel/lipstick/lip_default.ini","glossratio":0},
+							{"ratio":50,"color":"#b966eb","ini":"featuremodel/eyeshadow/eyeshadow_default.ini","flashratio":50}]},
+ {"mode":"lavender","param":[{"ratio":30,"color":"#ea9da5","ini":"featuremodel/blush/blush_default.ini"},
+							{"ratio":20,"color":"#f04f71","ini":"featuremodel/lipstick/lip_default.ini","glossratio":0},
+							{"ratio":50,"color":"#d916e3","ini":"featuremodel/eyeshadow/eyeshadow_default.ini","flashratio":50}]},
+ {"mode":"princess","param":[{"ratio":30,"color":"#f8adc4","ini":"featuremodel/blush/blush_default.ini"},
+							{"ratio":20,"color":"#ee6869","ini":"featuremodel/lipstick/lip_default.ini","glossratio":30},
+							{"ratio":50,"color":"#eeb4b8","ini":"featuremodel/eyeshadow/eyeshadow_default.ini","flashratio":0}]},
+ {"mode":"refresh","param":[{"ratio":30,"color":"#f8adc4","ini":"featuremodel/blush/blush_default.ini"},
+							{"ratio":20,"color":"#f36289","ini":"featuremodel/lipstick/lip_default.ini","glossratio":50},
+							{"ratio":50,"color":"#96e0ed","ini":"featuremodel/eyeshadow/eyeshadow_default.ini","flashratio":25}]},
+ {"mode":"silk","param":[{"ratio":30,"color":"#ea9da5","ini":"featuremodel/blush/blush_default.ini"},
+							{"ratio":20,"color":"#d8697e","ini":"featuremodel/lipstick/lip_default.ini","glossratio":0},
+							{"ratio":50,"color":"#8e39ef","ini":"featuremodel/eyeshadow/eyeshadow_default.ini","flashratio":50}]}
+														
+]

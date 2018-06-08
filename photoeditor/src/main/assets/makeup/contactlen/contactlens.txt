@@ -1,0 +1,6 @@
+[{"ratio":0,"ini":"featuremodel/contactlens/contactlen_1.ini", "thumb": "none.png"}, 
+{"ratio":50,"ini":"featuremodel/contactlens/contactlen_1.ini", "thumb": "01.png"}, 
+{"ratio":50,"ini":"featuremodel/contactlens/contactlen_2.ini", "thumb": "02.png"}, 
+{"ratio":50,"ini":"featuremodel/contactlens/contactlen_3.ini", "thumb": "03.png"}, 
+{"ratio":50,"ini":"featuremodel/contactlens/contactlen_4.ini", "thumb": "04.png"}, 
+{"ratio":50,"ini":"featuremodel/contactlens/contactlen_5.ini", "thumb": "05.png"}]

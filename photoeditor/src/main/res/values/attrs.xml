@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Item">
+        <attr name="image" format="reference"/>
+        <attr name="text" format="reference"/>
+        <attr name="textColor" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CropImageView">
+        <attr name="guidelines">
+            <enum name="on" value="2" />
+            <enum name="onTouch" value="1" />
+            <enum name="off" value="0" />
+        </attr>
+        <attr name="fixAspectRatio" format="boolean" />
+        <attr name="aspectRatioX" format="integer" />
+        <attr name="aspectRatioY" format="integer" />
+        <attr name="imageResource" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="FeatureButton">
+        <attr name="checkedground" format="integer"/>
+        <attr name="unCheckedground" format="integer"/>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+     <com.cam001.widget.VerticalSeekBar
+        android:id="@+id/editor_trim_seek"
+        style="@style/BalloonSeekbar"
+        android:layout_width="40dp"
+        android:layout_height="280dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:max="18"
+        android:minWidth="118dip"
+       />
+
+</RelativeLayout>

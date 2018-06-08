@@ -1,0 +1,17 @@
+[
+{"blush":0, "eyelash":0, "eyeline":0, "shadow":0, "contact":0, "lipstick":0, "thumb": "thumb_none.png"},
+{"blush":1, "eyelash":1, "eyeline":1, "shadow":6, "contact":1, "lipstick":6, "thumb": "thumb_cateyes.png","lipstickratio":19},
+{"blush":2, "eyelash":2, "eyeline":2, "shadow":16, "contact":2, "lipstick":2, "thumb": "thumb_lavender.png","lipstickratio":21},
+{"blush":3, "eyelash":3, "eyeline":3, "shadow":10, "contact":3, "lipstick":3, "thumb": "thumb_princess.png","lipstickratio":19},
+{"blush":4, "eyelash":4, "eyeline":4, "shadow":20, "contact":4, "lipstick":4, "thumb": "thumb_refresh.png","lipstickratio":22},
+{"blush":5, "eyelash":5, "eyeline":1, "shadow":19, "contact":5, "lipstick":5, "thumb": "thumb_silk.png",
+ "eyelineratio":39,"lipstickratio":17},
+{"blush":6, "eyelash":1, "eyeline":2, "shadow":7, "contact":5, "lipstick":7, "thumb": "thumb_smoky_eyes.png","lipstickratio":23},
+
+{"blush":4, "eyelash":0, "eyeline":1, "shadow":1, "contact":0, "lipstick":4, "thumb": "thumb_ol_luozhuang.png",
+ "blushratio":14, "eyelineratio":40, "lipstickratio":22},
+{"blush":5, "eyelash":4, "eyeline":4, "shadow":13, "contact":0, "lipstick":2, "thumb": "thumb_guodongfenchun.png",
+ "blushratio":14, "eyelashratio":40, "eyelineratio":46, "lipstickratio":21},
+{"blush":0, "eyelash":0, "eyeline":1, "shadow":9, "contact":0, "lipstick":4, "thumb": "thumb_xiariqinxin.png",
+ "eyelineratio":38, "lipstickratio":22} 
+]

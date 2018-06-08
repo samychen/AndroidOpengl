@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="62dp"
+    android:background="@color/main_bar_bg">
+
+	    <ImageView android:id="@+id/editor_button_cancel" 
+	        android:layout_width="wrap_content" 
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="12dp"
+	        android:src="@drawable/cancel_opter_select" />
+	    
+	    <ImageView android:id="@+id/editor_button_confirm" 
+	        android:layout_width="wrap_content" 
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"  
+	        android:layout_marginRight="12dp" 
+            android:layout_alignParentRight="true"
+	        android:src="@drawable/sure_opter_select"/>
+	    
+        <TextView android:id="@+id/editor_label_title" 
+	        android:layout_width="wrap_content" 
+	        android:layout_height="wrap_content"
+            android:textColor="@android:color/white" 
+            android:textSize="22sp"
+            android:layout_centerInParent="true"
+           />
+</RelativeLayout>
