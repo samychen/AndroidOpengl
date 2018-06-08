@@ -299,8 +299,7 @@ public class Shape {
 			+ "void main(){"
 			+ "gl_FragColor = texture2D(uTexture, vTextureCoord);"
 			+ "}";
-//	vec4(1,1,1,1)- texture2D(uTexture, vTextureCoord)
-	
+
 	private String vertexShaderCode = "uniform mat4 uMVPMatrix;"
 			+ "attribute vec2 aTextureCoord;"
 			+ "varying vec2 vTextureCoord;"

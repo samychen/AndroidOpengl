@@ -65,6 +65,7 @@ facetune::facetune() {
     initEffect = 0;
     hasEffect = 0;
     isMoreSmooth = 0;
+    mCompareFlag = 0;
 }
 facetune::~facetune() {
     delete mModelMatrix;
@@ -149,6 +150,31 @@ int facetune::copyBuffer() {
     checkGlError("createFrameBuffer");
     return 0;
 }
+int facetune::copySrcBuffer() {
+    glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
+    glViewport(0, 0, picwidth, picheight);
+    glBindTexture(GL_TEXTURE_2D, dstTexure);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, dstTexure, 0);
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if(status != GL_FRAMEBUFFER_COMPLETE)
+        LOGE( "FBO Initialization Failed.");
+    glUseProgram(mPointProgramHandle);
+    mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
+    mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
+    mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
+    mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
+    glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE, GL_FLOAT, GL_FALSE, 0, POSITION);
+    glEnableVertexAttribArray(mPositionHandle);
+    glVertexAttribPointer(mTextureCoordinateHandle, TEXURE_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATE);
+    glEnableVertexAttribArray(mTextureCoordinateHandle);
+    glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, uMatrix);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, srcTexure);
+    glUniform1i(mTextureLocation, 0);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+    checkGlError("createFrameBuffer");
+    return 0;
+}
 void facetune::change(int width, int height) {
     mWidth = width;
     mHeight = height;
@@ -220,28 +246,46 @@ int checkGlError(const char* op) {
     return res;
 }
 void facetune::draw() {
-    //render To Texure
     glViewport(0,0,mWidth,mHeight);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);//绑定到默认纹理，渲染最后的纹理
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glClearColor(0, 0, 0, 1);
-    //render TO window
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    checkGlError("draw");
-
-    glUseProgram(mPointProgramHandle);
-    mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
-    mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
-    mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
-    mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
-    glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE, GL_FLOAT, GL_FALSE, 0, POSITION);
-    glEnableVertexAttribArray(mPositionHandle);
-    glVertexAttribPointer(mTextureCoordinateHandle, TEXURE_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATE);
-    glEnableVertexAttribArray(mTextureCoordinateHandle);
-    glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, mGrayMatrix);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, dstTexure);
-    glUniform1i(mTextureLocation, 0);
+    if (mCompareFlag==0){
+        //render To Texure
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);//绑定到默认纹理，渲染最后的纹理
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glClearColor(0, 0, 0, 1);
+        //render TO window
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        checkGlError("draw");
+        glUseProgram(mPointProgramHandle);
+        mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
+        mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
+        mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
+        mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
+        glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE, GL_FLOAT, GL_FALSE, 0, POSITION);
+        glEnableVertexAttribArray(mPositionHandle);
+        glVertexAttribPointer(mTextureCoordinateHandle, TEXURE_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATE);
+        glEnableVertexAttribArray(mTextureCoordinateHandle);
+        glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, mGrayMatrix);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, dstTexure);
+        glUniform1i(mTextureLocation, 0);
+    } else {
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glClearColor(0, 0, 0, 1);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glUseProgram(mPointProgramHandle);
+        mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
+        mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
+        mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
+        mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
+        glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE, GL_FLOAT, GL_FALSE, 0, POSITION);
+        glEnableVertexAttribArray(mPositionHandle);
+        glVertexAttribPointer(mTextureCoordinateHandle, TEXURE_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATE);
+        glEnableVertexAttribArray(mTextureCoordinateHandle);
+        glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, mGrayMatrix);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, srcTexure);
+        glUniform1i(mTextureLocation, 0);
+    }
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
     glDeleteFramebuffers(1, &fFrame);
 }
@@ -283,6 +327,7 @@ Java_com_learnopengles_android_render_ImageRender_nativeRender(JNIEnv *env,
                                                                       jfloat x, jfloat y) {
     if (facetuneobj) {
         int ret=facetuneobj->renderCenter({x,y},15.0f);
+        facetuneobj->mCompareFlag = 0;
         LOGE("ret=%d",ret);
     }
 }
@@ -334,6 +379,18 @@ Java_com_learnopengles_android_render_ImageRender_nativereleaseEffect(JNIEnv *en
             } else {
                 facetuneobj->bsWork = Erase;
             }
+        } else if (effecttype_==6){
+            facetuneobj->releaseEffect();
+            facetuneobj->copySrcBuffer();
+        } else if (effecttype_==7){
+            facetuneobj->copyBuffer();
         }
+    }
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_learnopengles_android_render_ImageRender_nativeCompare(JNIEnv *env, jclass type,jint actionup_) {
+    if (facetuneobj) {
+        facetuneobj->mCompareFlag = actionup_;
     }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <GridView
+        android:id="@+id/image_preview"
+        android:layout_width="100dp"
+        android:layout_height="fill_parent"
+        android:numColumns="1" >
+    </GridView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_launcher" >
+        </ImageView>
+
+        <GridView
+            android:id="@+id/filters"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:numColumns="5" >
+        </GridView>
+    </LinearLayout>
+
+</LinearLayout>

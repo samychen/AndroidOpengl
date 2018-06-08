@@ -26,13 +26,13 @@ public:
 
     void createFrameBuffer();
 
-    void releaseFrameBuffer();
-
     int renderCenter( FPOINT center,TFloat radius);
 
     int releaseEffect();
 
     int copyBuffer();
+
+    int copySrcBuffer();
 
     BTType ProType;
     int initEffect;
@@ -43,11 +43,12 @@ public:
     int picheight;
     int radius;
     char *picpath;
+    GLuint srcTexure;
+    int mCompareFlag;
 private:
 
     GLsizei mWidth;
     GLsizei mHeight;
-
     Matrix *mViewMatrix;
     Matrix *mModelMatrix;
     Matrix *mProjectionMatrix;
@@ -58,14 +59,13 @@ private:
     GLuint grayProgram;
     GLuint mTextureLocation;
     GLuint mTextureCoordinateHandle;
-    GLuint srcTexure;
+
     GLuint dstTexure;
     GLuint fFrame ;
     GLuint mPointProgramHandle;
 
     THandle TuneEngine;
     TByte *ImgBuf;
-
 };
 
 

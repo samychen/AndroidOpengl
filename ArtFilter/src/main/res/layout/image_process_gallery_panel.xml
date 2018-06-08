@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <GridView
+            android:id="@+id/filter_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:numColumns="1" >
+        </GridView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="600dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="5"
+        android:orientation="vertical" >
+
+        <com.spore.meitu.MagicImageView
+            android:id="@+id/image"
+            android:layout_width="600dp"
+            android:layout_height="300dp"
+            android:scaleType="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
+            android:src="@drawable/ic_launcher" >
+        </com.spore.meitu.MagicImageView>
+
+        <Gallery
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/image_gallery"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>
