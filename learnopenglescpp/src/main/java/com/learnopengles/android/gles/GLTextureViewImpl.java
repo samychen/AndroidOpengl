@@ -15,23 +15,21 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     private boolean isCanTouch = false;
     private int point_num = 0;//当前触摸的点数
     public static final float SCALE_MAX = 8.0f; //最大的缩放比例
-    private static final float SCALE_MIN = 1.0f;
+    private static final float SCALE_MIN = 0.6f;
 
     private double oldDist = 0;
     private double moveDist = 0;
-    //针对控件的坐标系，即控件左上角为原点
-    private double moveX = 0;
-    private double moveY = 0;
 
     private double downX = 0;
     private double downY = 0;
-    //针对屏幕的坐标系，即屏幕左上角为原点
-    private double moveRawX = 0;
-    private double moveRawY = 0;
+
     //是否选中移动或者没有选中效果
     private boolean moveFlag;
     private int picwidth,picheight;
+    private float scale;
     private EffectRender renderer;
+    private String TAG = "GLTextureViewImpl";
+
     public void setPicSize(int picwidth,int picheight) {
         this.picwidth = picwidth;
         this.picheight = picheight;
@@ -84,23 +82,22 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                     point_num = 0;
                     downX = 0;
                     downY = 0;
+                    if (scale < 1.0f){
+                        scale = 1.0f;
+                        setScale(scale);
+                    }
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (point_num == 1) {
                         //只有一个手指的时候才有移动的操作
                         float lessX = (float) (downX - event.getX());
                         float lessY = (float) (downY - event.getY());
-                        moveX = event.getX();
-                        moveY = event.getY();
-                        moveRawX = event.getRawX();
-                        moveRawY = event.getRawY();
                         setSelfPivot(lessX, lessY);
-                        //setPivot(getPivotX() + lessX, getPivotY() + lessY);
                     } else if (point_num == 2) {
                         //只有2个手指的时候才有放大缩小的操作
                         moveDist = spacing(event);
                         double space = moveDist - oldDist;
-                        float scale = (float) (getScaleX() + space / getWidth());
+                        scale = (float) (getScaleX() + space / getWidth());
                         if (scale > SCALE_MIN && scale < SCALE_MAX) {
                             setScale(scale);
                         } else if (scale < SCALE_MIN) {
@@ -206,6 +203,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
      * @param y
      */
     public void setPivot(float x, float y) {
+        Log.e(TAG, "setScale: "+Thread.currentThread().getId()+Thread.currentThread().getName());
         setPivotX(x);
         setPivotY(y);
     }
@@ -216,8 +214,13 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
      * @param scale
      */
     public void setScale(float scale) {
+        Log.e(TAG, "setScale: "+Thread.currentThread().getId()+Thread.currentThread().getName());
         setScaleX(scale);
         setScaleY(scale);
+//        float tx = (float) (downX*scale - downX);
+//        float ty = (float) (downY*scale - downY);
+//        setTranslationX(tx);
+//        setTranslationY(ty);
     }
 
     /**

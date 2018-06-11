@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.learnopengles.android.gles.GLTextureViewImpl
+        android:layout_marginTop="10dp"
         android:id="@+id/gl_texture_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

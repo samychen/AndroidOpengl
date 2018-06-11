@@ -77,6 +77,10 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                         effectRender.releaseEffect(1);
                     }
                 });
+                if (moveFlag){
+                    moveFlag = !moveFlag;
+                    mGLTextureView.setMoveFlag(moveFlag);
+                }
                 break;
             case R.id.button_smooth:
                 mGLTextureView.queueEvent(new Runnable() {
@@ -85,6 +89,10 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                         effectRender.releaseEffect(2);
                     }
                 });
+                if (moveFlag){
+                    moveFlag = !moveFlag;
+                    mGLTextureView.setMoveFlag(moveFlag);
+                }
                 break;
             case R.id.button_bigsmooth:
                 mGLTextureView.queueEvent(new Runnable() {
@@ -93,6 +101,10 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                         effectRender.releaseEffect(3);
                     }
                 });
+                if (moveFlag){
+                    moveFlag = !moveFlag;
+                    mGLTextureView.setMoveFlag(moveFlag);
+                }
                 break;
             case R.id.button_detail:
                 mGLTextureView.queueEvent(new Runnable() {
@@ -101,6 +113,10 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                         effectRender.releaseEffect(4);
                     }
                 });
+                if (moveFlag){
+                    moveFlag = !moveFlag;
+                    mGLTextureView.setMoveFlag(moveFlag);
+                }
                 break;
             case R.id.button_erase:
                 mGLTextureView.queueEvent(new Runnable() {
@@ -109,6 +125,10 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                         effectRender.releaseEffect(5);
                     }
                 });
+                if (moveFlag){
+                    moveFlag = !moveFlag;
+                    mGLTextureView.setMoveFlag(moveFlag);
+                }
                 break;
             case R.id.button_refuse:
                 mGLTextureView.queueEvent(new Runnable() {
