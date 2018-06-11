@@ -8,17 +8,19 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name="com.learnopengles.android.MyApplication"
         android:icon="@drawable/icon"
         android:label="@string/app_name">
-        <activity android:name="com.learnopengles.android.FacetuneActivity">
+        <activity android:name="com.learnopengles.android.render.TextureImplctivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,7 +51,6 @@
         <activity
             android:name="com.learnopengles.android.lesson8.LessonEightActivity"
             android:label="@string/lesson_eight" />
-
     </application>
 
 </manifest>
