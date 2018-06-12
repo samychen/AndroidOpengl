@@ -1,6 +1,7 @@
 package com.learnopengles.android.gles;
 
 import android.content.Context;
+import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,7 +16,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     private boolean isCanTouch = false;
     private int point_num = 0;//当前触摸的点数
     public static final float SCALE_MAX = 8.0f; //最大的缩放比例
-    private static final float SCALE_MIN = 0.6f;
+    private static final float SCALE_MIN = 0.9f;
 
     private double oldDist = 0;
     private double moveDist = 0;
@@ -71,48 +72,56 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         if (!isCanTouch) {
             return false;
         }
+        Log.e(TAG, "onTouch: " );
         if (moveFlag){//允许移动
-            switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                case MotionEvent.ACTION_DOWN:
-                    point_num = 1;
-                    downX = event.getX();
-                    downY = event.getY();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    point_num = 0;
-                    downX = 0;
-                    downY = 0;
-                    if (scale < 1.0f){
-                        scale = 1.0f;
-                        setScale(scale);
-                    }
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    if (point_num == 1) {
-                        //只有一个手指的时候才有移动的操作
-                        float lessX = (float) (downX - event.getX());
-                        float lessY = (float) (downY - event.getY());
-                        setSelfPivot(lessX, lessY);
-                    } else if (point_num == 2) {
-                        //只有2个手指的时候才有放大缩小的操作
-                        moveDist = spacing(event);
-                        double space = moveDist - oldDist;
-                        scale = (float) (getScaleX() + space / getWidth());
-                        if (scale > SCALE_MIN && scale < SCALE_MAX) {
-                            setScale(scale);
-                        } else if (scale < SCALE_MIN) {
-                            setScale(SCALE_MIN);
-                        }
-                    }
-                    break;
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    oldDist = spacing(event);//两点按下时的距离
-                    point_num += 1;
-                    break;
-                case MotionEvent.ACTION_POINTER_UP:
-                    point_num -= 1;
-                    break;
-            }
+//            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+//                case MotionEvent.ACTION_DOWN:
+//                    point_num = 1;
+//                    downX = event.getX();
+//                    downY = event.getY();
+//                    Log.e(TAG, "ACTION_DOWN: " );
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                    point_num = 0;
+//                    downX = 0;
+//                    downY = 0;
+//                    if (scale < 1.0f){
+//                        scale = 1.0f;
+//                        setScale(scale);
+//                    }
+//                    Log.e(TAG, "ACTION_UP: " );
+//                    break;
+//                case MotionEvent.ACTION_MOVE:
+//                    if (point_num == 1) {
+//                        //只有一个手指的时候才有移动的操作
+//                        float lessX = (float) (downX - event.getX());
+//                        float lessY = (float) (downY - event.getY());
+//                        setSelfPivot(lessX, lessY);
+//                    } else if (point_num == 2) {
+//                        //只有2个手指的时候才有放大缩小的操作
+//                        moveDist = spacing(event);
+//                        mid(event);
+//                        double space = moveDist - oldDist;
+//                        scale = (float) (getScaleX() + space / getWidth());
+//                        if (scale > SCALE_MIN && scale < SCALE_MAX) {
+//                            setScale(scale);
+//                        } else if (scale < SCALE_MIN) {
+//                            setScale(SCALE_MIN);
+//                        }
+//                    }
+//                    Log.e(TAG, "ACTION_MOVE: " );
+//                    break;
+//                case MotionEvent.ACTION_POINTER_DOWN:
+//                    oldDist = spacing(event);//两点按下时的距离
+//                    mid(event);
+//                    point_num += 1;
+//                    Log.e(TAG, "ACTION_POINTER_DOWN: " );
+//                    break;
+//                case MotionEvent.ACTION_POINTER_UP://  当屏幕上已经有触点(手指)，再有一个触点压下屏幕
+//                    point_num -= 1;
+//                    Log.e(TAG, "ACTION_POINTER_UP: " );
+//                    break;
+//            }
         } else {//处理效果
             if (event != null) {
                 final float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
@@ -195,7 +204,12 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
             return 0;
         }
     }
-
+    float midX,midY;
+    /** 计算两个手指间的中间点 */
+    private void mid(MotionEvent event) {
+        midX = (event.getX(1) + event.getX(0)) / 2;
+        midY = (event.getY(1) + event.getY(0)) / 2;
+    }
     /**
      * 平移画面，当画面的宽或高大于屏幕宽高时，调用此方法进行平移
      *
@@ -203,7 +217,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
      * @param y
      */
     public void setPivot(float x, float y) {
-        Log.e(TAG, "setScale: "+Thread.currentThread().getId()+Thread.currentThread().getName());
         setPivotX(x);
         setPivotY(y);
     }
@@ -214,7 +227,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
      * @param scale
      */
     public void setScale(float scale) {
-        Log.e(TAG, "setScale: "+Thread.currentThread().getId()+Thread.currentThread().getName());
         setScaleX(scale);
         setScaleY(scale);
 //        float tx = (float) (downX*scale - downX);

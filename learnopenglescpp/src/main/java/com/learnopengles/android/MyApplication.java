@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,9 +23,9 @@ public class MyApplication extends Application {
 // 获取当前进程名
         String processName = getProcessName(android.os.Process.myPid());
 // 设置是否为上报进程
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
-        strategy.setUploadProcess(processName == null || processName.equals(packageName));
-        CrashReport.initCrashReport(getApplicationContext(), "633c8ddb77", false);
+//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+//        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+//        CrashReport.initCrashReport(getApplicationContext(), "633c8ddb77", false);
         //测试
 //        CrashReport.testJavaCrash();
     }

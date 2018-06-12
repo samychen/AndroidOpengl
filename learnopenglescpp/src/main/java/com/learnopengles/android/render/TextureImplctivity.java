@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 
+import com.jarvislau.destureviewbinder.GestureViewBinder;
 import com.learnopengles.android.cpp.R;
 import com.learnopengles.android.gles.EffectRender;
 import com.learnopengles.android.gles.GLTextureViewImpl;
@@ -30,6 +32,8 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_texture_implctivity);
         mGLTextureView = (GLTextureViewImpl) findViewById(R.id.gl_texture_view);
+        FrameLayout groupview = findViewById(R.id.texture_group);
+        GestureViewBinder.bind(this, groupview, mGLTextureView).setFullGroup(false);
         findViewById(R.id.button_teethwhite).setOnClickListener(this);
         findViewById(R.id.button_smooth).setOnClickListener(this);
         findViewById(R.id.button_bigsmooth).setOnClickListener(this);
@@ -61,7 +65,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
             bmp.recycle();
         }
         effectRender = new EffectRender(this,width,height,picpath);
-        mGLTextureView.setIsCanTouch(true);
+        mGLTextureView.setIsCanTouch(false);
         mGLTextureView.setMoveFlag(moveFlag);
         mGLTextureView.setRenderer(effectRender);
         mGLTextureView.setPicSize(width,height);
@@ -71,6 +75,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button_teethwhite:
+                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -83,6 +88,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_smooth:
+                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -95,6 +101,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_bigsmooth:
+                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -107,6 +114,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_detail:
+                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -119,6 +127,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_erase:
+                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -149,6 +158,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 mGLTextureView.requestRender();
                 break;
             case R.id.button_move:
+                mGLTextureView.setIsCanTouch(false);
                 moveFlag = !moveFlag;
                 mGLTextureView.setMoveFlag(moveFlag);
                 break;

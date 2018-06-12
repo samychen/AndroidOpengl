@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
-apply plugin: 'bugly'
+//apply plugin: 'bugly'
 def platformVersion = 18    //openGLES 3 min Version
-bugly {
-    appId = '633c8ddb77' // 注册时分配的App ID
-    appKey = 'a81825cb-81f4-4f9f-91a9-0c765e12abde' // 注册时分配的App Key
-    debug = true
-}
+//bugly {
+//    appId = '633c8ddb77' // 注册时分配的App ID
+//    appKey = 'a81825cb-81f4-4f9f-91a9-0c765e12abde' // 注册时分配的App Key
+//    debug = true
+//}
 android {
     compileSdkVersion 27
 
@@ -48,8 +48,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    compile 'com.tencent.bugly:crashreport:latest.release'
+    implementation project(path: ':gestureviewbinder')
+//    compile 'com.tencent.bugly:crashreport:latest.release'
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+//    compile 'com.tencent.bugly:nativecrashreport:latest.release'
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }

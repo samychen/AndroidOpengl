@@ -8,13 +8,14 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 /**
  * Created by 000 on 2018/6/11.
  */
 
-public class GestureView extends RelativeLayout {
+public class GestureView extends FrameLayout {
 
     private ViewDragHelper mViewDragHelper;//用于处理子View 的滑动
     private ScaleGestureDetector mGesture;//用与处理双手的缩放手势
@@ -89,7 +90,7 @@ public class GestureView extends RelativeLayout {
         } else {
             addView(view);
             //确保子view永远铺满控件
-            RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            FrameLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             view.setLayoutParams(params);
         }
     }
