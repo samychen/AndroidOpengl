@@ -13,10 +13,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.jarvislau.destureviewbinder.GestureViewBinder;
 import com.learnopengles.android.cpp.R;
 import com.learnopengles.android.gles.EffectRender;
 import com.learnopengles.android.gles.GLTextureViewImpl;
+import com.learnopengles.android.scaleutil.GestureViewBinder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,8 +32,8 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_texture_implctivity);
         mGLTextureView = (GLTextureViewImpl) findViewById(R.id.gl_texture_view);
-        FrameLayout groupview = findViewById(R.id.texture_group);
-        GestureViewBinder.bind(this, groupview, mGLTextureView).setFullGroup(false);
+//        FrameLayout groupview = findViewById(R.id.texture_group);
+//        GestureViewBinder.bind(this, groupview, mGLTextureView).setFullGroup(false);
         findViewById(R.id.button_teethwhite).setOnClickListener(this);
         findViewById(R.id.button_smooth).setOnClickListener(this);
         findViewById(R.id.button_bigsmooth).setOnClickListener(this);
@@ -65,10 +65,11 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
             bmp.recycle();
         }
         effectRender = new EffectRender(this,width,height,picpath);
-        mGLTextureView.setIsCanTouch(false);
+        mGLTextureView.setIsCanTouch(true);
         mGLTextureView.setMoveFlag(moveFlag);
         mGLTextureView.setRenderer(effectRender);
         mGLTextureView.setPicSize(width,height);
+        mGLTextureView.setActivity(this);
     }
 
     @Override
@@ -158,7 +159,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 mGLTextureView.requestRender();
                 break;
             case R.id.button_move:
-                mGLTextureView.setIsCanTouch(false);
+//                mGLTextureView.setIsCanTouch(false);
                 moveFlag = !moveFlag;
                 mGLTextureView.setMoveFlag(moveFlag);
                 break;

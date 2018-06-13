@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -29,7 +30,8 @@ public class ScaledImageView extends ImageView
 	private Handler mHandler = new Handler();
 	
 	protected int mImgWidth,mImgHeight;
-	
+	private String TAG = "ScaledImageView";
+
 	public ScaledImageView(Context context) {
 		super(context);
 		init();
@@ -58,6 +60,7 @@ public class ScaledImageView extends ImageView
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
+		Log.e(TAG, "onDraw: " );
 		canvas.concat(mMatCanvas);
 		super.onDraw(canvas);
 	}
@@ -260,6 +263,7 @@ public class ScaledImageView extends ImageView
 
 	@Override
 	public void onRefresh(Matrix mat) {
+		Log.e(TAG, "onRefresh: "+Thread.currentThread().getName()+Thread.currentThread().getId() );
 		postInvalidate();
 	}
 }

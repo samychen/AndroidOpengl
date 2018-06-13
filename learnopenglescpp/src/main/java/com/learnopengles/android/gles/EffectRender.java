@@ -30,6 +30,7 @@ public class EffectRender implements GLViewRenderer {
     public static native void nativereleaseEffect(int type);
     public static native void nativeRender(float norX,float norY);
     public static native void nativeCompare(int flag);
+    public static native void nativeTransform(float[] martrix);
     public void releaseEffect(int type){
         nativereleaseEffect(type);
     }
@@ -40,6 +41,9 @@ public class EffectRender implements GLViewRenderer {
     public void handleTouchDrag(float normalizedX, float normalizedY) {
         Log.e(TAG, "handleTouchPress() called with: normalizedX = [" + normalizedX + "], normalizedY = [" + normalizedY + "]");
         nativeRender(normalizedX, normalizedY);
+    }
+    public void transformMartrix(float[] martrix){
+        nativeTransform(martrix);
     }
     @Override
     public void onSurfaceCreated() {

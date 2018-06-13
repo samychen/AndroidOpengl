@@ -9,6 +9,8 @@
 #include <graphics/Matrix.h>
 #include <include/tcomdef.h>
 #include <include/beautitune.h>
+#include <jni.h>
+
 class textureeffect {
 public:
 
@@ -32,6 +34,8 @@ public:
 
     int copySrcBuffer();
 
+    int changeMartrix(float* mat);
+
     BTType ProType;
     int initEffect;
     BSWork bsWork;
@@ -54,7 +58,6 @@ private:
 
     GLuint mMVPMatrixHandle;
     GLuint mPositionHandle;
-    GLuint grayProgram;
     GLuint mTextureLocation;
     GLuint mTextureCoordinateHandle;
 

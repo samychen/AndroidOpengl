@@ -1,35 +1,45 @@
 package com.learnopengles.android.gles;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.PointF;
+import android.graphics.Matrix;
+import android.graphics.RectF;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
+
+import com.learnopengles.android.scaleutil.DensityUtil;
+import com.learnopengles.android.scaleutil.MatrixAnimation;
 
 /**
  * Created by 000 on 2018/6/11.
  */
 
-public class GLTextureViewImpl extends GLTextureView implements View.OnTouchListener{
+public class GLTextureViewImpl extends GLTextureView implements View.OnTouchListener,MatrixAnimation.OnRefreshListener{
     private boolean isCanTouch = false;
-    private int point_num = 0;//当前触摸的点数
-    public static final float SCALE_MAX = 8.0f; //最大的缩放比例
-    private static final float SCALE_MIN = 0.9f;
+    private static final float MAX_ZOOM = 3.0f;
+    private static final int MAX_DCLICK_TIME = 300;
+    private static int MAX_DCLICK_DIS = 50;
+    private static boolean sNeedDipToPix = true;
 
-    private double oldDist = 0;
-    private double moveDist = 0;
+    protected Matrix mMatCanvas = null;
 
-    private double downX = 0;
-    private double downY = 0;
+    protected float mLastX0,mLastY0,mLastX1,mLastY1;
+    protected float mDownX,mDownY;
+    private boolean mIsSingleTouch = false;
+    private long mLastTapTime = 0;
+    protected MatrixAnimation mAnim = null;
+    private Handler mHandler = new Handler();
 
     //是否选中移动或者没有选中效果
     private boolean moveFlag;
     private int picwidth,picheight;
-    private float scale;
     private EffectRender renderer;
     private String TAG = "GLTextureViewImpl";
+    private float[] mMatTmp;
+    private Matrix mDrawMatrix;
 
     public void setPicSize(int picwidth,int picheight) {
         this.picwidth = picwidth;
@@ -47,6 +57,16 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     public GLTextureViewImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOnTouchListener(this);
+        initAnim();
+        mMatTmp = new float[9];
+    }
+    private void initAnim() {
+        mMatCanvas = new Matrix();
+        mAnim = new MatrixAnimation();
+        if(sNeedDipToPix) {
+            MAX_DCLICK_DIS = DensityUtil.dip2px(getContext(), MAX_DCLICK_DIS);
+            sNeedDipToPix = false;
+        }
     }
     public void setRenderer(EffectRender renderer) {
         this.renderer = renderer;
@@ -72,56 +92,33 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         if (!isCanTouch) {
             return false;
         }
-        Log.e(TAG, "onTouch: " );
+        if(mAnim.isAnimating()) return false;
         if (moveFlag){//允许移动
-//            switch (event.getAction() & MotionEvent.ACTION_MASK) {
-//                case MotionEvent.ACTION_DOWN:
-//                    point_num = 1;
-//                    downX = event.getX();
-//                    downY = event.getY();
-//                    Log.e(TAG, "ACTION_DOWN: " );
-//                    break;
-//                case MotionEvent.ACTION_UP:
-//                    point_num = 0;
-//                    downX = 0;
-//                    downY = 0;
-//                    if (scale < 1.0f){
-//                        scale = 1.0f;
-//                        setScale(scale);
-//                    }
-//                    Log.e(TAG, "ACTION_UP: " );
-//                    break;
-//                case MotionEvent.ACTION_MOVE:
-//                    if (point_num == 1) {
-//                        //只有一个手指的时候才有移动的操作
-//                        float lessX = (float) (downX - event.getX());
-//                        float lessY = (float) (downY - event.getY());
-//                        setSelfPivot(lessX, lessY);
-//                    } else if (point_num == 2) {
-//                        //只有2个手指的时候才有放大缩小的操作
-//                        moveDist = spacing(event);
-//                        mid(event);
-//                        double space = moveDist - oldDist;
-//                        scale = (float) (getScaleX() + space / getWidth());
-//                        if (scale > SCALE_MIN && scale < SCALE_MAX) {
-//                            setScale(scale);
-//                        } else if (scale < SCALE_MIN) {
-//                            setScale(SCALE_MIN);
-//                        }
-//                    }
-//                    Log.e(TAG, "ACTION_MOVE: " );
-//                    break;
-//                case MotionEvent.ACTION_POINTER_DOWN:
-//                    oldDist = spacing(event);//两点按下时的距离
-//                    mid(event);
-//                    point_num += 1;
-//                    Log.e(TAG, "ACTION_POINTER_DOWN: " );
-//                    break;
-//                case MotionEvent.ACTION_POINTER_UP://  当屏幕上已经有触点(手指)，再有一个触点压下屏幕
-//                    point_num -= 1;
-//                    Log.e(TAG, "ACTION_POINTER_UP: " );
-//                    break;
-//            }
+                if(super.onTouchEvent(event)) {
+                    return true;
+                }
+                boolean bHandled = false;
+                int pCount = event.getPointerCount();
+                switch(pCount) {
+                    case 1:
+                        if(event.getAction()==MotionEvent.ACTION_DOWN) {
+                            mIsSingleTouch = true;
+                        } else if(!mIsSingleTouch) {
+                            return false;
+                        }
+                        bHandled = handleSingleTouhEvent(event);
+                        break;
+                    case 2:
+                        if(mIsSingleTouch) {
+                            mIsSingleTouch = false;
+                        }
+                        bHandled = handleMultiTouchEvent(event);
+                        break;
+                    default:
+                        break;
+                }
+                if(bHandled) invalidate();
+                return bHandled;
         } else {//处理效果
             if (event != null) {
                 final float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
@@ -150,97 +147,190 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 return false;
             }
         }
+    }
+    protected boolean handleSingleTouhEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if(event.getDownTime()-mLastTapTime<MAX_DCLICK_TIME
+                        && Math.abs(mLastX0-event.getX(0))<MAX_DCLICK_DIS
+                        && Math.abs(mLastY0-event.getY(0))<MAX_DCLICK_DIS) {
+                    mHandler.removeCallbacks(mRunSingleClick);
+                    handleDoubleClick();
+                    return true;
+                }
+                mLastTapTime = event.getDownTime();
+                mLastX0 = mDownX = event.getX(0);
+                mLastY0 = mDownY = event.getY(0);
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                float x0 = event.getX(0);
+                float y0 = event.getY(0);
+                float offsetX = x0-mLastX0;
+                float offsetY = y0-mLastY0;
+                mMatCanvas.postTranslate(offsetX, offsetY);
+                setTransform(mMatCanvas);
+                transMartrix();
+                postInvalidate();
+                mLastX0 = x0;
+                mLastY0 = y0;
+                return true;
+            case MotionEvent.ACTION_UP:
+                ensureTransform();
+                if(event.getEventTime()-event.getDownTime()<MAX_DCLICK_TIME
+                        && Math.abs(mDownX-event.getX(0))<MAX_DCLICK_DIS
+                        && Math.abs(mDownY-event.getY(0))<MAX_DCLICK_DIS) {
+                    mHandler.postDelayed(mRunSingleClick, MAX_DCLICK_TIME);
+                }
+                return true;
+        }
+        return false;
+    }
+    private final RectF mTempSrc = new RectF();
+    private final RectF mTempDst = new RectF();
+    // 传递矩阵给uMVPMartrix
+    private void transMartrix() {
+        Log.e(TAG, "transMartrix:" +mMatCanvas.toShortString());
+//        mDrawMatrix = mMatCanvas;
+//        mDrawMatrix.setRectToRect(mTempSrc, mTempDst, Matrix.ScaleToFit.CENTER);
+//        Log.e(TAG, "transMartrix: mDrawMatrix"+mDrawMatrix.toShortString() );
+//        queueEvent(new Runnable() {
+//            @Override
+//            public void run() {
+//                mDrawMatrix.getValues(mMatTmp);
+//                renderer.transformMartrix(mMatTmp);
+//            }
+//        });
+    }
+
+    protected boolean handleMultiTouchEvent(MotionEvent event) {
+        switch(event.getAction()& MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_POINTER_DOWN:
+                mLastX0 = event.getX(0);
+                mLastY0 = event.getY(0);
+                mLastX1 = event.getX(1);
+                mLastY1 = event.getY(1);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float x0 = event.getX(0);
+                float y0 = event.getY(0);
+                float x1 = event.getX(1);
+                float y1 = event.getY(1);
+
+                float offsetX = (x0-mLastX0 + x1-mLastX1)/2.0f;
+                float offsetY = (y0-mLastY0 + y1-mLastY1)/2.0f;
+                mMatCanvas.postTranslate(offsetX, offsetY);
+                float scale = getScale(x0, y0, x1, y1);
+                mMatCanvas.postScale(scale, scale, (x0+x1)/2, (y0+y1)/2);
+                scale = getScale(mMatCanvas);
+                if(scale>MAX_ZOOM) {
+                    scale = MAX_ZOOM/scale;
+                    mMatCanvas.postScale(scale, scale, (x0+x1)/2, (y0+y1)/2);
+                }
+                setTransform(mMatCanvas);
+                transMartrix();
+                postInvalidate();
+                mLastX0 = x0;
+                mLastY0 = y0;
+                mLastX1 = x1;
+                mLastY1 = y1;
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                ensureTransform();
+                break;
+            default:
+                break;
+        }
         return true;
     }
-    /**
-     * 触摸使用的移动事件
-     *
-     * @param lessX
-     * @param lessY
-     */
-    private void setSelfPivot(float lessX, float lessY) {
-        float setPivotX = 0;
-        float setPivotY = 0;
-        setPivotX = getPivotX() + lessX;
-        setPivotY = getPivotY() + lessY;
-        Log.e("lawwingLog", "setPivotX:" + setPivotX + "  setPivotY:" + setPivotY
-                + "  getWidth:" + getWidth() + "  getHeight:" + getHeight());
-        if (setPivotX < 0 && setPivotY < 0) {
-            setPivotX = 0;
-            setPivotY = 0;
-        } else if (setPivotX > 0 && setPivotY < 0) {
-            setPivotY = 0;
-            if (setPivotX > getWidth()) {
-                setPivotX = getWidth();
-            }
-        } else if (setPivotX < 0 && setPivotY > 0) {
-            setPivotX = 0;
-            if (setPivotY > getHeight()) {
-                setPivotY = getHeight();
-            }
+    protected boolean handleDoubleClick() {
+        if(mMatCanvas.isIdentity()) {
+            Matrix mat = new Matrix(mMatCanvas);
+            mat.setScale(MAX_ZOOM, MAX_ZOOM, getWidth()/2f, getHeight()/2f);
+            transformTo(mat);
         } else {
-            if (setPivotX > getWidth()) {
-                setPivotX = getWidth();
-            }
-            if (setPivotY > getHeight()) {
-                setPivotY = getHeight();
-            }
+            transformToIdentify();
         }
-        setPivot(setPivotX, setPivotY);
+        return true;
     }
-
-    /**
-     * 计算两个点的距离
-     *
-     * @param event
-     * @return
-     */
-    private double spacing(MotionEvent event) {
-        if (event.getPointerCount() == 2) {
-            float x = event.getX(0) - event.getX(1);
-            float y = event.getY(0) - event.getY(1);
-            return Math.sqrt(x * x + y * y);
-        } else {
-            return 0;
+    private Runnable mRunSingleClick = new Runnable(){
+        @Override
+        public void run() {
+            handleSingleClick();
+        }
+    };
+    protected boolean handleSingleClick() {
+        return false;
+    }
+    private void ensureTransform() {
+        float[] pos = new float[]{0, 0, getWidth(), getHeight()};
+        mMatCanvas.mapPoints(pos);
+        Log.e(TAG,"l="+pos[0]+" t="+pos[1]+" r="+pos[2]+" b="+pos[3]);
+        if(getWidth()>(pos[2]-pos[0])) {
+            Log.e(TAG, "transformToIdentify: " );
+            transformToIdentify();
+            return;
+        }
+        float offsetX = 0.0f;
+        float offsetY = 0.0f;
+        if(pos[0]>0) {
+            offsetX = -pos[0];
+        } else if(pos[2]<getWidth()) {
+            offsetX = getWidth() - pos[2];
+        }
+        if(pos[1]>0) {
+            offsetY = -pos[1];
+        } else if(pos[3]<getHeight()){
+            offsetY = getHeight() - pos[3];
+        }
+        if(Math.abs(offsetX)>0f || Math.abs(offsetY)>0f) {
+            Matrix dst = new Matrix(mMatCanvas);
+            dst.postTranslate(offsetX, offsetY);
+            transformTo(dst);
         }
     }
-    float midX,midY;
-    /** 计算两个手指间的中间点 */
-    private void mid(MotionEvent event) {
-        midX = (event.getX(1) + event.getX(0)) / 2;
-        midY = (event.getY(1) + event.getY(0)) / 2;
+    private float getScale(float x0, float y0, float x1, float y1) {
+        double o = Math.sqrt((mLastX0-mLastX1)*(mLastX0-mLastX1) +(mLastY0-mLastY1)*(mLastY0-mLastY1));
+        double n = Math.sqrt((x0-x1)*(x0-x1) +(y0-y1)*(y0-y1));
+        return (float)(n/o);
     }
-    /**
-     * 平移画面，当画面的宽或高大于屏幕宽高时，调用此方法进行平移
-     *
-     * @param x
-     * @param y
-     */
-    public void setPivot(float x, float y) {
-        setPivotX(x);
-        setPivotY(y);
+    public boolean onBackPressed() {
+        if(mAnim.isAnimating()) return true;
+        if(!mMatCanvas.isIdentity()) {
+            transformToIdentify();
+            return true;
+        }
+        return false;
     }
-
-    /**
-     * 设置放大缩小
-     *
-     * @param scale
-     */
-    public void setScale(float scale) {
-        setScaleX(scale);
-        setScaleY(scale);
-//        float tx = (float) (downX*scale - downX);
-//        float ty = (float) (downY*scale - downY);
-//        setTranslationX(tx);
-//        setTranslationY(ty);
+    public float getScale(Matrix m) {
+        float[] v = new float[9];
+        m.getValues(v);
+        return v[0];
     }
-
-    /**
-     * 初始化比例，也就是原始比例
-     */
-    public void setInitScale() {
-        setScaleX(1.0f);
-        setScaleY(1.0f);
-        setPivot(getWidth() / 2, getHeight() / 2);
+    public void transformToIdentify() {
+        Matrix matDst = new Matrix();
+        transformTo(matDst);
+    }
+    private void transformTo(Matrix matDst) {
+        Log.e(TAG, "transformTo: "+matDst.toShortString() );
+        mAnim.startAnimation(mMatCanvas, matDst, this);
+    }
+    public Matrix getScaleMatrix() {
+        return mMatCanvas;
+    }
+    private Activity activity;
+    public void setActivity(Activity activity){
+        this.activity = activity;
+    }
+    @Override
+    public void onRefresh(Matrix mat) {
+        Log.e(TAG, "onRefresh: "+mMatCanvas.toShortString() );
+        Log.e(TAG, "onRefresh:mat "+mat.toShortString() );
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setTransform(mMatCanvas);
+                postInvalidate();
+            }
+        });
     }
 }

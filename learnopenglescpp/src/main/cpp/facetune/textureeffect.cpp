@@ -36,17 +36,17 @@ GLfloat COORDINATEPOSITION[] =
         };
 GLfloat mOriMartrix[] =
         {
-                1.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, 1.0f, 0.0f, 0.0f,
-                0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f
+                1.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 1.0f,
+                0.0f, 0.0f, 0.0f
         };
 GLfloat flipYMartrix[] =
         {
-                1.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, -1.0f, 0.0f, 0.0f,
-                0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f
+                1.0f, 0.0f, 0.0f,
+                0.0f, -1.0f, 0.0f,
+                0.0f, 0.0f, 1.0f,
+                0.0f, 0.0f, 0.0f
         };
 textureeffect::textureeffect() {
     mWidth = 0;
@@ -59,7 +59,6 @@ textureeffect::textureeffect() {
     TuneEngine = NULL;
     mPositionHandle = 0;
     mPointProgramHandle = 0;
-    grayProgram = 0;
     ImgBuf = NULL;
     initEffect = 0;
     hasEffect = 0;
@@ -74,19 +73,33 @@ textureeffect::~textureeffect() {
     delete mProjectionMatrix;
     mProjectionMatrix = NULL;
 }
+int textureeffect::changeMartrix(float *mat) {
+    for (int i = 0; i < sizeof(mOriMartrix)/ sizeof(mOriMartrix[0]); ++i) {
+        mOriMartrix[i] = mat[i];
+        flipYMartrix[i] = mat[i];
+    }
+    flipYMartrix[4] = -mOriMartrix[4];
+    return 0;
+}
+//void textureeffect::create() {
+//    const char *vertex = GLUtils::openTextFile("vertex/facetune_vertex_shader.glsl");
+//    const char *fragment = GLUtils::openTextFile("fragment/facetune_frag_shader.glsl");
+//    mPointProgramHandle = GLUtils::createProgram(&vertex, &fragment);
+//    if (!mPointProgramHandle) {
+//        LOGE("Could not create program");
+//        return;
+//    }
+//    mModelMatrix = new Matrix();
+//    mMVPMatrix = new Matrix();
+//    srcTexure = GLUtils::loadTexture(picpath);
+//    checkError("create");
+//}
 void textureeffect::create() {
-    const char *vertex = GLUtils::openTextFile("vertex/facetune_vertex_shader.glsl");
-    const char *fragment = GLUtils::openTextFile("fragment/facetune_frag_shader.glsl");
+    const char *vertex = GLUtils::openTextFile("vertex/transform_vertex_shader.glsl");
+    const char *fragment = GLUtils::openTextFile("fragment/transform_fragment_shader.glsl");
     mPointProgramHandle = GLUtils::createProgram(&vertex, &fragment);
     if (!mPointProgramHandle) {
         LOGE("Could not create program");
-        return;
-    }
-    const char *vertex2 = GLUtils::openTextFile("vertex/gray_vertex_shader.glsl");
-    const char *fragment2 = GLUtils::openTextFile("fragment/gray_frag_shader.glsl");
-    grayProgram = GLUtils::createProgram(&vertex2, &fragment2);
-    if (!grayProgram) {
-        LOGE("Could not create gray program");
         return;
     }
     mModelMatrix = new Matrix();
@@ -118,7 +131,7 @@ void textureeffect::createFrameBuffer(){
     glEnableVertexAttribArray(mPositionHandle);
     glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
     glEnableVertexAttribArray(mTextureCoordinateHandle);
-    glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, flipYMartrix);
+    glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, flipYMartrix);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, srcTexure);
     glUniform1i(mTextureLocation, 0);
@@ -142,7 +155,7 @@ int textureeffect::copyBuffer() {
     glEnableVertexAttribArray(mPositionHandle);
     glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
     glEnableVertexAttribArray(mTextureCoordinateHandle);
-    glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, flipYMartrix);
+    glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, flipYMartrix);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, dstTexure);
     glUniform1i(mTextureLocation, 0);
@@ -167,7 +180,7 @@ int textureeffect::copySrcBuffer() {
     glEnableVertexAttribArray(mPositionHandle);
     glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
     glEnableVertexAttribArray(mTextureCoordinateHandle);
-    glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, flipYMartrix);
+    glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, flipYMartrix);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, srcTexure);
     glUniform1i(mTextureLocation, 0);
@@ -265,7 +278,7 @@ void textureeffect::draw() {
         glEnableVertexAttribArray(mPositionHandle);
         glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
         glEnableVertexAttribArray(mTextureCoordinateHandle);
-        glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, mOriMartrix);
+        glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, mOriMartrix);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, dstTexure);
         glUniform1i(mTextureLocation, 0);
@@ -282,7 +295,7 @@ void textureeffect::draw() {
         glEnableVertexAttribArray(mPositionHandle);
         glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
         glEnableVertexAttribArray(mTextureCoordinateHandle);
-        glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, mOriMartrix);
+        glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, mOriMartrix);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, srcTexure);
         glUniform1i(mTextureLocation, 0);
@@ -395,4 +408,15 @@ Java_com_learnopengles_android_gles_EffectRender_nativeCompare(JNIEnv *env, jcla
     if (textureeffectobj) {
         textureeffectobj->mCompareFlag = actionup_;
     }
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_learnopengles_android_gles_EffectRender_nativeTransform(JNIEnv *env, jclass type,
+                                                                 jfloatArray martrix_) {
+    jfloat *martrix = env->GetFloatArrayElements(martrix_, NULL);
+    if (textureeffectobj) {
+        textureeffectobj->changeMartrix(martrix);
+    }
+    env->ReleaseFloatArrayElements(martrix_, martrix, 0);
 }
