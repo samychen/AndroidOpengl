@@ -53,10 +53,6 @@ private:
     GLsizei top;
     GLsizei right;
     GLsizei bottom;
-    Matrix *mViewMatrix;
-    Matrix *mModelMatrix;
-    Matrix *mProjectionMatrix;
-    Matrix *mMVPMatrix;
 
     GLuint mMVPMatrixHandle;
     GLuint mPositionHandle;

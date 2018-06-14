@@ -43,7 +43,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
         findViewById(R.id.button_save).setOnClickListener(this);
         findViewById(R.id.button_move).setOnClickListener(this);
         findViewById(R.id.img_compare).setOnTouchListener(this);
-        String picpath = "texture/face.jpg";
+        String picpath = "texture/land.jpg";
         InputStream in = null;
         AssetManager assetManager = getAssets();
         try {
@@ -64,7 +64,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
         } finally {
             bmp.recycle();
         }
-        effectRender = new EffectRender(this,width,height,picpath);
+        effectRender = new EffectRender(this,width,height,picpath );
         mGLTextureView.setIsCanTouch(true);
         mGLTextureView.setMoveFlag(moveFlag);
         mGLTextureView.setRenderer(effectRender);

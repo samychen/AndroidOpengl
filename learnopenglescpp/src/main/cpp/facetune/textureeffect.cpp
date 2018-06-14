@@ -1,3 +1,7 @@
+//
+// Created by 000 on 2018/6/11.
+//
+
 #include "textureeffect.h"
 #include <graphics/GLUtils.h>
 #include <android/log.h>
@@ -12,16 +16,14 @@
 int checkError(const char* op);
 GLint POSITION_SIZE = 2;
 GLint TEX_COORD_SIZE = 2;
-float vertexWidth = 1.0f;
-float vertexHeight = 1.0f;
 GLfloat VERTEXPOSITION[] =
         {
                 0.0f,  0.0f,
-                vertexWidth,  -vertexHeight,
-                -vertexWidth, -vertexHeight,
-                -vertexWidth, vertexHeight,
-                vertexWidth,  vertexHeight,
-                vertexWidth,  -vertexHeight
+                1.0f,  -1.0f,
+                -1.0f, -1.0f,
+                -1.0f, 1.0f,
+                1.0f,  1.0f,
+                1.0f,  -1.0f
         };
 GLfloat COORDINATEPOSITION[] =
         {
@@ -36,19 +38,15 @@ GLfloat mOriMartrix[] =
         {
                 1.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 1.0f
+                0.0f, 0.0f, 1.0f,
         };
 GLfloat flipYMartrix[] =
         {
                 1.0f, 0.0f, 0.0f,
                 0.0f, -1.0f, 0.0f,
-                0.0f, 0.0f, 1.0f
+                0.0f, 0.0f, 1.0f,
         };
 textureeffect::textureeffect() {
-    mViewMatrix = NULL;
-    mModelMatrix = NULL;
-    mProjectionMatrix = NULL;
-    mMVPMatrix = NULL;
     fFrame = 0;
     TuneEngine = NULL;
     mPositionHandle = 0;
@@ -60,33 +58,17 @@ textureeffect::textureeffect() {
     mCompareFlag = 0;
 }
 textureeffect::~textureeffect() {
-    delete mModelMatrix;
-    mModelMatrix = NULL;
-    delete mViewMatrix;
-    mViewMatrix = NULL;
-    delete mProjectionMatrix;
-    mProjectionMatrix = NULL;
+
 }
 int textureeffect::changeMartrix(float *mat) {
     for (int i = 0; i < sizeof(mOriMartrix)/ sizeof(mOriMartrix[0]); ++i) {
-        COORDINATEPOSITION[i] = mat[i];
+        mOriMartrix[i] = mat[i];
+        flipYMartrix[i] = mat[i];
     }
-
+    flipYMartrix[4] = -mOriMartrix[4];
     return 0;
 }
-//void textureeffect::create() {
-//    const char *vertex = GLUtils::openTextFile("vertex/facetune_vertex_shader.glsl");
-//    const char *fragment = GLUtils::openTextFile("fragment/facetune_frag_shader.glsl");
-//    mPointProgramHandle = GLUtils::createProgram(&vertex, &fragment);
-//    if (!mPointProgramHandle) {
-//        LOGE("Could not create program");
-//        return;
-//    }
-//    mModelMatrix = new Matrix();
-//    mMVPMatrix = new Matrix();
-//    srcTexure = GLUtils::loadTexture(picpath);
-//    checkError("create");
-//}
+
 void textureeffect::create() {
     const char *vertex = GLUtils::openTextFile("vertex/transform_vertex_shader.glsl");
     const char *fragment = GLUtils::openTextFile("fragment/transform_fragment_shader.glsl");
@@ -95,8 +77,6 @@ void textureeffect::create() {
         LOGE("Could not create program");
         return;
     }
-    mModelMatrix = new Matrix();
-    mMVPMatrix = new Matrix();
     srcTexure = GLUtils::loadTexture(picpath);
     checkError("create");
 }
@@ -130,11 +110,12 @@ void textureeffect::createFrameBuffer(){
     glUniform1i(mTextureLocation, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
     checkError("createFrameBuffer");
-    glViewport(left,top,right,bottom);
+    glViewport(left, top, right, bottom);
 }
+// 切换效果前把目的纹理内容拷贝到源纹理
 int textureeffect::copyBuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
-//    glViewport(left, top, right, bottom);
+    glViewport(0, 0, right, bottom);
     glBindTexture(GL_TEXTURE_2D, srcTexure);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, srcTexure, 0);
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -157,10 +138,9 @@ int textureeffect::copyBuffer() {
     checkError("createFrameBuffer");
     return 0;
 }
-//拷贝源纹理到目的纹理,源纹理矩阵根据setTransform改变纹理矩阵COORDINATEPOSITION
 int textureeffect::copySrcBuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
-//    glViewport(left, top, right, bottom);
+    glViewport(0, 0, right, bottom);
     glBindTexture(GL_TEXTURE_2D, dstTexure);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, dstTexure, 0);
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -188,12 +168,6 @@ void textureeffect::change(int l, int t, int r, int b) {
     top = t;
     right = r;
     bottom = b;
-//    float asp = (right-left)/(bottom-top);
-//    if (asp > 1.0f){
-//        vertexHeight = 1/asp;
-//    } else {
-//        vertexWidth = asp;
-//    }
     checkError("change");
 }
 int textureeffect::renderCenter(FPOINT center, TFloat radius) {
@@ -261,7 +235,7 @@ int checkError(const char* op) {
     return res;
 }
 void textureeffect::draw() {
-//    glViewport(left,top,right,bottom);
+//    glViewport(0,0,mWidth,mHeight);
     if (mCompareFlag==0){
         //render To Texure
         glBindFramebuffer(GL_FRAMEBUFFER, 0);//绑定到默认纹理，渲染最后的纹理
@@ -310,7 +284,7 @@ textureeffect *textureeffectobj;
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_learnopengles_android_gles_EffectRender_nativeSurfaceCreate(JNIEnv *env, jclass type,
-                                                                     jobject assetManager,jint picwidth_,jint picheight_, jstring picpath_) {
+                                                                      jobject assetManager,jint picwidth_,jint picheight_, jstring picpath_) {
     const char *picpath = env->GetStringUTFChars(picpath_, 0);
     GLUtils::setEnvAndAssetManager(env, assetManager);
     if (textureeffectobj) {
@@ -327,11 +301,10 @@ Java_com_learnopengles_android_gles_EffectRender_nativeSurfaceCreate(JNIEnv *env
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_learnopengles_android_gles_EffectRender_nativeSurfaceChange(JNIEnv *env,
-                                                                     jclass type,
-                                                                     jint left,
-                                                                     jint top,jint right, jint bottom) {
+                                                                      jclass type,
+                                                                      jint left_, jint top_,jint right_,jint bottom_) {
     if (textureeffectobj) {
-        textureeffectobj->change(left,top,right,bottom);
+        textureeffectobj->change(left_, top_,right_,bottom_);
         textureeffectobj->createFrameBuffer();
     }
 
@@ -339,8 +312,8 @@ Java_com_learnopengles_android_gles_EffectRender_nativeSurfaceChange(JNIEnv *env
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_learnopengles_android_gles_EffectRender_nativeRender(JNIEnv *env,
-                                                              jclass type,
-                                                              jfloat x, jfloat y) {
+                                                               jclass type,
+                                                               jfloat x, jfloat y) {
     if (textureeffectobj) {
         int ret=textureeffectobj->renderCenter({x,y},15.0f);
         textureeffectobj->mCompareFlag = 0;
@@ -350,7 +323,7 @@ Java_com_learnopengles_android_gles_EffectRender_nativeRender(JNIEnv *env,
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_learnopengles_android_gles_EffectRender_nativeDrawFrame(JNIEnv *env,
-                                                                 jclass type) {
+                                                                  jclass type) {
 
     if (textureeffectobj) {
         textureeffectobj->draw();
@@ -359,7 +332,7 @@ Java_com_learnopengles_android_gles_EffectRender_nativeDrawFrame(JNIEnv *env,
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_learnopengles_android_gles_EffectRender_nativereleaseEffect(JNIEnv *env,
-                                                                     jclass type,jint effecttype_) {
+                                                                      jclass type,jint effecttype_) {
     if (textureeffectobj) {
         LOGE("release");
         textureeffectobj->initEffect = 1;
@@ -395,10 +368,10 @@ Java_com_learnopengles_android_gles_EffectRender_nativereleaseEffect(JNIEnv *env
             } else {
                 textureeffectobj->bsWork = Erase;
             }
-        } else if (effecttype_==6){//取消
+        } else if (effecttype_==6){
             textureeffectobj->releaseEffect();
             textureeffectobj->copySrcBuffer();
-        } else if (effecttype_==7){//保存
+        } else if (effecttype_==7){
             textureeffectobj->copyBuffer();
         }
     }
