@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.graphics.SurfaceTexture;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -40,6 +41,8 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     private String TAG = "GLTextureViewImpl";
     private float[] mMatTmp;
     private Matrix mDrawMatrix;
+    private int screenWidth,screenHeight;
+    private float scale = 1.0f;
 
     public void setPicSize(int picwidth,int picheight) {
         this.picwidth = picwidth;
@@ -68,6 +71,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
             sNeedDipToPix = false;
         }
     }
+    private Matrix mMat = new Matrix();
     public void setRenderer(EffectRender renderer) {
         this.renderer = renderer;
         super.setRenderer(renderer);
@@ -85,6 +89,18 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     @Override
     protected void onGLDraw() {
         //预留
+    }
+
+    @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        super.onSurfaceTextureAvailable(surface, width, height);
+        Log.e(TAG, "onSurfaceTextureAvailable() called with: width = [" + width + "], height = [" + height + "]");
+        screenWidth = width;
+        screenHeight = height;
+        RectF rectDst = new RectF();
+        mMat.setRectToRect(new RectF(0,0,picwidth, picheight), new RectF(0,0,screenWidth,screenHeight), Matrix.ScaleToFit.CENTER);
+        mMat.mapRect(rectDst, new RectF(0,0,picwidth, picheight));
+        setTransform(mMat);
     }
 
     @Override
@@ -121,6 +137,8 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 return bHandled;
         } else {//处理效果
             if (event != null) {
+                Log.e(TAG, "onTouch: "+mMatCanvas.toShortString() );
+                Log.e(TAG, "onTouch: width="+v.getWidth()+"height="+v.getHeight() );
                 final float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
                 final float normalizedY =event.getY() / (float) v.getHeight()*picheight;
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -167,9 +185,10 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 float y0 = event.getY(0);
                 float offsetX = x0-mLastX0;
                 float offsetY = y0-mLastY0;
+                Log.e(TAG, "handleSingleTouhEvent: offsetX="+offsetX+"offsetY="+offsetY );
                 mMatCanvas.postTranslate(offsetX, offsetY);
                 setTransform(mMatCanvas);
-                transMartrix();
+                Log.e(TAG, "handleSingleTouhEvent: "+mMatCanvas.toShortString() );
                 postInvalidate();
                 mLastX0 = x0;
                 mLastY0 = y0;
@@ -185,22 +204,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         }
         return false;
     }
-    private final RectF mTempSrc = new RectF();
-    private final RectF mTempDst = new RectF();
-    // 传递矩阵给uMVPMartrix
-    private void transMartrix() {
-        Log.e(TAG, "transMartrix:" +mMatCanvas.toShortString());
-//        mDrawMatrix = mMatCanvas;
-//        mDrawMatrix.setRectToRect(mTempSrc, mTempDst, Matrix.ScaleToFit.CENTER);
-//        Log.e(TAG, "transMartrix: mDrawMatrix"+mDrawMatrix.toShortString() );
-//        queueEvent(new Runnable() {
-//            @Override
-//            public void run() {
-//                mDrawMatrix.getValues(mMatTmp);
-//                renderer.transformMartrix(mMatTmp);
-//            }
-//        });
-    }
 
     protected boolean handleMultiTouchEvent(MotionEvent event) {
         switch(event.getAction()& MotionEvent.ACTION_MASK) {
@@ -215,19 +218,20 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 float y0 = event.getY(0);
                 float x1 = event.getX(1);
                 float y1 = event.getY(1);
-
                 float offsetX = (x0-mLastX0 + x1-mLastX1)/2.0f;
                 float offsetY = (y0-mLastY0 + y1-mLastY1)/2.0f;
                 mMatCanvas.postTranslate(offsetX, offsetY);
-                float scale = getScale(x0, y0, x1, y1);
+                scale = getScale(x0, y0, x1, y1);
+                Log.e(TAG, "handleMultiTouchEvent: offsetX="+offsetX+"offsetY="+offsetY );
                 mMatCanvas.postScale(scale, scale, (x0+x1)/2, (y0+y1)/2);
                 scale = getScale(mMatCanvas);
                 if(scale>MAX_ZOOM) {
                     scale = MAX_ZOOM/scale;
                     mMatCanvas.postScale(scale, scale, (x0+x1)/2, (y0+y1)/2);
                 }
+                Log.e(TAG, "handleMultiTouchEvent: scale="+scale );
+                Log.e(TAG, "handleMultiTouchEvent: mMatCanvas="+mMatCanvas.toShortString() );
                 setTransform(mMatCanvas);
-                transMartrix();
                 postInvalidate();
                 mLastX0 = x0;
                 mLastY0 = y0;
@@ -287,6 +291,8 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
             dst.postTranslate(offsetX, offsetY);
             transformTo(dst);
         }
+        Log.e(TAG, "transMartrix:" +mMatCanvas.toShortString());
+
     }
     private float getScale(float x0, float y0, float x1, float y1) {
         double o = Math.sqrt((mLastX0-mLastX1)*(mLastX0-mLastX1) +(mLastY0-mLastY1)*(mLastY0-mLastY1));

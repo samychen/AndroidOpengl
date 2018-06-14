@@ -60,7 +60,7 @@ public class ScaledImageView extends ImageView
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Log.e(TAG, "onDraw: " );
+		Log.e(TAG, "onDraw: " +mMatCanvas.toShortString());
 		canvas.concat(mMatCanvas);
 		super.onDraw(canvas);
 	}
@@ -216,6 +216,7 @@ public class ScaledImageView extends ImageView
 			dst.postTranslate(offsetX, offsetY);
 			transformTo(dst);
 		}
+		Log.e(TAG, "ensureTransform: "+mMatCanvas.toShortString() );
 	}
 	
 	private float getScale(float x0, float y0, float x1, float y1) {
@@ -254,6 +255,7 @@ public class ScaledImageView extends ImageView
 	}
 	
 	private void transformTo(Matrix matDst) {
+		Log.e(TAG, "transformTo: "+matDst.toShortString() );
 		mAnim.startAnimation(mMatCanvas, matDst, this);
 	}
 
@@ -263,7 +265,7 @@ public class ScaledImageView extends ImageView
 
 	@Override
 	public void onRefresh(Matrix mat) {
-		Log.e(TAG, "onRefresh: "+Thread.currentThread().getName()+Thread.currentThread().getId() );
+		Log.e(TAG, "onRefresh: mat="+mat.toShortString() );
 		postInvalidate();
 	}
 }
