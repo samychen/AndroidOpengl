@@ -20,7 +20,7 @@ public:
 
     void create();
 
-    void change(int left, int top, int right, int bottom);
+    void change(int width, int height);
 
     void draw();
 
@@ -49,10 +49,8 @@ public:
     int mCompareFlag;
 private:
 
-    GLsizei left;
-    GLsizei top;
-    GLsizei right;
-    GLsizei bottom;
+    GLsizei mWidth;
+    GLsizei mHeight;
     Matrix *mViewMatrix;
     Matrix *mModelMatrix;
     Matrix *mProjectionMatrix;
