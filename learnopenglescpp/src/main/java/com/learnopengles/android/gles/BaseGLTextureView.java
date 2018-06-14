@@ -195,10 +195,12 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
         this.renderer = renderer;
     }
 
-
+    private int width,height;
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         Log.d("BaseGLTextureView", "onSurfaceTextureAvailable: ");
+        this.width = width;
+        this.height = height;
         surfaceAvailable = true;
         glThreadBuilder = new GLThread.Builder();
         if (mGLThread == null) {
@@ -219,7 +221,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
     }
 
     protected void createGLThread() {
-        Log.d("BaseGLTextureView", "createGLThread: ");
+        Log.e("BaseGLTextureView", "createGLThread: ");
         hasCreateGLThreadCalledOnce = true;
         if (!surfaceAvailable) {
             return;
@@ -239,7 +241,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
             }
         });
         mGLThread.start();
-        freshSurface(getWidth(), getHeight());
+        freshSurface(width, height);
         for (Runnable cacheEvent : cacheEvents) {
             mGLThread.queueEvent(cacheEvent);
         }
@@ -250,6 +252,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
      * surface inited or updated.
      */
     private void freshSurface(int width, int height) {
+        Log.e(TAG, "freshSurface() called with: width = [" + width + "], height = [" + height + "]");
         surfaceCreated();
         surfaceChanged(width, height);
         surfaceRedrawNeeded();
