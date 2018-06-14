@@ -92,12 +92,11 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         super.onSurfaceTextureAvailable(surface, width, height);
-        Matrix adjustsMartrix = adjustWindowSize();
-        mMatCanvas = adjustsMartrix;
-         //[1.0, 0.0, 0.0][0.0, 0.95609754, 32.399963][0.0, 0.0, 1.0]invert[1.0, 0.0, -0.0][0.0, 1.0459183, -33.887714][0.0, 0.0, 1.0]
-        Log.e(TAG, "onSurfaceTextureAvailable: "+adjustsMartrix.toShortString() );//[1.0, 0.0, 0.0][0.0, 0.51733994, 355.78125][0.0, 0.0, 1.0]
+//        Matrix adjustsMartrix = adjustWindowSize();
+//        mMatCanvas = adjustsMartrix;
+//        Log.e(TAG, "onSurfaceTextureAvailable: "+adjustsMartrix.toShortString() );// [1.0, 0.0, 0.0][0.0, 0.52807313, 340.78125][0.0, 0.0, 1.0]
     }
-
+    private int ystart,yend;
     @NonNull
     private Matrix adjustWindowSize() {
         float sx = (float) getWidth() / (float) picwidth;
@@ -111,10 +110,15 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         if (sx >= sy){
             //图片高大于宽
             adjustsMartrix.postScale(sy, sy, getWidth() / 2, getHeight() / 2);
-            //图片可点击的y范围[(getHeight()-picwidth/picheight*getWidth())/2,(getHeight()+picwidth/picheight*getWidth())/2]
         }else{
             //图片宽大于高
+            //图片可点击的y范围[(getHeight()-picwidth/picheight*getWidth())/2,(getHeight()+picwidth/picheight*getWidth())/2]
             adjustsMartrix.postScale(sx, sx, getWidth() / 2, getHeight() / 2);
+            int textureHeight = (int)((picheight*getWidth())/(picwidth*1.0f));
+            Log.e(TAG, "adjustWindowSize: "+textureHeight );
+            ystart = (getHeight()-textureHeight)/2;
+            yend = (getHeight()+textureHeight)/2;
+            Log.e(TAG, "adjustWindowSize: ystart"+ystart+"yend="+yend );
         }
         setTransform(adjustsMartrix);
         return adjustsMartrix;
@@ -154,7 +158,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 return bHandled;
         } else {//处理效果
             if (event != null) {
-                Log.e(TAG, "onTouch: "+ mMatCanvas.toShortString());//[1.7718471, 0.0, -360.5752][0.0, 1.6940588, -163.51263][0.0, 0.0, 1.0]
+                Log.e(TAG, "onTouch: "+ mMatCanvas.toShortString());//[1.7107325, 0.0, -294.44125][0.0, 1.7107325, -429.01883][0.0, 0.0, 1.0]
                 final float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
                 final float normalizedY =event.getY() / (float) v.getHeight()*picheight;
                 float[] mat = new float[9];
@@ -165,12 +169,13 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 temp.getValues(mat);
                 final float x = mat[0]*normalizedX+mat[1]*normalizedY+mat[2];
                 final float y = mat[3]*normalizedX+mat[4]*normalizedY+mat[5];
+
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     queueEvent(new Runnable() {
                         @Override
                         public void run() {
                             renderer.handleTouchPress(
-                                    x, y);
+                                    normalizedX, normalizedY);
                         }
                     });
                     requestRender();
@@ -179,7 +184,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                         @Override
                         public void run() {
                             renderer.handleTouchDrag(
-                                    x, y);
+                                    normalizedX, normalizedY);
                         }
                     });
                     requestRender();
@@ -205,6 +210,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 mLastY0 = mDownY = event.getY(0);
                 return true;
             case MotionEvent.ACTION_MOVE:
+                Log.e(TAG, "handleSingleTouhEvent: ACTION_MOVE"+getScale(mMatCanvas) );
                 float x0 = event.getX(0);
                 float y0 = event.getY(0);
 
@@ -212,7 +218,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 float offsetY = y0-mLastY0;
                 mMatCanvas.postTranslate(offsetX, offsetY);
                 setTransform(mMatCanvas);
-                transMartrix();
                 postInvalidate();
                 mLastX0 = x0;
                 mLastY0 = y0;
@@ -227,21 +232,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 return true;
         }
         return false;
-    }
-
-    // 传递矩阵给uMVPMartrix
-    private void transMartrix() {
-        Log.e(TAG, "transMartrix:" +mMatCanvas.toShortString());
-//        mDrawMatrix = mMatCanvas;
-//        mDrawMatrix.setRectToRect(mTempSrc, mTempDst, Matrix.ScaleToFit.CENTER);
-//        Log.e(TAG, "transMartrix: mDrawMatrix"+mDrawMatrix.toShortString() );
-//        queueEvent(new Runnable() {
-//            @Override
-//            public void run() {
-//                mDrawMatrix.getValues(mMatTmp);
-//                renderer.transformMartrix(mMatTmp);
-//            }
-//        });
     }
 
     protected boolean handleMultiTouchEvent(MotionEvent event) {
@@ -269,7 +259,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                     mMatCanvas.postScale(scale, scale, (x0+x1)/2, (y0+y1)/2);
                 }
                 setTransform(mMatCanvas);
-                transMartrix();
                 postInvalidate();
                 mLastX0 = x0;
                 mLastY0 = y0;
@@ -350,7 +339,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         return v[0];
     }
     public void transformToIdentify() {
-        Matrix adjustsMartrix = adjustWindowSize();
+        Matrix adjustsMartrix = new Matrix();
         transformTo(adjustsMartrix);
     }
     private void transformTo(Matrix matDst) {

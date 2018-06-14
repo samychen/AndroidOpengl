@@ -47,12 +47,6 @@ GLfloat flipYMartrix[] =
                 0.0f, 0.0f, 1.0f,
         };
 textureeffect::textureeffect() {
-    mWidth = 0;
-    mHeight = 0;
-    mViewMatrix = NULL;
-    mModelMatrix = NULL;
-    mProjectionMatrix = NULL;
-    mMVPMatrix = NULL;
     fFrame = 0;
     TuneEngine = NULL;
     mPositionHandle = 0;
@@ -64,12 +58,7 @@ textureeffect::textureeffect() {
     mCompareFlag = 0;
 }
 textureeffect::~textureeffect() {
-    delete mModelMatrix;
-    mModelMatrix = NULL;
-    delete mViewMatrix;
-    mViewMatrix = NULL;
-    delete mProjectionMatrix;
-    mProjectionMatrix = NULL;
+
 }
 int textureeffect::changeMartrix(float *mat) {
     for (int i = 0; i < sizeof(mOriMartrix)/ sizeof(mOriMartrix[0]); ++i) {
@@ -79,19 +68,7 @@ int textureeffect::changeMartrix(float *mat) {
     flipYMartrix[4] = -mOriMartrix[4];
     return 0;
 }
-//void textureeffect::create() {
-//    const char *vertex = GLUtils::openTextFile("vertex/facetune_vertex_shader.glsl");
-//    const char *fragment = GLUtils::openTextFile("fragment/facetune_frag_shader.glsl");
-//    mPointProgramHandle = GLUtils::createProgram(&vertex, &fragment);
-//    if (!mPointProgramHandle) {
-//        LOGE("Could not create program");
-//        return;
-//    }
-//    mModelMatrix = new Matrix();
-//    mMVPMatrix = new Matrix();
-//    srcTexure = GLUtils::loadTexture(picpath);
-//    checkError("create");
-//}
+
 void textureeffect::create() {
     const char *vertex = GLUtils::openTextFile("vertex/transform_vertex_shader.glsl");
     const char *fragment = GLUtils::openTextFile("fragment/transform_fragment_shader.glsl");
@@ -100,8 +77,6 @@ void textureeffect::create() {
         LOGE("Could not create program");
         return;
     }
-    mModelMatrix = new Matrix();
-    mMVPMatrix = new Matrix();
     srcTexure = GLUtils::loadTexture(picpath);
     checkError("create");
 }
@@ -135,10 +110,12 @@ void textureeffect::createFrameBuffer(){
     glUniform1i(mTextureLocation, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
     checkError("createFrameBuffer");
+    glViewport(left, top, right, bottom);
 }
+// 切换效果前把目的纹理内容拷贝到源纹理
 int textureeffect::copyBuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
-    glViewport(0, 0, picwidth, picheight);
+    glViewport(0, 0, right, bottom);
     glBindTexture(GL_TEXTURE_2D, srcTexure);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, srcTexure, 0);
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -163,7 +140,7 @@ int textureeffect::copyBuffer() {
 }
 int textureeffect::copySrcBuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
-    glViewport(0, 0, picwidth, picheight);
+    glViewport(0, 0, right, bottom);
     glBindTexture(GL_TEXTURE_2D, dstTexure);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, dstTexure, 0);
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -186,10 +163,11 @@ int textureeffect::copySrcBuffer() {
     checkError("createFrameBuffer");
     return 0;
 }
-void textureeffect::change(int width, int height) {
-    mWidth = width;
-    mHeight = height;
-    glViewport(0, 0, mWidth, mHeight);
+void textureeffect::change(int l, int t, int r, int b) {
+    left = l;
+    top = t;
+    right = r;
+    bottom = b;
     checkError("change");
 }
 int textureeffect::renderCenter(FPOINT center, TFloat radius) {
@@ -199,7 +177,6 @@ int textureeffect::renderCenter(FPOINT center, TFloat radius) {
     }
     if (!TuneEngine)
     {
-        LOGE("init width=%d,height=%d",mWidth,mHeight);
         nRes = BeautiTune_Init(&TuneEngine,picwidth,picheight, ProType);
         if (nRes)
         {
@@ -258,7 +235,7 @@ int checkError(const char* op) {
     return res;
 }
 void textureeffect::draw() {
-    glViewport(0,0,mWidth,mHeight);
+//    glViewport(0,0,mWidth,mHeight);
     if (mCompareFlag==0){
         //render To Texure
         glBindFramebuffer(GL_FRAMEBUFFER, 0);//绑定到默认纹理，渲染最后的纹理
@@ -325,10 +302,9 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_learnopengles_android_gles_EffectRender_nativeSurfaceChange(JNIEnv *env,
                                                                       jclass type,
-                                                                      jint width,
-                                                                      jint height) {
+                                                                      jint left_, jint top_,jint right_,jint bottom_) {
     if (textureeffectobj) {
-        textureeffectobj->change(width, height);
+        textureeffectobj->change(left_, top_,right_,bottom_);
         textureeffectobj->createFrameBuffer();
     }
 
