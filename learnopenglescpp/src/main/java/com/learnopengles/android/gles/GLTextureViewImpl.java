@@ -158,24 +158,25 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 return bHandled;
         } else {//处理效果
             if (event != null) {
-                Log.e(TAG, "onTouch: "+ mMatCanvas.toShortString());//[1.7107325, 0.0, -294.44125][0.0, 1.7107325, -429.01883][0.0, 0.0, 1.0]
                 final float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
                 final float normalizedY =event.getY() / (float) v.getHeight()*picheight;
                 float[] mat = new float[9];
-                Matrix temp = mMatCanvas;
-                if (temp.invert(temp)){
-                    Log.e(TAG, "onTouch: " );
-                }
-                temp.getValues(mat);
+                Matrix src = mMatCanvas;
+                Log.e(TAG, "onTouch: mMatCanvas="+src.toShortString() );
+                Matrix dst = new Matrix();
+                src.invert(dst);
+                dst.getValues(mat);
+                Log.e(TAG, "onTouch: "+dst.toShortString() );
                 final float x = mat[0]*normalizedX+mat[1]*normalizedY+mat[2];
                 final float y = mat[3]*normalizedX+mat[4]*normalizedY+mat[5];
 
+                Log.e(TAG, "onTouch: x="+x+"y="+y+"norX="+normalizedX+"norY="+normalizedY );
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     queueEvent(new Runnable() {
                         @Override
                         public void run() {
                             renderer.handleTouchPress(
-                                    normalizedX, normalizedY);
+                                    x, y);
                         }
                     });
                     requestRender();
@@ -184,7 +185,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                         @Override
                         public void run() {
                             renderer.handleTouchDrag(
-                                    normalizedX, normalizedY);
+                                    x, y);
                         }
                     });
                     requestRender();

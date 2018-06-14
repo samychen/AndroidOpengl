@@ -109,13 +109,13 @@ void textureeffect::createFrameBuffer(){
     glBindTexture(GL_TEXTURE_2D, srcTexure);
     glUniform1i(mTextureLocation, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
-    checkError("createFrameBuffer");
-    glViewport(left, top, right, bottom);
+
 }
 // 切换效果前把目的纹理内容拷贝到源纹理
 int textureeffect::copyBuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
-    glViewport(0, 0, right, bottom);
+//    glViewport(0, 0, mWidth, mHeight);
+    glViewport(0, 0, picwidth, picheight);
     glBindTexture(GL_TEXTURE_2D, srcTexure);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, srcTexure, 0);
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -135,12 +135,13 @@ int textureeffect::copyBuffer() {
     glBindTexture(GL_TEXTURE_2D, dstTexure);
     glUniform1i(mTextureLocation, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
-    checkError("createFrameBuffer");
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return 0;
 }
+// 取消效果后把源纹理内存拷贝到目的纹理
 int textureeffect::copySrcBuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
-    glViewport(0, 0, right, bottom);
+    glViewport(0, 0, picwidth, picheight);
     glBindTexture(GL_TEXTURE_2D, dstTexure);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, dstTexure, 0);
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -160,14 +161,16 @@ int textureeffect::copySrcBuffer() {
     glBindTexture(GL_TEXTURE_2D, srcTexure);
     glUniform1i(mTextureLocation, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
-    checkError("createFrameBuffer");
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return 0;
 }
-void textureeffect::change(int l, int t, int r, int b) {
+void textureeffect::change(int l, int t, int r, int b,int w,int h) {
     left = l;
     top = t;
     right = r;
     bottom = b;
+    mWidth = w;
+    mHeight = h;
     checkError("change");
 }
 int textureeffect::renderCenter(FPOINT center, TFloat radius) {
@@ -236,6 +239,7 @@ int checkError(const char* op) {
 }
 void textureeffect::draw() {
 //    glViewport(0,0,mWidth,mHeight);
+    glViewport(left, top, right, bottom);
     if (mCompareFlag==0){
         //render To Texure
         glBindFramebuffer(GL_FRAMEBUFFER, 0);//绑定到默认纹理，渲染最后的纹理
@@ -302,9 +306,9 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_learnopengles_android_gles_EffectRender_nativeSurfaceChange(JNIEnv *env,
                                                                       jclass type,
-                                                                      jint left_, jint top_,jint right_,jint bottom_) {
+                                                                      jint left_, jint top_,jint right_,jint bottom_,jint width_,jint height_) {
     if (textureeffectobj) {
-        textureeffectobj->change(left_, top_,right_,bottom_);
+        textureeffectobj->change(left_, top_,right_,bottom_,width_,height_);
         textureeffectobj->createFrameBuffer();
     }
 

@@ -20,7 +20,7 @@ public:
 
     void create();
 
-    void change(int left, int top, int right, int bottom);
+    void change(int left, int top, int right, int bottom,int width, int height);
 
     void draw();
 
@@ -49,6 +49,8 @@ public:
     int mCompareFlag;
 private:
 
+    GLsizei mWidth;
+    GLsizei mHeight;
     GLsizei left;
     GLsizei top;
     GLsizei right;

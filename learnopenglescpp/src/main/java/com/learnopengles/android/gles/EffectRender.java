@@ -29,7 +29,7 @@ public class EffectRender implements GLViewRenderer {
         this.picpath = picpath;
     }
     public static native void nativeSurfaceCreate(AssetManager assetManager, int width, int height, String picpath);
-    public static native void nativeSurfaceChange(int l, int t, int r, int b);
+    public static native void nativeSurfaceChange(int l, int t, int r, int b,int width,int height);
     public static native void nativeDrawFrame();
     public static native void nativereleaseEffect(int type);
     public static native void nativeRender(float norX,float norY);
@@ -62,7 +62,7 @@ public class EffectRender implements GLViewRenderer {
         mMat.setRectToRect(new RectF(0,0,picwidth, picheight), new RectF(0,0,width,height), Matrix.ScaleToFit.CENTER);
         mMat.mapRect(rectDst, new RectF(0,0,picwidth, picheight));
         Log.e(TAG, "onSurfaceChanged:left= "+rectDst.left+"right="+rectDst.right+"top="+rectDst.top+"bottom="+rectDst.bottom+"width="+rectDst.width()+"height="+rectDst.height() );
-        nativeSurfaceChange((int)rectDst.left,(int)rectDst.top,(int)rectDst.width(),(int)rectDst.height());
+        nativeSurfaceChange((int)rectDst.left,(int)rectDst.top,(int)rectDst.width(),(int)rectDst.height(),width,height);
     }
 
     @Override
