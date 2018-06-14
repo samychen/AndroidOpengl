@@ -100,7 +100,8 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         RectF rectDst = new RectF();
         mMat.setRectToRect(new RectF(0,0,picwidth, picheight), new RectF(0,0,screenWidth,screenHeight), Matrix.ScaleToFit.CENTER);
         mMat.mapRect(rectDst, new RectF(0,0,picwidth, picheight));
-        setTransform(mMat);
+        Log.e(TAG, "onSurfaceTextureAvailable: "+mMat.toShortString() );//[0.84375, 0.0, 0.0][0.0, 0.84375, 356.20312][0.0, 0.0, 1.0]
+//        setTextureFransform(mMat);
     }
 
     @Override
@@ -139,6 +140,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
             if (event != null) {
                 Log.e(TAG, "onTouch: "+mMatCanvas.toShortString() );
                 Log.e(TAG, "onTouch: width="+v.getWidth()+"height="+v.getHeight() );
+
                 final float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
                 final float normalizedY =event.getY() / (float) v.getHeight()*picheight;
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -187,7 +189,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 float offsetY = y0-mLastY0;
                 Log.e(TAG, "handleSingleTouhEvent: offsetX="+offsetX+"offsetY="+offsetY );
                 mMatCanvas.postTranslate(offsetX, offsetY);
-                setTransform(mMatCanvas);
+                setTextureFransform(mMatCanvas);
                 Log.e(TAG, "handleSingleTouhEvent: "+mMatCanvas.toShortString() );
                 postInvalidate();
                 mLastX0 = x0;
@@ -231,7 +233,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 }
                 Log.e(TAG, "handleMultiTouchEvent: scale="+scale );
                 Log.e(TAG, "handleMultiTouchEvent: mMatCanvas="+mMatCanvas.toShortString() );
-                setTransform(mMatCanvas);
+                setTextureFransform(mMatCanvas);
                 postInvalidate();
                 mLastX0 = x0;
                 mLastY0 = y0;
@@ -334,8 +336,22 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                setTransform(mMatCanvas);
+                setTextureFransform(mMatCanvas);
                 postInvalidate();
+            }
+        });
+    }
+    public void setTextureFransform(final Matrix matrix){
+        Log.e(TAG, "setTextureFransform: "+matrix.toShortString() );//[1.3020909, 0.0, -155.46724][0.0, 1.3020909, -99.88502][0.0, 0.0, 1.0]
+        setTransform(matrix);
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                float[] v = new float[9];
+                matrix.getValues(v);
+                v[2] = v[2]/screenWidth;
+                v[5] = v[5]/screenHeight;
+                renderer.transformMartrix(v);
             }
         });
     }

@@ -43,7 +43,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
         findViewById(R.id.button_save).setOnClickListener(this);
         findViewById(R.id.button_move).setOnClickListener(this);
         findViewById(R.id.img_compare).setOnTouchListener(this);
-        String picpath = "texture/land.jpg";
+        String picpath = "texture/face.jpg";
         InputStream in = null;
         AssetManager assetManager = getAssets();
         try {
