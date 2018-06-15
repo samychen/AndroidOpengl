@@ -42,6 +42,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     private String TAG = "GLTextureViewImpl";
     private float[] mMatTmp;
     private Matrix mDrawMatrix;
+    private float totalOffsetX,totalOffsetY;
 
     public void setPicSize(int picwidth,int picheight) {
         this.picwidth = picwidth;
@@ -158,19 +159,20 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 return bHandled;
         } else {//处理效果
             if (event != null) {
-                final float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
-                final float normalizedY =event.getY() / (float) v.getHeight()*picheight;
                 float[] mat = new float[9];
                 Matrix src = mMatCanvas;
-                Log.e(TAG, "onTouch: mMatCanvas="+src.toShortString() );
                 Matrix dst = new Matrix();
                 src.invert(dst);
                 dst.getValues(mat);
-                Log.e(TAG, "onTouch: "+dst.toShortString() );
-                final float x = mat[0]*normalizedX+mat[1]*normalizedY+mat[2];
-                final float y = mat[3]*normalizedX+mat[4]*normalizedY+mat[5];
-
-                Log.e(TAG, "onTouch: x="+x+"y="+y+"norX="+normalizedX+"norY="+normalizedY );
+                //以屏幕左上角为(0,0)的位置,坐标系一中的触摸点位置
+                float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
+                float normalizedY =event.getY() / (float) v.getHeight()*picheight;
+                //坐标系一中经过缩放变化逆变换的触摸位置
+                float x2 = mat[0]*normalizedX+mat[1]*normalizedY+mat[2];
+                float y2 = mat[3]*normalizedX+mat[4]*normalizedY+mat[5];
+                //坐标系二中的触摸位置
+                final float x = x2 - mat[2] *(1-mat[0]/2)/ (float) v.getWidth()*picwidth;
+                final float y = y2 - mat[5] *(1-mat[0]/2)/ (float) v.getHeight()*picheight;
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     queueEvent(new Runnable() {
                         @Override
@@ -214,7 +216,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 Log.e(TAG, "handleSingleTouhEvent: ACTION_MOVE"+getScale(mMatCanvas) );
                 float x0 = event.getX(0);
                 float y0 = event.getY(0);
-
                 float offsetX = x0-mLastX0;
                 float offsetY = y0-mLastY0;
                 mMatCanvas.postTranslate(offsetX, offsetY);
