@@ -9,11 +9,16 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.learnopengles.android.scaleutil.DensityUtil;
 import com.learnopengles.android.scaleutil.MatrixAnimation;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 000 on 2018/6/11.
@@ -40,9 +45,10 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     private int picwidth,picheight;
     private EffectRender renderer;
     private String TAG = "GLTextureViewImpl";
-    private float[] mMatTmp;
-    private Matrix mDrawMatrix;
-    private float totalOffsetX,totalOffsetY;
+    private Map<Integer,SparseArray<Float>> pathMap = new HashMap<>();
+    private SparseArray<Float> path = new SparseArray<>();
+    private int pointcount;
+    private int pathcount;
 
     public void setPicSize(int picwidth,int picheight) {
         this.picwidth = picwidth;
@@ -61,7 +67,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         super(context, attrs);
         setOnTouchListener(this);
         initAnim();
-        mMatTmp = new float[9];
     }
     private void initAnim() {
         mMatCanvas = new Matrix();
@@ -82,7 +87,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     @Override
     protected void init() {
         super.init();
-        setOpaque(true);//This method indicates whether the content of this TextureView is opaque
+        setOpaque(true);
     }
 
     @Override
@@ -92,37 +97,28 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        Log.e(TAG, "onSurfaceTextureAvailable: " );
         super.onSurfaceTextureAvailable(surface, width, height);
-//        Matrix adjustsMartrix = adjustWindowSize();
-//        mMatCanvas = adjustsMartrix;
-//        Log.e(TAG, "onSurfaceTextureAvailable: "+adjustsMartrix.toShortString() );// [1.0, 0.0, 0.0][0.0, 0.52807313, 340.78125][0.0, 0.0, 1.0]
     }
-    private int ystart,yend;
-    @NonNull
-    private Matrix adjustWindowSize() {
-        float sx = (float) getWidth() / (float) picwidth;
-        float sy = (float) getHeight() / (float) picheight;
-        Matrix adjustsMartrix = new Matrix();
-        //把图片移动到View区,使两者中心点重合.
-        adjustsMartrix.preTranslate((getWidth() - picwidth) / 2, (getHeight() - picheight) / 2);
-        //因为默认图片是fitXY的形式显示的,所以首先要缩放还原回来.
-        adjustsMartrix.preScale(picwidth / (float) getWidth(), picheight / (float) getHeight());
-        //等比例放大或缩小,直到图片的一边和View一边相等.如果另一边和view的一边不相等，则留下空隙
-        if (sx >= sy){
-            //图片高大于宽
-            adjustsMartrix.postScale(sy, sy, getWidth() / 2, getHeight() / 2);
-        }else{
-            //图片宽大于高
-            //图片可点击的y范围[(getHeight()-picwidth/picheight*getWidth())/2,(getHeight()+picwidth/picheight*getWidth())/2]
-            adjustsMartrix.postScale(sx, sx, getWidth() / 2, getHeight() / 2);
-            int textureHeight = (int)((picheight*getWidth())/(picwidth*1.0f));
-            Log.e(TAG, "adjustWindowSize: "+textureHeight );
-            ystart = (getHeight()-textureHeight)/2;
-            yend = (getHeight()+textureHeight)/2;
-            Log.e(TAG, "adjustWindowSize: ystart"+ystart+"yend="+yend );
-        }
-        setTransform(adjustsMartrix);
-        return adjustsMartrix;
+
+    @Override
+    public void onResume() {
+        Log.e(TAG, "onResume: "+pathMap.toString() );
+        renderer.setPath(pathMap);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        Log.e(TAG, "onPause: "+pathMap.toString() );
+        mMatCanvas = new Matrix();
+        setTransform(mMatCanvas);
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -173,6 +169,8 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 //坐标系二中的触摸位置
                 final float x = x2 - mat[2] *(1-mat[0]/2)/ (float) v.getWidth()*picwidth;
                 final float y = y2 - mat[5] *(1-mat[0]/2)/ (float) v.getHeight()*picheight;
+                path.put(pointcount++,x);
+                path.put(pointcount++,y);
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     queueEvent(new Runnable() {
                         @Override
@@ -191,6 +189,12 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                         }
                     });
                     requestRender();
+                } else if (event.getAction() == MotionEvent.ACTION_UP){
+                    Log.e(TAG, "onTouch: pathcount="+pathcount+"path="+path.toString() );
+                    pathMap.put(pathcount++,path);
+                    pointcount = 0;
+                    path.clear();
+                    Log.e(TAG, "onTouch: clear pathcount="+pathcount+"path="+path.toString() );
                 }
                 return true;
             } else {
@@ -345,7 +349,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         transformTo(adjustsMartrix);
     }
     private void transformTo(Matrix matDst) {
-        Log.e(TAG, "transformTo: "+matDst.toShortString() );
         mAnim.startAnimation(mMatCanvas, matDst, this);
     }
     public Matrix getScaleMatrix() {
@@ -357,8 +360,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     }
     @Override
     public void onRefresh(Matrix mat) {
-        Log.e(TAG, "onRefresh: "+mMatCanvas.toShortString() );
-        Log.e(TAG, "onRefresh:mat "+mat.toShortString() );
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

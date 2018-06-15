@@ -198,7 +198,6 @@ public class GLThread extends Thread {
                             sGLThreadManager.notifyAll();
                             Log.e(TAG, "mPaused is now " + mPaused + " tid=" + getId());
                         }
-
                         // Have we lost the EGL context?
                         if (lostEglContext) {
                             Log.e(TAG, "lostEglContext");
@@ -206,7 +205,6 @@ public class GLThread extends Thread {
                             stopEglContextLocked();
                             lostEglContext = false;
                         }
-
                         // When pausing, release the EGL surface:
                         if (pausing && mHaveEglSurface) {
                             Log.e(TAG, "releasing EGL surface because paused tid=" + getId());
@@ -548,7 +546,22 @@ public class GLThread extends Thread {
             mChoreographerRenderWrapper.stop();
         }
     }
-
+    public void onDestroy(){
+        synchronized (sGLThreadManager) {
+            Log.e(TAG, "onPause tid=" + getId());
+            mRequestPaused = true;
+            sGLThreadManager.notifyAll();
+            while ((!mExited) && (!mPaused)) {
+                Log.e(TAG, "onPause waiting for mPaused.");
+                try {
+                    sGLThreadManager.wait();
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            mChoreographerRenderWrapper.stop();
+        }
+    }
     public void onResume() {
         synchronized (sGLThreadManager) {
             Log.e(TAG, "onResume tid=" + getId());

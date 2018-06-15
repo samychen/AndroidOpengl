@@ -60,14 +60,6 @@ textureeffect::textureeffect() {
 textureeffect::~textureeffect() {
 
 }
-int textureeffect::changeMartrix(float *mat) {
-    for (int i = 0; i < sizeof(mOriMartrix)/ sizeof(mOriMartrix[0]); ++i) {
-        mOriMartrix[i] = mat[i];
-        flipYMartrix[i] = mat[i];
-    }
-    flipYMartrix[4] = -mOriMartrix[4];
-    return 0;
-}
 
 void textureeffect::create() {
     const char *vertex = GLUtils::openTextFile("vertex/transform_vertex_shader.glsl");
@@ -164,6 +156,10 @@ int textureeffect::copySrcBuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return 0;
 }
+int textureeffect::swapBuffer() {
+
+    return 0;
+}
 void textureeffect::change(int l, int t, int r, int b,int w,int h) {
     left = l;
     top = t;
@@ -244,7 +240,7 @@ void textureeffect::draw() {
         //render To Texure
         glBindFramebuffer(GL_FRAMEBUFFER, 0);//绑定到默认纹理，渲染最后的纹理
         glBindTexture(GL_TEXTURE_2D, 0);
-        glClearColor(0, 0, 0, 1);
+        glClearColor(1, 1, 1, 1);
         //render TO window
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         checkError("draw");
@@ -263,7 +259,7 @@ void textureeffect::draw() {
         glUniform1i(mTextureLocation, 0);
     } else {
         glBindTexture(GL_TEXTURE_2D, 0);
-        glClearColor(0, 0, 0, 1);
+        glClearColor(1, 1, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(mPointProgramHandle);
         mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
@@ -386,15 +382,4 @@ Java_com_learnopengles_android_gles_EffectRender_nativeCompare(JNIEnv *env, jcla
     if (textureeffectobj) {
         textureeffectobj->mCompareFlag = actionup_;
     }
-}
-
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_learnopengles_android_gles_EffectRender_nativeTransform(JNIEnv *env, jclass type,
-                                                                 jfloatArray martrix_) {
-    jfloat *martrix = env->GetFloatArrayElements(martrix_, NULL);
-    if (textureeffectobj) {
-        textureeffectobj->changeMartrix(martrix);
-    }
-    env->ReleaseFloatArrayElements(martrix_, martrix, 0);
 }

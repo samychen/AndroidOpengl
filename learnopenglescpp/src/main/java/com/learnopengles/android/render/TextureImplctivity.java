@@ -1,9 +1,6 @@
 package com.learnopengles.android.render;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.pm.ConfigurationInfo;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,12 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.learnopengles.android.cpp.R;
 import com.learnopengles.android.gles.EffectRender;
 import com.learnopengles.android.gles.GLTextureViewImpl;
-import com.learnopengles.android.scaleutil.GestureViewBinder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,8 +27,6 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_texture_implctivity);
         mGLTextureView = (GLTextureViewImpl) findViewById(R.id.gl_texture_view);
-//        FrameLayout groupview = findViewById(R.id.texture_group);
-//        GestureViewBinder.bind(this, groupview, mGLTextureView).setFullGroup(false);
         findViewById(R.id.button_teethwhite).setOnClickListener(this);
         findViewById(R.id.button_smooth).setOnClickListener(this);
         findViewById(R.id.button_bigsmooth).setOnClickListener(this);
@@ -76,7 +69,6 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button_teethwhite:
-                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -89,7 +81,6 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_smooth:
-                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -102,7 +93,6 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_bigsmooth:
-                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -115,7 +105,6 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_detail:
-                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -128,7 +117,6 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_erase:
-                mGLTextureView.setIsCanTouch(true);
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
@@ -159,7 +147,6 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 mGLTextureView.requestRender();
                 break;
             case R.id.button_move:
-//                mGLTextureView.setIsCanTouch(false);
                 moveFlag = !moveFlag;
                 mGLTextureView.setMoveFlag(moveFlag);
                 break;
@@ -171,7 +158,6 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction()==MotionEvent.ACTION_UP){
-            Log.e(TAG, "action up" );
             mGLTextureView.queueEvent(new Runnable() {
                 @Override
                 public void run() {
@@ -192,12 +178,14 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
     }
     @Override
     protected void onResume() {
+        findViewById(R.id.texture_group).setVisibility(View.VISIBLE);
         super.onResume();
         mGLTextureView.onResume();
     }
 
     @Override
     protected void onPause() {
+        findViewById(R.id.texture_group).setVisibility(View.GONE);
         super.onPause();
         mGLTextureView.onPause();
     }

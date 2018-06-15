@@ -34,7 +34,7 @@ public:
 
     int copySrcBuffer();
 
-    int changeMartrix(float* mat);
+    int swapBuffer();
 
     BTType ProType;
     int initEffect;
