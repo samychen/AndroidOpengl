@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/texture_group"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp">
+        <com.ufotosoft.facetune.gles.GLTextureViewImpl
+            android:id="@+id/gl_texture_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:orientation="horizontal">
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_teethwhite"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="白化" />
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_smooth"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="平滑" />
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_bigsmooth"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="更加平滑" />
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_detail"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="细节" />
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_erase"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="擦除" />
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_refuse"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="取消" />
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_refuse_last"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="单条取消" />
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_save"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="保存" />
+        <Button
+            android:textSize="10sp"
+            android:id="@+id/button_move"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="移动" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/img_compare"
+        android:layout_gravity="bottom|right"
+        android:padding="10dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/compare"
+        android:background="@drawable/circle_shape"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+</FrameLayout>

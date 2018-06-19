@@ -71,6 +71,7 @@ add_library(
                 # src/main/cpp/samplecode.cpp
                 src/main/cpp/facetune/facetune.cpp
                 src/main/cpp/facetune/textureeffect.cpp
+                 src/main/cpp/facetune/facetune_jni.cpp
              )
 add_library( libbeautytune
              STATIC

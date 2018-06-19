@@ -36,7 +36,9 @@ android {
             abiFilters 'armeabi-v7a'
         }
     }
-
+    compileOptions {
+        encoding "GBK"
+    }
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"

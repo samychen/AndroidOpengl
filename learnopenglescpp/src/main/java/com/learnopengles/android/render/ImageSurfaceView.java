@@ -13,7 +13,7 @@ public class ImageSurfaceView extends GLSurfaceView {
     ImageRender imageRender;
     public ImageSurfaceView(Context context) {
         super(context);
-        //ä¸ºäº†å¯ä»¥æ¿€æ´»logå’Œé”™è¯¯æ£€æŸ¥ï¼Œå¸®åŠ©è°ƒè¯•3Dåº”ç”¨ï¼Œéœ€è¦è°ƒç”¨setDebugFlags()ã€‚
+        //ÎªÁË¿ÉÒÔ¼¤»îlogºÍ´íÎó¼ì²é£¬°ïÖúµ÷ÊÔ3DÓ¦ÓÃ£¬ĞèÒªµ÷ÓÃsetDebugFlags()¡£
         this.setDebugFlags(DEBUG_CHECK_GL_ERROR|DEBUG_LOG_GL_CALLS);
     }
     public void setParam(Activity activity, int width, int heitht, String picpath){

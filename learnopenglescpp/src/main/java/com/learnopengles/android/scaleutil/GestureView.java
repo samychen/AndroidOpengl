@@ -17,9 +17,9 @@ import android.widget.RelativeLayout;
 
 public class GestureView extends FrameLayout {
 
-    private ViewDragHelper mViewDragHelper;//ç”¨äºå¤„ç†å­View çš„æ»‘åŠ¨
-    private ScaleGestureDetector mGesture;//ç”¨ä¸å¤„ç†åŒæ‰‹çš„ç¼©æ”¾æ‰‹åŠ¿
-    private float mZoomScale = 1.0f;//é»˜è®¤çš„ç¼©æ”¾æ¯”ä¸º1
+    private ViewDragHelper mViewDragHelper;//ÓÃÓÚ´¦Àí×ÓView µÄ»¬¶¯
+    private ScaleGestureDetector mGesture;//ÓÃÓë´¦ÀíË«ÊÖµÄËõ·ÅÊÖÊÆ
+    private float mZoomScale = 1.0f;//Ä¬ÈÏµÄËõ·Å±ÈÎª1
     private Context mContext;
 
 
@@ -40,18 +40,18 @@ public class GestureView extends FrameLayout {
     private void init() {
         initViewDrag();
         mGesture = new ScaleGestureDetector(mContext, new ScaleGestureDetector.OnScaleGestureListener() {
-            //éšç€æ‰‹åŠ¿æ“ä½œï¼Œå›è°ƒçš„æ–¹æ³•ï¼Œ
+            //Ëæ×ÅÊÖÊÆ²Ù×÷£¬»Øµ÷µÄ·½·¨£¬
             @Override
             public boolean onScale(ScaleGestureDetector detector) {
-                float previousSpan = detector.getPreviousSpan();//ç¼©æ”¾å‘ç”Ÿå‰çš„ä¸¤ç‚¹è·ç¦»
-                float currentSpan = detector.getCurrentSpan();//ç¼©æ”¾å‘ç”Ÿæ—¶çš„ä¸¤ç‚¹è·ç¦»
-                if (previousSpan < currentSpan)//æ”¾å¤§
+                float previousSpan = detector.getPreviousSpan();//Ëõ·Å·¢ÉúÇ°µÄÁ½µã¾àÀë
+                float currentSpan = detector.getCurrentSpan();//Ëõ·Å·¢ÉúÊ±µÄÁ½µã¾àÀë
+                if (previousSpan < currentSpan)//·Å´ó
                 {
                     mZoomScale = mZoomScale + (currentSpan - previousSpan) / previousSpan;
                 } else {
                     mZoomScale = mZoomScale - (previousSpan - currentSpan) / previousSpan;
                 }
-                //ç¡®ä¿æ”¾å¤§æœ€å¤šä¸º2å€ï¼Œæœ€å°‘ä¸èƒ½å°äºåŸå›¾
+                //È·±£·Å´ó×î¶àÎª2±¶£¬×îÉÙ²»ÄÜĞ¡ÓÚÔ­Í¼
                 if (mZoomScale > 2) {
                     mZoomScale = 2;
                 } else if (mZoomScale < 1) {
@@ -59,8 +59,8 @@ public class GestureView extends FrameLayout {
                 }
                 setScaleX(mZoomScale);
                 setScaleY(mZoomScale);
-                //è¿™é‡Œè°ƒç”¨çš„æ˜¯æœ¬è‡ªå®šä¹‰Viewçš„æ–¹æ³•ï¼Œæ˜¯å¯¹æœ¬è‡ªå®šä¹‰viewè¿›è¡Œçš„ç¼©æ”¾
-                /*åœ¨è¿™é‡Œè°ƒç”¨getChildViewï¼ˆindexï¼‰çš„è¿›è¡Œç¼©æ”¾ï¼Œè™½ç„¶æ§ä»¶æ˜¾ç¤ºå¤§å°æ”¹å˜äº†ï¼Œä½†æ˜¯åœ¨ViewDragHelperçš„å›è°ƒæ–¹æ³•ä¸­è·å¾—çš„View childçš„getWidthï¼ˆï¼‰å’ŒgetHeigitï¼ˆï¼‰æ˜¯åŸæ¥çš„å¤§å°ï¼Œä¸ä¼šå‘ç”Ÿæ”¹å˜*/
+                //ÕâÀïµ÷ÓÃµÄÊÇ±¾×Ô¶¨ÒåViewµÄ·½·¨£¬ÊÇ¶Ô±¾×Ô¶¨Òåview½øĞĞµÄËõ·Å
+                /*ÔÚÕâÀïµ÷ÓÃgetChildView£¨index£©µÄ½øĞĞËõ·Å£¬ËäÈ»¿Ø¼şÏÔÊ¾´óĞ¡¸Ä±äÁË£¬µ«ÊÇÔÚViewDragHelperµÄ»Øµ÷·½·¨ÖĞ»ñµÃµÄView childµÄgetWidth£¨£©ºÍgetHeigit£¨£©ÊÇÔ­À´µÄ´óĞ¡£¬²»»á·¢Éú¸Ä±ä*/
                 return true;
             }
 
@@ -81,15 +81,15 @@ public class GestureView extends FrameLayout {
         });
     }
 
-    //å°†éœ€è¦çš„viewæ”¾ç½®åœ¨å¸ƒå±€ä¸­
+    //½«ĞèÒªµÄview·ÅÖÃÔÚ²¼¾ÖÖĞ
     public void addChildView(final View view) {
-        //ä¿è¯æ§ä»¶åªæœ‰ä¸€ä¸ªå­Viewï¼Œæ–¹ä¾¿æ“ä½œ
+        //±£Ö¤¿Ø¼şÖ»ÓĞÒ»¸ö×ÓView£¬·½±ã²Ù×÷
 
         if (getChildCount() != 0) {
             throw new IllegalStateException("this view can only have one child!");
         } else {
             addView(view);
-            //ç¡®ä¿å­viewæ°¸è¿œé“ºæ»¡æ§ä»¶
+            //È·±£×ÓviewÓÀÔ¶ÆÌÂú¿Ø¼ş
             FrameLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             view.setLayoutParams(params);
         }
@@ -113,14 +113,14 @@ public class GestureView extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //å°†äº‹ä»¶äº¤ç»™ViewDragHelperå’ŒScaleGestureDetector å¤„ç†
+        //½«ÊÂ¼ş½»¸øViewDragHelperºÍScaleGestureDetector ´¦Àí
         mViewDragHelper.processTouchEvent(event);
         return mGesture.onTouchEvent(event);
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        //ç”±ViewDragHelperå¤„ç†æ‹¦æˆª
+        //ÓÉViewDragHelper´¦ÀíÀ¹½Ø
         return mViewDragHelper.shouldInterceptTouchEvent(ev);
 
 
@@ -130,15 +130,15 @@ public class GestureView extends FrameLayout {
         mViewDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
-                //è¿™é‡Œçš„return trueè¡¨ç¤ºè‡ªviewå¯ä»¥æ»‘åŠ¨ï¼Œfalseè¡¨ç¤ºä¸å¤„ç†æ»‘åŠ¨
+                //ÕâÀïµÄreturn true±íÊ¾×Ôview¿ÉÒÔ»¬¶¯£¬false±íÊ¾²»´¦Àí»¬¶¯
                 return true;
 
             }
 
-            /*è¿™é‡Œæ˜¯æ§åˆ¶å­viewå·¦å³æ»‘åŠ¨çš„å›è°ƒï¼Œchildä¸ºæœ¬è‡ªå®šä¹‰viewçš„å­æ§ä»¶ï¼Œleftè¡¨ç¤ºæ„å›¾ä»æ‰‹æŒ‡æ“ä½œå­viewä»å·¦è¾¹ç•Œæ»‘åŠ¨çš„è·ç¦»ï¼Œå¤§äº0è¡¨ç¤ºå‘å³ç§»åŠ¨ï¼Œå°äº0è¡¨ç¤ºå‘å·¦ç§»åŠ¨ï¼Œæ˜¯ä»æ‰‹æŒ‡çš„ç§»åŠ¨æµ‹å‡ºçš„ç†è®ºå€¼ã€‚æ–¹æ³•çš„è¿”å›å€¼è¡¨ç¤ºå®é™…ä¸Šæ§ä»¶ç§»åŠ¨çš„è·ç¦»ï¼Œå¯ä»¥ç”¨è¿”å›å€¼æ§åˆ¶è¾¹ç•Œ*/
+            /*ÕâÀïÊÇ¿ØÖÆ×Óview×óÓÒ»¬¶¯µÄ»Øµ÷£¬childÎª±¾×Ô¶¨ÒåviewµÄ×Ó¿Ø¼ş£¬left±íÊ¾ÒâÍ¼´ÓÊÖÖ¸²Ù×÷×Óview´Ó×ó±ß½ç»¬¶¯µÄ¾àÀë£¬´óÓÚ0±íÊ¾ÏòÓÒÒÆ¶¯£¬Ğ¡ÓÚ0±íÊ¾Ïò×óÒÆ¶¯£¬ÊÇ´ÓÊÖÖ¸µÄÒÆ¶¯²â³öµÄÀíÂÛÖµ¡£·½·¨µÄ·µ»ØÖµ±íÊ¾Êµ¼ÊÉÏ¿Ø¼şÒÆ¶¯µÄ¾àÀë£¬¿ÉÒÔÓÃ·µ»ØÖµ¿ØÖÆ±ß½ç*/
             @Override
             public int clampViewPositionHorizontal(View child, int left, int dx) {
-                //æ”¾å¤§åæ§ä»¶çš„å®½åº¦-ä¸»å¸ƒå±€çš„å®½åº¦ å› ä¸ºView chlidçš„æ§ä»¶ä½¿ç”¨çš„æ˜¯match_parent,æ‰€ä»¥ç›´æ¥ç”¨çˆ¶å¸ƒå±€çš„å®½å–å€¼
+                //·Å´óºó¿Ø¼şµÄ¿í¶È-Ö÷²¼¾ÖµÄ¿í¶È ÒòÎªView chlidµÄ¿Ø¼şÊ¹ÓÃµÄÊÇmatch_parent,ËùÒÔÖ±½ÓÓÃ¸¸²¼¾ÖµÄ¿íÈ¡Öµ
                 if (left < (getWidth() - getWidth() * mZoomScale) / 2) {
                     return (int) ((getWidth() - getWidth() * mZoomScale) / 2);
                 }
@@ -146,10 +146,10 @@ public class GestureView extends FrameLayout {
                     return (int) ((mZoomScale * getWidth() - getWidth()) / 2);
                 }
                 return left;
-                /** è¿™é‡Œè¿›è¡Œè¾¹ç•Œå¤„ç†ï¼Œå› ä¸ºè¿™é‡Œå®é™…æœ€å¤§èƒ½æ”¾å¤§2å€ï¼Œé‚£ä¹ˆå®é™…ä¼šæœ‰3/4çš„å·¦å³æ»‘åŠ¨ç©ºé—´æ‰ä¼šæŠŠå­Viewï¼ˆchildï¼‰å®Œå…¨åˆ’å‡ºå¯è§èŒƒå›´ï¼Œè¿™é‡Œä¸ºäº†ä¿è¯viewçš„å¯è§æ€§ï¼Œä½¿ç”¨1/2ç¡®ä¿å­viewå§‹ç»ˆåœ¨å¯è§èŒƒå›´ä¹‹å†…*/
+                /** ÕâÀï½øĞĞ±ß½ç´¦Àí£¬ÒòÎªÕâÀïÊµ¼Ê×î´óÄÜ·Å´ó2±¶£¬ÄÇÃ´Êµ¼Ê»áÓĞ3/4µÄ×óÓÒ»¬¶¯¿Õ¼ä²Å»á°Ñ×ÓView£¨child£©ÍêÈ«»®³ö¿É¼û·¶Î§£¬ÕâÀïÎªÁË±£Ö¤viewµÄ¿É¼ûĞÔ£¬Ê¹ÓÃ1/2È·±£×ÓviewÊ¼ÖÕÔÚ¿É¼û·¶Î§Ö®ÄÚ*/
             }
 
-            /*è¿™ä¸ªæ–¹æ³•æ˜¯æ§åˆ¶ä¸Šä¸‹æ»‘åŠ¨çš„ï¼Œè·Ÿä¸Šé¢çš„æ–¹æ³•æ„ä¹‰ä¸€æ ·ï¼Œåªæ˜¯æ–¹å‘ä¸Šä¸ä¸€æ ·ï¼Œtopè¡¨ç¤ºä»é¡¶éƒ¨è¾¹ç•Œè®¡ç®—çš„è·ç¦»ï¼Œå‘ä¸‹ä¸ºæ­£ï¼Œå‘ä¸Šä¸ºè´Ÿ*/
+            /*Õâ¸ö·½·¨ÊÇ¿ØÖÆÉÏÏÂ»¬¶¯µÄ£¬¸úÉÏÃæµÄ·½·¨ÒâÒåÒ»Ñù£¬Ö»ÊÇ·½ÏòÉÏ²»Ò»Ñù£¬top±íÊ¾´Ó¶¥²¿±ß½ç¼ÆËãµÄ¾àÀë£¬ÏòÏÂÎªÕı£¬ÏòÉÏÎª¸º*/
             @Override
             public int clampViewPositionVertical(View child, int top, int dy) {
 

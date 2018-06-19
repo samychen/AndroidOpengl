@@ -18,22 +18,22 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Context context = getApplicationContext();
-// è·å–å½“å‰åŒ…å
+// »ñÈ¡µ±Ç°°üÃû
         String packageName = context.getPackageName();
-// è·å–å½“å‰è¿›ç¨‹å
+// »ñÈ¡µ±Ç°½ø³ÌÃû
         String processName = getProcessName(android.os.Process.myPid());
-// è®¾ç½®æ˜¯å¦ä¸ºä¸ŠæŠ¥è¿›ç¨‹
+// ÉèÖÃÊÇ·ñÎªÉÏ±¨½ø³Ì
 //        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
 //        strategy.setUploadProcess(processName == null || processName.equals(packageName));
 //        CrashReport.initCrashReport(getApplicationContext(), "633c8ddb77", false);
-        //æµ‹è¯•
+        //²âÊÔ
 //        CrashReport.testJavaCrash();
     }
     /**
-     * è·å–è¿›ç¨‹å·å¯¹åº”çš„è¿›ç¨‹å
+     * »ñÈ¡½ø³ÌºÅ¶ÔÓ¦µÄ½ø³ÌÃû
      *
-     * @param pid è¿›ç¨‹å·
-     * @return è¿›ç¨‹å
+     * @param pid ½ø³ÌºÅ
+     * @return ½ø³ÌÃû
      */
     private static String getProcessName(int pid) {
         BufferedReader reader = null;

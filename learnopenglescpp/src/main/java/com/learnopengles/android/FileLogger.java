@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
  */
 public final class FileLogger {
     /**
-     * Logä¸­çš„å¸¸é‡æ˜¯intå€¼ï¼Œä¸é€‚åˆç»™å¤–é¢ä½¿ç”¨ï¼Œè¿™é‡Œç»Ÿä¸€ç”¨è¿™ä¸ªæšä¸¾å€¼è¿›è¡Œè®¾ç½®
+     * LogÖĞµÄ³£Á¿ÊÇintÖµ£¬²»ÊÊºÏ¸øÍâÃæÊ¹ÓÃ£¬ÕâÀïÍ³Ò»ÓÃÕâ¸öÃ¶¾ÙÖµ½øĞĞÉèÖÃ
      */
     public enum LogLevel {
         VERBOSE(Log.VERBOSE),
@@ -58,9 +58,9 @@ public final class FileLogger {
     private static Map<String, Integer> limitLogMap = new HashMap<>();
 
     /**
-     * è®¾ç½®Logå¼€å…³
+     * ÉèÖÃLog¿ª¹Ø
      *
-     * @param enable å¼€å…³é¡¹(é»˜è®¤ä¸ºå¼€).
+     * @param enable ¿ª¹ØÏî(Ä¬ÈÏÎª¿ª).
      */
     public static void setEnable(boolean enable) {
         sLogEnable = enable;
@@ -75,9 +75,9 @@ public final class FileLogger {
     }
 
     /**
-     * è®¾ç½®å†™å…¥logçš„æ–‡ä»¶å¤¹
+     * ÉèÖÃĞ´ÈëlogµÄÎÄ¼ş¼Ğ
      *
-     * @param dirPath æ–‡ä»¶å¤¹åœ°å€
+     * @param dirPath ÎÄ¼ş¼ĞµØÖ·
      */
     public static void init(String dirPath) {
         sLogEnable = true;
@@ -396,8 +396,8 @@ public final class FileLogger {
     }
 
     public static class LogFileManager {
-        private static final int LOG_FILES_MAX_NUM = 5; //æ–‡ä»¶æœ€å¤šæœ‰5ä¸ª
-        private static final int LOG_FILE_MAX_SIZE = 1000 * 1000 * 20; //æ–‡ä»¶æœ€å¤§20MB
+        private static final int LOG_FILES_MAX_NUM = 5; //ÎÄ¼ş×î¶àÓĞ5¸ö
+        private static final int LOG_FILE_MAX_SIZE = 1000 * 1000 * 20; //ÎÄ¼ş×î´ó20MB
 
         private static final SimpleDateFormat LOG_FILE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
         public static final String PREFIX = "Log";
@@ -420,13 +420,13 @@ public final class FileLogger {
             File dir = new File(mLogFileDir);
             File[] files = dir.listFiles(fileFilter);
             if (files == null || files.length == 0) {
-                // åˆ›å»ºæ–°æ–‡ä»¶
+                // ´´½¨ĞÂÎÄ¼ş
                 return createNewLogFileIfNeed();
             }
             List<File> sortedFiles = sortFiles(files);
 
             if (files.length > LOG_FILES_MAX_NUM) {
-                // åˆ æ‰æœ€è€çš„æ–‡ä»¶
+                // É¾µô×îÀÏµÄÎÄ¼ş
                 FileUtil.delete(sortedFiles.get(0));
             }
             return createNewLogFileIfNeed();

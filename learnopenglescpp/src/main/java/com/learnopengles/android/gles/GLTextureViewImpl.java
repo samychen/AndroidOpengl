@@ -3,10 +3,8 @@ package com.learnopengles.android.gles;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Matrix;
-import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
@@ -17,7 +15,6 @@ import com.learnopengles.android.scaleutil.DensityUtil;
 import com.learnopengles.android.scaleutil.MatrixAnimation;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,14 +36,27 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     private long mLastTapTime = 0;
     protected MatrixAnimation mAnim = null;
     private Handler mHandler = new Handler();
-
-    //æ˜¯å¦é€‰ä¸­ç§»åŠ¨æˆ–è€…æ²¡æœ‰é€‰ä¸­æ•ˆæœ
+    //ÊÇ·ñÑ¡ÖĞÒÆ¶¯»òÕßÃ»ÓĞÑ¡ÖĞĞ§¹û
     private boolean moveFlag;
     private int picwidth,picheight;
     private EffectRender renderer;
     private String TAG = "GLTextureViewImpl";
     private Map<Integer,SparseArray<Float>> pathMap = new HashMap<>();
-    private SparseArray<Float> path = new SparseArray<>();
+
+    public Map<Integer, SparseArray<Float>> getPathMap() {
+        return pathMap;
+    }
+    public Map<Integer, SparseArray<Float>> getLastPath(){
+        Map<Integer,SparseArray<Float>> map = new HashMap<>();
+        map.put(0,pathMap.get(pathMap.size()-1));
+        pathMap.remove(pathMap.size()-1);
+        pathcount--;
+        return map;
+    }
+    public void clearPath(){
+        pathMap.clear();
+        pathcount = 0;
+    }
     private int pointcount;
     private int pathcount;
 
@@ -92,12 +102,11 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
 
     @Override
     protected void onGLDraw() {
-        //é¢„ç•™
+        //Ô¤Áô
     }
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        Log.e(TAG, "onSurfaceTextureAvailable: " );
         super.onSurfaceTextureAvailable(surface, width, height);
     }
 
@@ -110,7 +119,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
 
     @Override
     public void onPause() {
-        Log.e(TAG, "onPause: "+pathMap.toString() );
+//        Log.e(TAG, "onPause: "+pathMap.toString() );
         mMatCanvas = new Matrix();
         setTransform(mMatCanvas);
         super.onPause();
@@ -127,7 +136,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
             return false;
         }
         if(mAnim.isAnimating()) return false;
-        if (moveFlag){//å…è®¸ç§»åŠ¨
+        if (moveFlag){//ÔÊĞíÒÆ¶¯
                 if(super.onTouchEvent(event)) {
                     return true;
                 }
@@ -153,24 +162,22 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 }
                 if(bHandled) invalidate();
                 return bHandled;
-        } else {//å¤„ç†æ•ˆæœ
+        } else {//´¦ÀíĞ§¹û
             if (event != null) {
                 float[] mat = new float[9];
                 Matrix src = mMatCanvas;
                 Matrix dst = new Matrix();
                 src.invert(dst);
                 dst.getValues(mat);
-                //ä»¥å±å¹•å·¦ä¸Šè§’ä¸º(0,0)çš„ä½ç½®,åæ ‡ç³»ä¸€ä¸­çš„è§¦æ‘¸ç‚¹ä½ç½®
+                //ÒÔÆÁÄ»×óÉÏ½ÇÎª(0,0)µÄÎ»ÖÃ,×ø±êÏµÒ»ÖĞµÄ´¥ÃşµãÎ»ÖÃ
                 float normalizedX =event.getX() / (float) v.getWidth()*picwidth;
                 float normalizedY =event.getY() / (float) v.getHeight()*picheight;
-                //åæ ‡ç³»ä¸€ä¸­ç»è¿‡ç¼©æ”¾å˜åŒ–é€†å˜æ¢çš„è§¦æ‘¸ä½ç½®
+                //×ø±êÏµÒ»ÖĞ¾­¹ıËõ·Å±ä»¯Äæ±ä»»µÄ´¥ÃşÎ»ÖÃ
                 float x2 = mat[0]*normalizedX+mat[1]*normalizedY+mat[2];
                 float y2 = mat[3]*normalizedX+mat[4]*normalizedY+mat[5];
-                //åæ ‡ç³»äºŒä¸­çš„è§¦æ‘¸ä½ç½®
+                //×ø±êÏµ¶şÖĞµÄ´¥ÃşÎ»ÖÃ
                 final float x = x2 - mat[2] *(1-mat[0]/2)/ (float) v.getWidth()*picwidth;
                 final float y = y2 - mat[5] *(1-mat[0]/2)/ (float) v.getHeight()*picheight;
-                path.put(pointcount++,x);
-                path.put(pointcount++,y);
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     queueEvent(new Runnable() {
                         @Override
@@ -180,6 +187,12 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                         }
                     });
                     requestRender();
+                    //TODO-µ±Ç°ÊÇ·ñÊÇÑ¡ÖĞĞ§¹û,Ã»ÓĞÑ¡ÖĞ²»·ÅÈëmap
+
+                    SparseArray<Float> path = new SparseArray<>();
+                    path.put(pointcount++,x);
+                    path.put(pointcount++,y);
+                    pathMap.put(pathcount,path);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     queueEvent(new Runnable() {
                         @Override
@@ -189,12 +202,11 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                         }
                     });
                     requestRender();
+                    pathMap.get(pathcount).put(pointcount++,x);
+                    pathMap.get(pathcount).put(pointcount++,y);
                 } else if (event.getAction() == MotionEvent.ACTION_UP){
-                    Log.e(TAG, "onTouch: pathcount="+pathcount+"path="+path.toString() );
-                    pathMap.put(pathcount++,path);
                     pointcount = 0;
-                    path.clear();
-                    Log.e(TAG, "onTouch: clear pathcount="+pathcount+"path="+path.toString() );
+                    pathcount++;//TODO-pathcountÔÚÄ³Ğ©Çé¿öÏÂÃ»ÓĞÖÃÎª0
                 }
                 return true;
             } else {

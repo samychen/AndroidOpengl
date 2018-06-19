@@ -214,9 +214,6 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
         this.height = height;
         surfaceAvailable = true;
         glThreadBuilder = new GLThread.Builder();
-//        if (surfaceTexture==null){
-//            surfaceTexture = surface;
-//        }
         if (mGLThread == null) {
             glThreadBuilder.setRenderMode(getRenderMode())
                     .setSurface(surface)
@@ -287,12 +284,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
         Log.d("BaseGLTextureView", "onSurfaceTextureDestroyed: ");
-//        if (windowDestroyed){
-            surfaceDestroyed();
-//        }
-//        if (windowDestroyed){
-//            surfaceTexture = null;
-//        }
+        surfaceDestroyed();
         if (surfaceTextureListener != null) {
             surfaceTextureListener.onSurfaceTextureDestroyed(surface);
         }

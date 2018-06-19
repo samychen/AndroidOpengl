@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -15,6 +17,7 @@ import com.learnopengles.android.gles.GLTextureViewImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 public class TextureImplctivity extends Activity implements View.OnClickListener,View.OnTouchListener{
     private GLTextureViewImpl mGLTextureView;
@@ -33,6 +36,7 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
         findViewById(R.id.button_detail).setOnClickListener(this);
         findViewById(R.id.button_erase).setOnClickListener(this);
         findViewById(R.id.button_refuse).setOnClickListener(this);
+        findViewById(R.id.button_refuse_last).setOnClickListener(this);
         findViewById(R.id.button_save).setOnClickListener(this);
         findViewById(R.id.button_move).setOnClickListener(this);
         findViewById(R.id.img_compare).setOnTouchListener(this);
@@ -129,10 +133,25 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.button_refuse:
+                //TODO-保存后点击取消只能取消保存后的效果，onResume回来时还是取消了所有效果
                 mGLTextureView.queueEvent(new Runnable() {
                     @Override
                     public void run() {
                         effectRender.releaseEffect(6);
+                    }
+                });
+                mGLTextureView.requestRender();
+                mGLTextureView.clearPath();
+                break;
+            case R.id.button_refuse_last:
+                //擦除最后一条效果模式
+                final Map<Integer, SparseArray<Float>> lastPath = mGLTextureView.getLastPath();
+                mGLTextureView.queueEvent(new Runnable() {
+                    @Override
+                    public void run() {
+                        effectRender.removeLastEffect();//先切换到擦除模式
+                        //绘制最后一条路径
+                        effectRender.setPath(lastPath);
                     }
                 });
                 mGLTextureView.requestRender();
@@ -178,21 +197,19 @@ public class TextureImplctivity extends Activity implements View.OnClickListener
     }
     @Override
     protected void onResume() {
-        findViewById(R.id.texture_group).setVisibility(View.VISIBLE);
         super.onResume();
         mGLTextureView.onResume();
     }
 
     @Override
     protected void onPause() {
-        findViewById(R.id.texture_group).setVisibility(View.GONE);
         super.onPause();
         mGLTextureView.onPause();
+        effectRender.destroy();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        imageRender.destroy();
     }
 }

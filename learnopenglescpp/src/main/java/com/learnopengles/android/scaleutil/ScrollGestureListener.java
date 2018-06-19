@@ -51,13 +51,13 @@ public class ScrollGestureListener extends GestureDetector.SimpleOnGestureListen
             distanceY = -distanceY;
 
             if (viewWidthReal > groupWidth) {
-                //æœ€å¤§ç§»åŠ¨è·ç¦»å…¨éƒ¨ä¸ºæ­£æ•°ï¼Œæ‰€ä»¥éœ€è¦é€šè¿‡åˆ¤æ–­distanceXçš„æ­£è´Ÿï¼Œæ¥åˆ¤æ–­æ˜¯å‘å·¦ç§»åŠ¨è¿˜æ˜¯å‘å³ç§»åŠ¨ï¼Œ
-                // ç„¶åé€šè¿‡å–distanceXçš„ç»å¯¹å€¼æ¥å’Œç›¸åº”ç§»åŠ¨æ–¹å‘çš„æœ€å¤§ç§»åŠ¨è·ç¦»æ¯”è¾ƒ
+                //×î´óÒÆ¶¯¾àÀëÈ«²¿ÎªÕıÊı£¬ËùÒÔĞèÒªÍ¨¹ıÅĞ¶ÏdistanceXµÄÕı¸º£¬À´ÅĞ¶ÏÊÇÏò×óÒÆ¶¯»¹ÊÇÏòÓÒÒÆ¶¯£¬
+                // È»ºóÍ¨¹ıÈ¡distanceXµÄ¾ø¶ÔÖµÀ´ºÍÏàÓ¦ÒÆ¶¯·½ÏòµÄ×î´óÒÆ¶¯¾àÀë±È½Ï
                 if ((distanceX < 0 && Math.abs(distanceXTemp + distanceX) < maxTranslationLeft)
                         || (distanceX > 0 && distanceXTemp + distanceX < maxTranslationRight)) {
                     distanceXTemp += distanceX;
                     targetView.setTranslationX(distanceXTemp);
-                    //å¦‚æœè¶…å‡ºè¾¹ç•Œï¼Œå°±ç§»åŠ¨åˆ°æœ€å¤§è·ç¦»ï¼Œé˜²æ­¢è¾¹ç•Œæœ‰å‰©ä½™é‡
+                    //Èç¹û³¬³ö±ß½ç£¬¾ÍÒÆ¶¯µ½×î´ó¾àÀë£¬·ÀÖ¹±ß½çÓĞÊ£ÓàÁ¿
                 } else if ((distanceX < 0 && Math.abs(distanceXTemp + distanceX) > maxTranslationLeft)) {
                     distanceXTemp = -maxTranslationLeft;
                     targetView.setTranslationX(-maxTranslationLeft);
@@ -72,7 +72,7 @@ public class ScrollGestureListener extends GestureDetector.SimpleOnGestureListen
                         || (distanceY > 0 && distanceYTemp + distanceY < maxTranslationBottom)) {
                     distanceYTemp += distanceY;
                     targetView.setTranslationY(distanceYTemp);
-                    //å¦‚æœè¶…å‡ºè¾¹ç•Œï¼Œå°±ç§»åŠ¨åˆ°æœ€å¤§è·ç¦»ï¼Œé˜²æ­¢è¾¹ç•Œæœ‰å‰©ä½™é‡
+                    //Èç¹û³¬³ö±ß½ç£¬¾ÍÒÆ¶¯µ½×î´ó¾àÀë£¬·ÀÖ¹±ß½çÓĞÊ£ÓàÁ¿
                 } else if ((distanceY < 0 && Math.abs(distanceYTemp + distanceY) > maxTranslationTop)) {
                     distanceYTemp = -maxTranslationTop;
                     targetView.setTranslationY(-maxTranslationTop);
@@ -87,7 +87,7 @@ public class ScrollGestureListener extends GestureDetector.SimpleOnGestureListen
 
     @Override
     public boolean onDown(MotionEvent e) {
-        //è®¡ç®—èƒ½ç§»åŠ¨çš„æœ€å¤§è·ç¦»
+        //¼ÆËãÄÜÒÆ¶¯µÄ×î´ó¾àÀë
         if (!isCalculate) {
             isCalculate = true;
             maxTranslationLeft = targetView.getLeft();
@@ -110,7 +110,7 @@ public class ScrollGestureListener extends GestureDetector.SimpleOnGestureListen
 
         viewWidthReal = viewWidthNormal * scale;
         viewHeightReal = viewHeightNormal * scale;
-        //å¦‚æœviewæ¯”groupå°
+        //Èç¹ûview±ÈgroupĞ¡
         if (viewWidthReal < groupWidth) {
             if (isFullGroup) {
                 distanceXTemp = 0;
@@ -118,7 +118,7 @@ public class ScrollGestureListener extends GestureDetector.SimpleOnGestureListen
             }
             maxTranslationLeft = targetView.getLeft() - (viewWidthReal - viewWidthNormal) / 2;
             maxTranslationRight = (viewGroup.getWidth() - targetView.getRight()) - (viewWidthReal - viewWidthNormal) / 2;
-            //å¦‚æœç§»åŠ¨è·ç¦»è¶…è¿‡æœ€å¤§å¯ç§»åŠ¨è·ç¦»
+            //Èç¹ûÒÆ¶¯¾àÀë³¬¹ı×î´ó¿ÉÒÆ¶¯¾àÀë
             if (scale > this.scale && distanceXTemp < 0 && -distanceXTemp > maxTranslationLeft) {
                 float translate = (viewWidthReal - viewWidthRealTemp) / 2;
                 targetView.setTranslationX(targetView.getTranslationX() + translate);
@@ -150,7 +150,7 @@ public class ScrollGestureListener extends GestureDetector.SimpleOnGestureListen
                 distanceYTemp = 0;
                 targetView.setTranslationY(0);
             }
-            //å¦‚æœç§»åŠ¨è·ç¦»è¶…è¿‡æœ€å¤§å¯ç§»åŠ¨è·ç¦»
+            //Èç¹ûÒÆ¶¯¾àÀë³¬¹ı×î´ó¿ÉÒÆ¶¯¾àÀë
             if (scale > this.scale && distanceYTemp < 0 && -distanceYTemp > maxTranslationTop) {
                 float translate = (viewHeightReal - viewHeightRealTemp) / 2;
                 targetView.setTranslationY(targetView.getTranslationY() + translate);

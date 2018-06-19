@@ -62,6 +62,13 @@
             android:text="取消" />
         <Button
             android:textSize="10sp"
+            android:id="@+id/button_refuse_last"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="单条取消" />
+        <Button
+            android:textSize="10sp"
             android:id="@+id/button_save"
             android:layout_width="0dp"
             android:layout_weight="1"

@@ -5,12 +5,8 @@
 #include "textureeffect.h"
 #include <graphics/GLUtils.h>
 #include <android/log.h>
-#include <jni.h>
-#include <graphics/Matrix.h>
 #include "include/beautitune.h"
 #define LOG_TAG "textureeffect"
-#define LOGI(fmt, args...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, fmt, ##args)
-#define LOGD(fmt, args...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, fmt, ##args)
 #define LOGE(fmt, args...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, fmt, ##args)
 
 int checkError(const char* op);
@@ -70,7 +66,6 @@ void textureeffect::create() {
         return;
     }
     srcTexure = GLUtils::loadTexture(picpath);
-    checkError("create");
 }
 void textureeffect::createFrameBuffer(){
     glGenFramebuffers(1, &fFrame);
@@ -156,10 +151,7 @@ int textureeffect::copySrcBuffer() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return 0;
 }
-int textureeffect::swapBuffer() {
 
-    return 0;
-}
 void textureeffect::change(int l, int t, int r, int b,int w,int h) {
     left = l;
     top = t;
@@ -212,7 +204,6 @@ int textureeffect::renderCenter(FPOINT center, TFloat radius) {
         nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, 10.0f, &Para, ImgBuf);
     }
     draw();
-    checkError("create");
     return 0;
 }
 int textureeffect::releaseEffect() {
@@ -234,7 +225,6 @@ int checkError(const char* op) {
     return res;
 }
 void textureeffect::draw() {
-//    glViewport(0,0,mWidth,mHeight);
     glViewport(left, top, right, bottom);
     if (mCompareFlag==0){
         //render To Texure
@@ -257,7 +247,7 @@ void textureeffect::draw() {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, dstTexure);
         glUniform1i(mTextureLocation, 0);
-    } else {
+    } else {// compare时显示原纹理
         glBindTexture(GL_TEXTURE_2D, 0);
         glClearColor(1, 1, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -276,110 +266,12 @@ void textureeffect::draw() {
         glUniform1i(mTextureLocation, 0);
     }
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+    glDisableVertexAttribArray(mPositionHandle);
+    glDisableVertexAttribArray(mTextureCoordinateHandle);
+}
+
+void textureeffect::destroyTexture() const {
     glDeleteFramebuffers(1, &fFrame);
-    checkError("draw");
-}
-textureeffect *textureeffectobj;
-
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_learnopengles_android_gles_EffectRender_nativeSurfaceCreate(JNIEnv *env, jclass type,
-                                                                      jobject assetManager,jint picwidth_,jint picheight_, jstring picpath_) {
-    const char *picpath = env->GetStringUTFChars(picpath_, 0);
-    GLUtils::setEnvAndAssetManager(env, assetManager);
-    if (textureeffectobj) {
-        delete textureeffectobj;
-        textureeffectobj = NULL;
-    }
-    textureeffectobj = new textureeffect();
-    textureeffectobj->picwidth = picwidth_;
-    textureeffectobj->picheight = picheight_;
-    textureeffectobj->picpath = (char *) picpath;
-    textureeffectobj->create();
-    env->ReleaseStringUTFChars(picpath_, picpath);
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_learnopengles_android_gles_EffectRender_nativeSurfaceChange(JNIEnv *env,
-                                                                      jclass type,
-                                                                      jint left_, jint top_,jint right_,jint bottom_,jint width_,jint height_) {
-    if (textureeffectobj) {
-        textureeffectobj->change(left_, top_,right_,bottom_,width_,height_);
-        textureeffectobj->createFrameBuffer();
-    }
-
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_learnopengles_android_gles_EffectRender_nativeRender(JNIEnv *env,
-                                                               jclass type,
-                                                               jfloat x, jfloat y) {
-    if (textureeffectobj) {
-        int ret=textureeffectobj->renderCenter({x,y},15.0f);
-        textureeffectobj->mCompareFlag = 0;
-        LOGE("ret=%d",ret);
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_learnopengles_android_gles_EffectRender_nativeDrawFrame(JNIEnv *env,
-                                                                  jclass type) {
-
-    if (textureeffectobj) {
-        textureeffectobj->draw();
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_learnopengles_android_gles_EffectRender_nativereleaseEffect(JNIEnv *env,
-                                                                      jclass type,jint effecttype_) {
-    if (textureeffectobj) {
-        LOGE("release");
-        textureeffectobj->initEffect = 1;
-        if (effecttype_==1){
-            textureeffectobj->releaseEffect();
-            textureeffectobj->ProType = TeethWhite;
-            textureeffectobj->bsWork = Paint;
-            textureeffectobj->hasEffect = 1;
-            textureeffectobj->copyBuffer();
-        } else if (effecttype_==2){
-            textureeffectobj->releaseEffect();
-            textureeffectobj->ProType = Smooth;
-            textureeffectobj->bsWork = Paint;
-            textureeffectobj->hasEffect = 1;
-            textureeffectobj->copyBuffer();
-        } else if (effecttype_==3){
-            textureeffectobj->releaseEffect();
-            textureeffectobj->ProType = Smooth;
-            textureeffectobj->bsWork = Paint;
-            textureeffectobj->hasEffect = 1;
-            textureeffectobj->isMoreSmooth = 1;
-            textureeffectobj->copyBuffer();
-        } else if (effecttype_==4){
-            textureeffectobj->releaseEffect();
-            textureeffectobj->ProType = Detail;
-            textureeffectobj->bsWork = Paint;
-            textureeffectobj->hasEffect = 1;
-            textureeffectobj->copyBuffer();
-        } else if (effecttype_==5){
-            //之前是否选择其他按钮
-            if ( textureeffectobj->hasEffect == 0){
-                textureeffectobj->initEffect = 0;
-            } else {
-                textureeffectobj->bsWork = Erase;
-            }
-        } else if (effecttype_==6){
-            textureeffectobj->releaseEffect();
-            textureeffectobj->copySrcBuffer();
-        } else if (effecttype_==7){
-            textureeffectobj->copyBuffer();
-        }
-    }
-}
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_learnopengles_android_gles_EffectRender_nativeCompare(JNIEnv *env, jclass type,jint actionup_) {
-    if (textureeffectobj) {
-        textureeffectobj->mCompareFlag = actionup_;
-    }
+    glDeleteTextures(1,&srcTexure);
+    glDeleteTextures(1,&dstTexure);
 }
