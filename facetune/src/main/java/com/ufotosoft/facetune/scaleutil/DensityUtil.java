@@ -12,5 +12,9 @@ public class DensityUtil {
     public static int px2dip(Context context, float pxValue) {  
         final float scale = context.getResources().getDisplayMetrics().density;  
         return (int) (pxValue / scale + 0.5f);  
-    }  
+    }
+    public static float px2dipF(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return pxValue / scale;
+    }
 } 
