@@ -1,7 +1,7 @@
 
 #include "beauty_jni.h"
 
-textureeffect *textureeffectobj;
+textureeffect *textureObj;
 
 extern "C"
 JNIEXPORT void JNICALL
@@ -12,15 +12,15 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativeSurfaceCreate(JNIEnv *env, j
                                                                      jstring picpath_) {
     const char *picpath = env->GetStringUTFChars(picpath_, 0);
     GLUtils::setEnvAndAssetManager(env, assetManager);
-    if (textureeffectobj) {
-        delete textureeffectobj;
-        textureeffectobj = NULL;
+    if (textureObj) {
+        delete textureObj;
+        textureObj = NULL;
     }
-    textureeffectobj = new textureeffect();
-    textureeffectobj->picwidth = picwidth_;
-    textureeffectobj->picheight = picheight_;
-    textureeffectobj->picpath = (char *) picpath;
-    textureeffectobj->create();
+    textureObj = new textureeffect();
+    textureObj->picwidth = picwidth_;
+    textureObj->picheight = picheight_;
+    textureObj->picpath = (char *) picpath;
+    textureObj->create();
     env->ReleaseStringUTFChars(picpath_, picpath);
 }
 extern "C"
@@ -30,9 +30,9 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativeSurfaceChange(JNIEnv *env,
                                                                      jint left_, jint top_,
                                                                      jint right_, jint bottom_,
                                                                      jint width_, jint height_) {
-    if (textureeffectobj) {
-        textureeffectobj->change(left_, top_, right_, bottom_, width_, height_);
-        textureeffectobj->createFrameBuffer();
+    if (textureObj) {
+        textureObj->change(left_, top_, right_, bottom_, width_, height_);
+        textureObj->createFrameBuffer();
     }
 
 }
@@ -40,10 +40,10 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_nativeRender(JNIEnv *env,
                                                               jclass type,
-                                                              jfloat x, jfloat y) {
-    if (textureeffectobj) {
-        int ret = textureeffectobj->renderCenter({x, y}, 15.0f);
-        textureeffectobj->mCompareFlag = 0;
+                                                              jfloat x, jfloat y,jfloat radius) {
+    if (textureObj) {
+        int ret = textureObj->renderCenter({x, y}, radius);
+        textureObj->mCompareFlag = 0;
         LOGE("ret=%d", ret);
     }
 }
@@ -51,11 +51,11 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_nativeDrawPath(JNIEnv *env,
                                                                 jclass type,
-                                                                jfloat x, jfloat y) {
-    if (textureeffectobj) {
-        textureeffectobj->initEffect = 1;
-        int ret = textureeffectobj->renderCenter({x, y}, 15.0f);
-        textureeffectobj->mCompareFlag = 0;
+                                                                jfloat x, jfloat y,jfloat radius) {
+    if (textureObj) {
+        textureObj->initEffect = 1;
+        int ret = textureObj->renderCenter({x, y}, radius);
+        textureObj->mCompareFlag = 0;
         LOGE("ret=%d", ret);
     }
 }
@@ -64,8 +64,8 @@ JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_nativeDrawFrame(JNIEnv *env,
                                                                  jclass type) {
 
-    if (textureeffectobj) {
-        textureeffectobj->draw();
+    if (textureObj) {
+        textureObj->draw();
     }
 }
 
@@ -76,55 +76,55 @@ JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_nativereleaseEffect(JNIEnv *env,
                                                                      jclass type,
                                                                      jint effecttype_) {
-    if (textureeffectobj) {
+    if (textureObj) {
         LOGE("release");
-        textureeffectobj->initEffect = 1;
+        textureObj->initEffect = 1;
 
         if (effecttype_ == 1) {
             unitEffect();
-            textureeffectobj->ProType = TeethWhite;
-            textureeffectobj->bsWork = Paint;
-            textureeffectobj->hasEffect = 1;
+            textureObj->ProType = TeethWhite;
+            textureObj->bsWork = Paint;
+            textureObj->hasEffect = 1;
 
-            textureeffectobj->copyBuffer();
+            textureObj->copyBuffer();
         } else if (effecttype_ == 2) {
             unitEffect();
-            textureeffectobj->ProType = Smooth;
-            textureeffectobj->bsWork = Paint;
-            textureeffectobj->hasEffect = 1;
-            textureeffectobj->copyBuffer();
+            textureObj->ProType = Smooth;
+            textureObj->bsWork = Paint;
+            textureObj->hasEffect = 1;
+            textureObj->copyBuffer();
         } else if (effecttype_ == 3) {
             unitEffect();
-            textureeffectobj->ProType = Smooth;
-            textureeffectobj->bsWork = Paint;
-            textureeffectobj->hasEffect = 1;
-            textureeffectobj->isMoreSmooth = 1;
-            textureeffectobj->copyBuffer();
+            textureObj->ProType = Smooth;
+            textureObj->bsWork = Paint;
+            textureObj->hasEffect = 1;
+            textureObj->isMoreSmooth = 1;
+            textureObj->copyBuffer();
         } else if (effecttype_ == 4) {
             unitEffect();
-            textureeffectobj->ProType = Detail;
-            textureeffectobj->bsWork = Paint;
-            textureeffectobj->hasEffect = 1;
-            textureeffectobj->copyBuffer();
+            textureObj->ProType = Detail;
+            textureObj->bsWork = Paint;
+            textureObj->hasEffect = 1;
+            textureObj->copyBuffer();
         } else if (effecttype_ == 5) {
             //之前是否选择其他按钮
-            if (textureeffectobj->hasEffect == 0) {
-                textureeffectobj->initEffect = 0;
+            if (textureObj->hasEffect == 0) {
+                textureObj->initEffect = 0;
             } else {
-                textureeffectobj->bsWork = Erase;
+                textureObj->bsWork = Erase;
             }
         } else if (effecttype_ == 6) {
             unitEffect();
-            textureeffectobj->copySrcBuffer();
+            textureObj->copySrcBuffer();
         } else if (effecttype_ == 7) {
-            textureeffectobj->copyBuffer();
+            textureObj->copyBuffer();
         }
     }
 }
 
 void unitEffect() {//之前是否选择其他按钮
-    if (textureeffectobj->hasEffect == 1) {
-        textureeffectobj->releaseEffect();
+    if (textureObj->hasEffect == 1) {
+        textureObj->releaseEffect();
     }
 }
 
@@ -132,24 +132,24 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_nativeCompare(JNIEnv *env, jclass type,
                                                                jint actionup_) {
-    if (textureeffectobj) {
-        textureeffectobj->mCompareFlag = actionup_;
+    if (textureObj) {
+        textureObj->mCompareFlag = actionup_;
     }
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_nativeRemoveLastEffect(JNIEnv *env, jclass type) {
-    if (textureeffectobj) {
-        textureeffectobj->initEffect = 1;
-        textureeffectobj->bsWork = Erase;
+    if (textureObj) {
+        textureObj->initEffect = 1;
+        textureObj->bsWork = Erase;
     }
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_nativeSetPaint(JNIEnv *env, jclass type) {
-    if (textureeffectobj) {
-        textureeffectobj->initEffect = 1;
-        textureeffectobj->bsWork = Paint;
+    if (textureObj) {
+        textureObj->initEffect = 1;
+        textureObj->bsWork = Paint;
     }
 }
 jobject globalObj = 0;
@@ -163,8 +163,8 @@ Java_com_ufotosoft_facetune_gles_EffectRender_init(JNIEnv *env, jobject instance
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_destroy(JNIEnv *env, jobject instance) {
-    delete textureeffectobj;
-    textureeffectobj = NULL;
+    delete textureObj;
+    textureObj = NULL;
     env->DeleteGlobalRef(globalObj);
     globalObj = 0;
 }

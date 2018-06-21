@@ -26,11 +26,18 @@ public class EffectRender implements GLViewRenderer {
     private String TAG = "EffectRender";
     private Matrix mMat = new Matrix();
 
+    public void setRadius(float radius) {
+        this.radius = radius;
+        Log.e(TAG, "setRadius: "+radius );
+    }
+
+    private float radius;
     public EffectRender(MainActivity activity, int width, int height, String picpath) {
         mActivity = new WeakReference<MainActivity>(activity);
         this.picwidth = width;
         this.picheight = height;
         this.picpath = picpath;
+        setRadius(width*20.0f/600);
         init();
     }
     public native void init();
@@ -39,9 +46,9 @@ public class EffectRender implements GLViewRenderer {
     public static native void nativeSurfaceChange(int l, int t, int r, int b,int width,int height);
     public static native void nativeDrawFrame();
     public static native void nativereleaseEffect(int type);
-    public static native void nativeRender(float norX,float norY);
+    public static native void nativeRender(float norX,float norY,float radius);
     public static native void nativeCompare(int flag);
-    public static native void nativeDrawPath(float norX,float norY);
+    public static native void nativeDrawPath(float norX,float norY,float radius);
     public static native void nativeRemoveLastEffect();
     public static native void nativeSetPaint();
     private Map<Integer,SparseArray<Float>> pathMap;
@@ -58,10 +65,10 @@ public class EffectRender implements GLViewRenderer {
         nativeSetPaint();
     }
     public void handleTouchPress(float normalizedX, float normalizedY) {
-        nativeRender(normalizedX, normalizedY);
+        nativeRender(normalizedX, normalizedY,radius);
     }
     public void handleTouchDrag(float normalizedX, float normalizedY) {
-        nativeRender(normalizedX, normalizedY);
+        nativeRender(normalizedX, normalizedY,radius);
     }
     public void setPath(Map<Integer,SparseArray<Float>> path){
         pathMap = path;
@@ -104,7 +111,7 @@ public class EffectRender implements GLViewRenderer {
                     float y = onePath.get(j+1);
                     Log.e(TAG, "onDrawFrame: x="+x+"y="+y );
                     j++;
-                    nativeDrawPath(x,y);
+                    nativeDrawPath(x,y,radius);
                 }
                 resumeFlag = false;
             }

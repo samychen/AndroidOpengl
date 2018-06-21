@@ -5,7 +5,7 @@
 #ifndef ANDROIDOPENGL_MASTER_FACETUNE_JNI_H
 #define ANDROIDOPENGL_MASTER_FACETUNE_JNI_H
 
-#include "textureeffect.h"
+#include "facetune/textureeffect.h"
 #include <graphics/GLUtils.h>
 #include <android/log.h>
 #include <jni.h>

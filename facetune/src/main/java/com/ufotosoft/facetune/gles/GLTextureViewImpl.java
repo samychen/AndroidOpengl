@@ -8,9 +8,11 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 
 import com.ufotosoft.facetune.R;
 import com.ufotosoft.facetune.scaleutil.DensityUtil;
@@ -25,7 +27,7 @@ import java.util.Map;
 
 public class GLTextureViewImpl extends GLTextureView implements View.OnTouchListener, MatrixAnimation.OnRefreshListener {
     private boolean isCanTouch = false;
-    private static final float MAX_ZOOM = 3.0f;
+    private static final float MAX_ZOOM = 8.0f;
     private static final int MAX_DCLICK_TIME = 300;
     private static int MAX_DCLICK_DIS = 50;
     private static boolean sNeedDipToPix = true;
@@ -114,6 +116,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         super.onSurfaceTextureAvailable(surface, width, height);
+        setLayoutParams(new FrameLayout.LayoutParams(width,picheight*width/picwidth, Gravity.CENTER));
     }
 
     @Override
@@ -159,6 +162,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 return true;
             }
             bHandled = false;
+            Log.e(TAG, "onTouch: top="+v.getTop() );
             int count = event.getPointerCount();
             switch (count) {
                 case 1:
@@ -181,48 +185,39 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 Matrix dst = new Matrix();
                 src.invert(dst);
                 dst.getValues(mat);
-                int[] location = new int[2];
-                v.getLocationOnScreen(location);
-                Log.e(TAG, "onTouch: 显示出的高度"+ (v.getWidth()/(picwidth*1.0f)*picheight));//1411.2
-                float height = v.getWidth()/(picwidth*1.0f)*picheight;
-                Log.e(TAG, "onTouch: height="+height+"v.height="+v.getHeight() );
-                Log.e(TAG, "onTouch: x="+location[0]+"y="+location[1] +"top="+v.getTop()+"bottom="+v.getBottom());// x=0y=66top=131bottom=1647不同手机不同
-                Log.e(TAG, "onTouch: "+v.getHeight() );
-                float sca = v.getHeight()/height;//Density=3.0
-                Log.e(TAG, "onTouch: "+activity.getResources().getDisplayMetrics().density );
+                if (mat[0]!=1){
+                    renderer.setRadius(picwidth*20.0f/600*mat[0]*2);
+                }
                 //将event的x，y值映射到view中心
-                float normalizedX = event.getX() / (v.getWidth()*1.0f) * picwidth;
-                float normalizedY = (event.getY()*mat[0]-v.getTop()) / height * picheight;
-                Log.e(TAG, "onTouch: event.getY="+event.getY()+"v.getTop="+v.getTop()+"mat[0]="+mat[0] );
-//                float x2 = mat[0] * normalizedX + mat[1] * normalizedY + mat[2];
-//                float y2 = mat[3] * normalizedX + mat[4] * normalizedY + mat[5];
-                final float x = normalizedX;//x2 - mat[2] * (1 - mat[0] / 2) / (v.getWidth()*1.0f) * picwidth;
-                final float y1 = normalizedY;//y2 - mat[5] * (1 - mat[0] / 2) / (v.getHeight()*1.0f) * picheight;
-                final float y = y1 + ((v.getHeight()-height)*1.0f/2)/mat[0];
+                float x1 = mat[0] * event.getX() + mat[1] * event.getY() + mat[2];
+                float y1 = mat[3] * event.getX() + mat[4] * event.getY() + mat[5];
+                final float normalizedX = x1 / (v.getWidth()*1.0f) * picwidth;
+                final float normalizedY = y1 / (v.getHeight()*1.0f) * picheight;
+                Log.e(TAG, "onTouch: x="+normalizedX+"y="+normalizedY );
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     queueEvent(new Runnable() {
                         @Override
                         public void run() {
                             renderer.handleTouchPress(
-                                    x, y);
+                                    normalizedX, normalizedY);
                         }
                     });
                     requestRender();
                     SparseArray<Float> path = new SparseArray<>();
-                    path.put(pointcount++, x);
-                    path.put(pointcount++, y);
+                    path.put(pointcount++, normalizedX);
+                    path.put(pointcount++, normalizedY);
                     pathMap.put(pathcount, path);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     queueEvent(new Runnable() {
                         @Override
                         public void run() {
                             renderer.handleTouchDrag(
-                                    x, y);
+                                    normalizedX, normalizedY);
                         }
                     });
                     requestRender();
-                    pathMap.get(pathcount).put(pointcount++, x);
-                    pathMap.get(pathcount).put(pointcount++, y);
+                    pathMap.get(pathcount).put(pointcount++, normalizedX);
+                    pathMap.get(pathcount).put(pointcount++, normalizedY);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     pointcount = 0;
                     pathcount++;
@@ -290,6 +285,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 float offsetY = (y0 - mLastY0 + y1 - mLastY1) / 2.0f;
                 mMatCanvas.postTranslate(offsetX, offsetY);
                 scale = getScale(x0, y0, x1, y1);
+
                 mMatCanvas.postScale(scale, scale, (x0 + x1) / 2, (y0 + y1) / 2);
                 scale = getScale(mMatCanvas);
                 if (scale > MAX_ZOOM) {

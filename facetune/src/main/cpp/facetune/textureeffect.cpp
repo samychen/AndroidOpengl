@@ -163,6 +163,7 @@ void textureeffect::change(int l, int t, int r, int b,int w,int h) {
 }
 int textureeffect::renderCenter(FPOINT center, TFloat radius) {
     int32_t nRes;
+    LOGE("radius=%lf",radius);
     if (!initEffect){
         return -1;
     }
@@ -188,7 +189,7 @@ int textureeffect::renderCenter(FPOINT center, TFloat radius) {
 
         LOGE("TeethWhite srcTexure=%d,dstTexure=%d,center.x=%lf,center.y=%lf",srcTexure,dstTexure,center.x,center.y);
         Para.BsWork = bsWork;//涂抹还是擦除
-        nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, 10.0f,&Para, ImgBuf);
+        nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, radius,&Para, ImgBuf);
         LOGE("process success");
     }
     else if (ProType == Smooth)
@@ -196,13 +197,13 @@ int textureeffect::renderCenter(FPOINT center, TFloat radius) {
         LOGE("Smooth srcTexure=%d,dstTexure=%d,center.x=%lf,center.y=%lf",srcTexure,dstTexure,center.x,center.y);
         Para.IsMoreSmooth = isMoreSmooth;//是否需要更强的模糊
         Para.BsWork = bsWork;
-        nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, 10.0f,&Para, ImgBuf);
+        nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, radius,&Para, ImgBuf);
     }
     else if (ProType == Detail)
     {
         LOGE("Detail srcTexure=%d,dstTexure=%d,center.x=%lf,center.y=%lf",srcTexure,dstTexure,center.x,center.y);
         Para.BsWork = bsWork;
-        nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, 10.0f, &Para, ImgBuf);
+        nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, radius, &Para, ImgBuf);
     }
     draw();
     return 0;
