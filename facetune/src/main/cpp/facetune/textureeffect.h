@@ -18,8 +18,6 @@ public:
 
     ~textureeffect();
 
-    void create();
-
     void change(int left, int top, int right, int bottom,int width, int height);
 
     void draw();
@@ -45,8 +43,8 @@ public:
     char *picpath;
     GLuint srcTexure;
     int mCompareFlag;
+    GLuint mPointProgramHandle;
 private:
-
     GLsizei mWidth;
     GLsizei mHeight;
     GLsizei left;
@@ -61,11 +59,8 @@ private:
 
     GLuint dstTexure;
     GLuint fFrame ;
-    GLuint mPointProgramHandle;
-
     THandle TuneEngine;
     TByte *ImgBuf;
-
     void destroyTexture() const;
 };
 

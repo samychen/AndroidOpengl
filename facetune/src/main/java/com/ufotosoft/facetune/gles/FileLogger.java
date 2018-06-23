@@ -18,9 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public final class FileLogger {
-    /**
-     * Log中的常量是int值，不适合给外面使用，这里统一用这个枚举值进行设置
-     */
+
     public enum LogLevel {
         VERBOSE(Log.VERBOSE),
         DEBUG(Log.DEBUG),
@@ -50,11 +48,6 @@ public final class FileLogger {
 
     private static Map<String, Integer> limitLogMap = new HashMap<>();
 
-    /**
-     * 设置Log开关
-     *
-     * @param enable 开关项(默认为开).
-     */
     public static void setEnable(boolean enable) {
         sLogEnable = enable;
     }
@@ -67,11 +60,7 @@ public final class FileLogger {
         sLogLevel = level;
     }
 
-    /**
-     * 设置写入log的文件夹
-     *
-     * @param dirPath 文件夹地址
-     */
+
     public static void init(String dirPath) {
         sLogEnable = true;
         File file = new File(dirPath);
@@ -389,8 +378,8 @@ public final class FileLogger {
     }
 
     public static class LogFileManager {
-        private static final int LOG_FILES_MAX_NUM = 5; //文件最多有5个
-        private static final int LOG_FILE_MAX_SIZE = 1000 * 1000 * 20; //文件最大20MB
+        private static final int LOG_FILES_MAX_NUM = 5; //????????5??
+        private static final int LOG_FILE_MAX_SIZE = 1000 * 1000 * 20; //??????20MB
 
         private static final SimpleDateFormat LOG_FILE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
         public static final String PREFIX = "Log";
@@ -413,13 +402,13 @@ public final class FileLogger {
             File dir = new File(mLogFileDir);
             File[] files = dir.listFiles(fileFilter);
             if (files == null || files.length == 0) {
-                // 创建新文件
+                // ?????????
                 return createNewLogFileIfNeed();
             }
             List<File> sortedFiles = sortFiles(files);
 
             if (files.length > LOG_FILES_MAX_NUM) {
-                // 删掉最老的文件
+                // ???????????
                 FileUtil.delete(sortedFiles.get(0));
             }
             return createNewLogFileIfNeed();

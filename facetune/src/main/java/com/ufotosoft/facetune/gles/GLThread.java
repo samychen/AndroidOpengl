@@ -111,6 +111,7 @@ public class GLThread extends Thread {
 
     public void setSurface(@NonNull Object surface) {
         if (mSurface != surface) {
+            Log.e(TAG, "changeSurface = true" );
             changeSurface = true;
         }
         this.mSurface = surface;
@@ -321,19 +322,19 @@ public class GLThread extends Thread {
 
                 if (createEglSurface) {
                     FileLogger.w(TAG, "egl createSurface");
-                    if (mEglHelper.createSurface(mSurface)) {
-                        synchronized (sGLThreadManager) {
-                            mFinishedCreatingEglSurface = true;
-                            sGLThreadManager.notifyAll();
+                        if (mEglHelper.createSurface(mSurface)) {
+                            synchronized (sGLThreadManager) {
+                                mFinishedCreatingEglSurface = true;
+                                sGLThreadManager.notifyAll();
+                            }
+                        } else {
+                            synchronized (sGLThreadManager) {
+                                mFinishedCreatingEglSurface = true;
+                                mSurfaceIsBad = true;
+                                sGLThreadManager.notifyAll();
+                            }
+                            continue;
                         }
-                    } else {
-                        synchronized (sGLThreadManager) {
-                            mFinishedCreatingEglSurface = true;
-                            mSurfaceIsBad = true;
-                            sGLThreadManager.notifyAll();
-                        }
-                        continue;
-                    }
                     createEglSurface = false;
                 }
 
@@ -503,10 +504,6 @@ public class GLThread extends Thread {
         }
     }
 
-    /**
-     * mHasSurface = false --> mWaitingForSurface = true
-     * -->
-     */
     public void surfaceDestroyed() {
         synchronized (sGLThreadManager) {
             Log.e(TAG, "surfaceDestroyed tid=" + getId());
@@ -522,26 +519,21 @@ public class GLThread extends Thread {
         }
     }
 
-    /**
-     * mRequestPaused --> mPaused, pausing
-     * --> pausing && mHaveEglSurface, stopEglSurfaceLocked()
-     * --> pausing && mHaveEglContext, preserve context or not.
-     */
     public void onPause() {
-        synchronized (sGLThreadManager) {
-            Log.e(TAG, "onPause tid=" + getId());
-            mRequestPaused = true;
-            sGLThreadManager.notifyAll();
-            while ((!mExited) && (!mPaused)) {
-                Log.e(TAG, "onPause waiting for mPaused.");
-                try {
-                    sGLThreadManager.wait();
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-            mChoreographerRenderWrapper.stop();
-        }
+//        synchronized (sGLThreadManager) {
+//            Log.e(TAG, "onPause tid=" + getId());
+//            mRequestPaused = true;
+//            sGLThreadManager.notifyAll();
+//            while ((!mExited) && (!mPaused)) {
+//                Log.e(TAG, "onPause waiting for mPaused.");
+//                try {
+//                    sGLThreadManager.wait();
+//                } catch (InterruptedException ex) {
+//                    Thread.currentThread().interrupt();
+//                }
+//            }
+//            mChoreographerRenderWrapper.stop();
+//        }
     }
     public void onDestroy(){
         synchronized (sGLThreadManager) {
@@ -614,6 +606,7 @@ public class GLThread extends Thread {
     public void requestExitAndWait() {
         // don't call this from GLThread thread or it is a guaranteed
         // deadlock!
+        Log.e(TAG, "requestExitAndWait: " );
         synchronized (sGLThreadManager) {
             mShouldExit = true;
             sGLThreadManager.notifyAll();
@@ -977,7 +970,7 @@ public class GLThread extends Thread {
         @Override
         public EGLSurface createWindowSurface(EGL10 egl, EGLDisplay display,
                                               EGLConfig config, Object nativeWindow) {
-
+            Log.e(TAG, "createWindowSurface: " );
             int[] surfaceAttribs = {
                     EGL10.EGL_NONE
             };
@@ -999,12 +992,14 @@ public class GLThread extends Thread {
         @Override
         public void destroySurface(EGL10 egl, EGLDisplay display,
                                    EGLSurface surface) {
+            Log.e(TAG, "destroySurface: 1" );
             egl.eglDestroySurface(display, surface);
         }
 
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         public android.opengl.EGLSurface createWindowSurface(android.opengl.EGLDisplay display, android.opengl.EGLConfig config, Object nativeWindow) {
+            Log.e(TAG, "createWindowSurface: 3" );
             int[] surfaceAttribs = {
                     EGL14.EGL_NONE
             };
@@ -1026,6 +1021,7 @@ public class GLThread extends Thread {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         public void destroySurface(android.opengl.EGLDisplay display, android.opengl.EGLSurface surface) {
+            Log.e(TAG, "destroySurface: 2" );
             EGL14.eglDestroySurface(display, surface);
         }
     }

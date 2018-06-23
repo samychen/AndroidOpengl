@@ -6,12 +6,9 @@ textureeffect *textureObj;
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_nativeSurfaceCreate(JNIEnv *env, jclass type,
-                                                                     jobject assetManager,
-                                                                     jint picwidth_,
-                                                                     jint picheight_,
-                                                                     jstring picpath_) {
-    const char *picpath = env->GetStringUTFChars(picpath_, 0);
-    GLUtils::setEnvAndAssetManager(env, assetManager);
+                                                                  jint picwidth_,
+                                                                  jint picheight_,
+                                                                  jint texID,jint programID) {
     if (textureObj) {
         delete textureObj;
         textureObj = NULL;
@@ -19,9 +16,12 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativeSurfaceCreate(JNIEnv *env, j
     textureObj = new textureeffect();
     textureObj->picwidth = picwidth_;
     textureObj->picheight = picheight_;
-    textureObj->picpath = (char *) picpath;
-    textureObj->create();
-    env->ReleaseStringUTFChars(picpath_, picpath);
+    textureObj->srcTexure = texID;
+    textureObj->mPointProgramHandle = programID;
+    if (!programID) {
+        LOGE("Could not create program");
+    }
+    textureObj->createFrameBuffer();
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -32,9 +32,7 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativeSurfaceChange(JNIEnv *env,
                                                                      jint width_, jint height_) {
     if (textureObj) {
         textureObj->change(left_, top_, right_, bottom_, width_, height_);
-        textureObj->createFrameBuffer();
     }
-
 }
 extern "C"
 JNIEXPORT void JNICALL
@@ -79,13 +77,11 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativereleaseEffect(JNIEnv *env,
     if (textureObj) {
         LOGE("release");
         textureObj->initEffect = 1;
-
         if (effecttype_ == 1) {
             unitEffect();
             textureObj->ProType = TeethWhite;
             textureObj->bsWork = Paint;
             textureObj->hasEffect = 1;
-
             textureObj->copyBuffer();
         } else if (effecttype_ == 2) {
             unitEffect();

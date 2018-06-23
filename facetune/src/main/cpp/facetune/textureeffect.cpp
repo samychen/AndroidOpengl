@@ -3,13 +3,20 @@
 //
 
 #include "textureeffect.h"
-#include <graphics/GLUtils.h>
 #include <android/log.h>
 #include "include/beautitune.h"
 #define LOG_TAG "textureeffect"
 #define LOGE(fmt, args...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, fmt, ##args)
 
-int checkError(const char* op);
+int checkError(const char* op) {
+    int res = 0;
+    for (GLint error = glGetError(); error; error
+                                                    = glGetError()) {
+        LOGE("after %s() glError (0x%x)\n", op, error);
+        res = 1;
+    }
+    return res;
+}
 GLint POSITION_SIZE = 2;
 GLint TEX_COORD_SIZE = 2;
 GLfloat VERTEXPOSITION[] =
@@ -57,23 +64,13 @@ textureeffect::~textureeffect() {
 
 }
 
-void textureeffect::create() {
-    const char *vertex = GLUtils::openTextFile("vertex/transform_vertex_shader.glsl");
-    const char *fragment = GLUtils::openTextFile("fragment/transform_fragment_shader.glsl");
-    mPointProgramHandle = GLUtils::createProgram(&vertex, &fragment);
-    if (!mPointProgramHandle) {
-        LOGE("Could not create program");
-        return;
-    }
-    srcTexure = GLUtils::loadTexture(picpath);
-}
 void textureeffect::createFrameBuffer(){
     glGenFramebuffers(1, &fFrame);
     glBindFramebuffer(GL_FRAMEBUFFER, fFrame);
     glViewport(0, 0, picwidth, picheight);
     glGenTextures(1, &dstTexure);
     glBindTexture(GL_TEXTURE_2D, dstTexure);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -186,7 +183,6 @@ int textureeffect::renderCenter(FPOINT center, TFloat radius) {
     TypePara Para = { 0 };
     if (ProType == TeethWhite)
     {
-
         LOGE("TeethWhite srcTexure=%d,dstTexure=%d,center.x=%lf,center.y=%lf",srcTexure,dstTexure,center.x,center.y);
         Para.BsWork = bsWork;//涂抹还是擦除
         nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, radius,&Para, ImgBuf);
@@ -217,15 +213,7 @@ int textureeffect::releaseEffect() {
     }
     return 0;
 }
-int checkError(const char* op) {
-    int res = 0;
-    for (GLint error = glGetError(); error; error
-                                                    = glGetError()) {
-        LOGE("after %s() glError (0x%x)\n", op, error);
-        res = 1;
-    }
-    return res;
-}
+
 void textureeffect::draw() {
     glViewport(left, top, right, bottom);
     if (mCompareFlag==0){
@@ -247,6 +235,8 @@ void textureeffect::draw() {
         glEnableVertexAttribArray(mTextureCoordinateHandle);
         glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, mOriMartrix);
         glActiveTexture(GL_TEXTURE0);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, dstTexure);
         glUniform1i(mTextureLocation, 0);
     } else {// compare时显示原纹理
@@ -264,7 +254,10 @@ void textureeffect::draw() {
         glEnableVertexAttribArray(mTextureCoordinateHandle);
         glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, mOriMartrix);
         glActiveTexture(GL_TEXTURE0);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, srcTexure);
+        LOGE("compare");
         glUniform1i(mTextureLocation, 0);
     }
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);

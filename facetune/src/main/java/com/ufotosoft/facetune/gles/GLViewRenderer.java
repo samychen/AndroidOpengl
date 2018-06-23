@@ -11,4 +11,8 @@ public interface GLViewRenderer {
     void onSurfaceChanged(int width, int height);
 
     void onDrawFrame();
+
+    int getTexID();
+
+    void setTexID(int id);
 }

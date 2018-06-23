@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
+import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -25,7 +26,7 @@ import java.util.Map;
  * Created by 000 on 2018/6/11.
  */
 
-public class GLTextureViewImpl extends GLTextureView implements View.OnTouchListener, MatrixAnimation.OnRefreshListener {
+public class GLTextureViewImpl extends BaseGLTextureView implements View.OnTouchListener, MatrixAnimation.OnRefreshListener {
     private boolean isCanTouch = false;
     private static final float MAX_ZOOM = 8.0f;
     private static final int MAX_DCLICK_TIME = 300;
@@ -42,6 +43,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
     private boolean moveFlag;
     private int picwidth, picheight;
     private EffectRender renderer;
+    private String filepath;
     private String TAG = "GLTextureViewImpl";
     private Map<Integer, SparseArray<Float>> pathMap = new HashMap<>();
     private float scale = 1.0f;
@@ -61,7 +63,9 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         pathMap.clear();
         pathcount = 0;
     }
-
+    public void setfilePath(String path){
+        filepath = path;
+    }
     private int pointcount;
     private int pathcount;
 
@@ -69,6 +73,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
         this.picwidth = picwidth;
         this.picheight = picheight;
     }
+
 
     public void setMoveFlag(boolean moveFlag) {
         this.moveFlag = moveFlag;
@@ -162,7 +167,6 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 return true;
             }
             bHandled = false;
-            Log.e(TAG, "onTouch: top="+v.getTop() );
             int count = event.getPointerCount();
             switch (count) {
                 case 1:
@@ -186,7 +190,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 src.invert(dst);
                 dst.getValues(mat);
                 if (mat[0]!=1){
-                    renderer.setRadius(picwidth*20.0f/600*mat[0]*2);
+                    renderer.setRadius(picwidth*20.0f/600*mat[0]*3);
                 }
                 //将event的x，y值映射到view中心
                 float x1 = mat[0] * event.getX() + mat[1] * event.getY() + mat[2];
@@ -195,17 +199,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                 final float normalizedY = y1 / (v.getHeight()*1.0f) * picheight;
                 Log.e(TAG, "onTouch: x="+normalizedX+"y="+normalizedY );
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    queueEvent(new Runnable() {
-                        @Override
-                        public void run() {
-                            renderer.handleTouchPress(
-                                    normalizedX, normalizedY);
-                        }
-                    });
-                    requestRender();
                     SparseArray<Float> path = new SparseArray<>();
-                    path.put(pointcount++, normalizedX);
-                    path.put(pointcount++, normalizedY);
                     pathMap.put(pathcount, path);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     queueEvent(new Runnable() {
@@ -216,6 +210,7 @@ public class GLTextureViewImpl extends GLTextureView implements View.OnTouchList
                         }
                     });
                     requestRender();
+                    postInvalidate();
                     pathMap.get(pathcount).put(pointcount++, normalizedX);
                     pathMap.get(pathcount).put(pointcount++, normalizedY);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
