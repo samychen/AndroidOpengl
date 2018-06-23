@@ -173,7 +173,19 @@ public class Utils {
         }
         return textureID;
     }
-
+    public static int loadTexture(final Bitmap bmp){
+        int[] textures = new int[1];
+        GLES20.glGenTextures(1, textures, 0);
+        int textureID = textures[0];
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureID);
+        GLES20.glTexParameteri(
+                GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(
+                GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
+        bmp.recycle();
+        return textureID;
+    }
     public static float[] generateCubeData(float[] point1,
                                            float[] point2,
                                            float[] point3,

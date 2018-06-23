@@ -25,8 +25,7 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativeSurfaceCreate(JNIEnv *env, j
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_ufotosoft_facetune_gles_EffectRender_nativeSurfaceChange(JNIEnv *env,
-                                                                     jclass type,
+Java_com_ufotosoft_facetune_gles_EffectRender_nativeSurfaceChange(JNIEnv *env, jclass type,
                                                                      jint left_, jint top_,
                                                                      jint right_, jint bottom_,
                                                                      jint width_, jint height_) {
@@ -67,7 +66,12 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativeDrawFrame(JNIEnv *env,
     }
 }
 
-void unitEffect();
+void unitAndinitEffect() {//之前是否选择其他按钮
+    if (textureObj->hasEffect == 1) {
+        textureObj->releaseEffect();
+    }
+    textureObj->initGLEffect();
+}
 
 extern "C"
 JNIEXPORT void JNICALL
@@ -78,30 +82,39 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativereleaseEffect(JNIEnv *env,
         LOGE("release");
         textureObj->initEffect = 1;
         if (effecttype_ == 1) {
-            unitEffect();
+            unitAndinitEffect();
+            if (textureObj->hasEffect != 1) {
+                textureObj->copyBuffer();
+            }
             textureObj->ProType = TeethWhite;
             textureObj->bsWork = Paint;
             textureObj->hasEffect = 1;
-            textureObj->copyBuffer();
         } else if (effecttype_ == 2) {
-            unitEffect();
+            unitAndinitEffect();
+            if (textureObj->hasEffect != 1) {
+                textureObj->copyBuffer();
+            }
             textureObj->ProType = Smooth;
             textureObj->bsWork = Paint;
             textureObj->hasEffect = 1;
-            textureObj->copyBuffer();
+            textureObj->isMoreSmooth = 0;
         } else if (effecttype_ == 3) {
-            unitEffect();
+            unitAndinitEffect();
+            if (textureObj->hasEffect != 1) {
+                textureObj->copyBuffer();
+            }
             textureObj->ProType = Smooth;
             textureObj->bsWork = Paint;
             textureObj->hasEffect = 1;
             textureObj->isMoreSmooth = 1;
-            textureObj->copyBuffer();
         } else if (effecttype_ == 4) {
-            unitEffect();
+            unitAndinitEffect();
+            if (textureObj->hasEffect != 1) {
+                textureObj->copyBuffer();
+            }
             textureObj->ProType = Detail;
             textureObj->bsWork = Paint;
             textureObj->hasEffect = 1;
-            textureObj->copyBuffer();
         } else if (effecttype_ == 5) {
             //之前是否选择其他按钮
             if (textureObj->hasEffect == 0) {
@@ -110,17 +123,11 @@ Java_com_ufotosoft_facetune_gles_EffectRender_nativereleaseEffect(JNIEnv *env,
                 textureObj->bsWork = Erase;
             }
         } else if (effecttype_ == 6) {
-            unitEffect();
+            unitAndinitEffect();
             textureObj->copySrcBuffer();
         } else if (effecttype_ == 7) {
             textureObj->copyBuffer();
         }
-    }
-}
-
-void unitEffect() {//之前是否选择其他按钮
-    if (textureObj->hasEffect == 1) {
-        textureObj->releaseEffect();
     }
 }
 
@@ -159,6 +166,9 @@ Java_com_ufotosoft_facetune_gles_EffectRender_init(JNIEnv *env, jobject instance
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ufotosoft_facetune_gles_EffectRender_destroy(JNIEnv *env, jobject instance) {
+    if (textureObj) {
+        textureObj->destroyTexture();
+    }
     delete textureObj;
     textureObj = NULL;
     env->DeleteGlobalRef(globalObj);

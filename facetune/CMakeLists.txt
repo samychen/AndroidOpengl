@@ -12,12 +12,6 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 add_library(
                 beauty-lib
                 SHARED
-                # graphics
-                src/main/cpp/graphics/GLUtils.h
-                src/main/cpp/graphics/GLUtils.cpp
-                src/main/cpp/graphics/Matrix.h
-                src/main/cpp/graphics/Matrix.cpp
-
                 # filter
                 # src/main/cpp/samplecode.cpp
                 src/main/cpp/facetune/textureeffect.cpp

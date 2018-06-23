@@ -215,7 +215,6 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
         surfaceAvailable = true;
         glThreadBuilder = new GLThread.Builder();
         surfaceTexture = surface;
-        Log.e(TAG, "onSurfaceTextureAvailable: "+ renderer.getTexID());
         if (mGLThread == null) {
             glThreadBuilder.setRenderMode(getRenderMode())
                     .setSurface(surface)

@@ -1,10 +1,8 @@
 package com.ufotosoft.facetune.gles;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
-import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,13 +10,13 @@ import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.FrameLayout;
 
-import com.ufotosoft.facetune.R;
+import com.ufotosoft.facetune.MainActivity;
 import com.ufotosoft.facetune.scaleutil.DensityUtil;
 import com.ufotosoft.facetune.scaleutil.MatrixAnimation;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,8 +124,6 @@ public class GLTextureViewImpl extends BaseGLTextureView implements View.OnTouch
 
     @Override
     public void onResume() {
-        Log.e(TAG, "onResume: " + pathMap.toString());
-        renderer.setPath(pathMap);
         super.onResume();
     }
 
@@ -190,7 +186,7 @@ public class GLTextureViewImpl extends BaseGLTextureView implements View.OnTouch
                 src.invert(dst);
                 dst.getValues(mat);
                 if (mat[0]!=1){
-                    renderer.setRadius(picwidth*20.0f/600*mat[0]*3);
+                    renderer.setRadius(picwidth*20.0f/600*mat[0]*6);
                 }
                 //将event的x，y值映射到view中心
                 float x1 = mat[0] * event.getX() + mat[1] * event.getY() + mat[2];
@@ -201,16 +197,17 @@ public class GLTextureViewImpl extends BaseGLTextureView implements View.OnTouch
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     SparseArray<Float> path = new SparseArray<>();
                     pathMap.put(pathcount, path);
+                    renderer.handleTouchPress(normalizedX, normalizedY);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     queueEvent(new Runnable() {
                         @Override
                         public void run() {
                             renderer.handleTouchDrag(
                                     normalizedX, normalizedY);
+                            requestRender();
+                            postInvalidate();
                         }
                     });
-                    requestRender();
-                    postInvalidate();
                     pathMap.get(pathcount).put(pointcount++, normalizedX);
                     pathMap.get(pathcount).put(pointcount++, normalizedY);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -388,15 +385,15 @@ public class GLTextureViewImpl extends BaseGLTextureView implements View.OnTouch
         return mMatCanvas;
     }
 
-    private Activity activity;
+    private WeakReference<MainActivity> mActivity;
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setActivity(MainActivity activity) {
+        mActivity = new WeakReference<MainActivity>(activity);
     }
 
     @Override
     public void onRefresh(Matrix mat) {
-        activity.runOnUiThread(new Runnable() {
+        mActivity.get().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 setTransform(mMatCanvas);

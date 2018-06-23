@@ -6,10 +6,14 @@
 #define ANDROIDOPENGL_TEXTUREEFFECT_H
 
 #include <GLES2/gl2.h>
-#include <graphics/Matrix.h>
 #include <include/tcomdef.h>
 #include <include/beautitune.h>
 #include <jni.h>
+#include <android/log.h>
+#include <stdlib.h>
+
+#define LOG_TAG "textureeffect"
+#define LOGE(fmt, args...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, fmt, ##args)
 
 class textureeffect {
 public:
@@ -24,6 +28,8 @@ public:
 
     void createFrameBuffer();
 
+    int initGLEffect();
+
     int renderCenter( FPOINT center,TFloat radius);
 
     int releaseEffect();
@@ -31,6 +37,8 @@ public:
     int copyBuffer();
 
     int copySrcBuffer();
+
+    void destroyTexture();
 
     BTType ProType;
     int initEffect;
@@ -61,7 +69,7 @@ private:
     GLuint fFrame ;
     THandle TuneEngine;
     TByte *ImgBuf;
-    void destroyTexture() const;
+
 };
 
 

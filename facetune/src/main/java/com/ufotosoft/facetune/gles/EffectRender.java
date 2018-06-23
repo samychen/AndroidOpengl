@@ -1,21 +1,12 @@
 package com.ufotosoft.facetune.gles;
 
-import android.content.res.AssetManager;
 import android.graphics.Matrix;
 import android.graphics.RectF;
-import android.opengl.EGL14;
-import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.SurfaceView;
-
 import com.ufotosoft.facetune.MainActivity;
-
 import java.lang.ref.WeakReference;
 import java.util.Map;
-
-import javax.microedition.khronos.egl.EGL;
 
 /**
  * Created by 000 on 2018/6/11.
@@ -30,25 +21,13 @@ public class EffectRender implements GLViewRenderer {
     private String picpath;
     private String TAG = "EffectRender";
     private Matrix mMat = new Matrix();
-    private boolean pauseFlag;
-
-    public void setRadius(float radius) {
-        this.radius = radius;
-        Log.e(TAG, "setRadius: "+radius );
-    }
-
     private float radius;
     private int srcTextureID;
     private int glProgramId;
 
-    @Override
-    public int getTexID() {
-        return srcTextureID;
-    }
-
-    @Override
-    public void setTexID(int id) {
-        srcTextureID = id;
+    public void setRadius(float radius) {
+        this.radius = radius;
+        Log.e(TAG, "setRadius: "+radius );
     }
 
     public EffectRender(MainActivity activity, int width, int height, String picpath) {
@@ -71,7 +50,7 @@ public class EffectRender implements GLViewRenderer {
     public static native void nativeRemoveLastEffect();
     public static native void nativeSetPaint();
     private Map<Integer,SparseArray<Float>> pathMap;
-    private boolean resumeFlag;
+    private boolean clearLastEffect;
     // 切换效果
     public void releaseEffect(int type){
         nativereleaseEffect(type);
@@ -84,15 +63,29 @@ public class EffectRender implements GLViewRenderer {
         nativeSetPaint();
     }
     public void handleTouchPress(float normalizedX, float normalizedY) {
-        nativeRender(normalizedX, normalizedY,radius);
+        lastX = normalizedX;
+        lastY = normalizedY;
+//        nativeRender(normalizedX, normalizedY,radius);
     }
+    private float lastX,lastY;
     public void handleTouchDrag(float normalizedX, float normalizedY) {
         nativeRender(normalizedX, normalizedY,radius);
+//        float length = (float) Math.sqrt((lastX-normalizedX)*(lastX-normalizedX)+(lastY-normalizedY)*(lastY-normalizedY));
+//        if (length>16){
+//            int size = (int) (length / 5);
+//            float deltaX = (normalizedX - lastX)/size;
+//            float deltaY = (normalizedY - lastY)/size;
+//            for (int i = 0; i < size; i++) {
+//                Log.e(TAG, "handleTouchDrag: " );
+//                nativeRender(normalizedX+i*deltaX, normalizedY+i*deltaY,radius);
+//            }
+//        }
+        lastX = normalizedX;
+        lastY = normalizedY;
     }
     public void setPath(Map<Integer,SparseArray<Float>> path){
+        clearLastEffect = true;
         pathMap = path;
-        resumeFlag = true;
-        Log.e(TAG, "setPath: "+pathMap.toString() );
     }
     // 比对效果
     public void compare(int flag){
@@ -100,7 +93,6 @@ public class EffectRender implements GLViewRenderer {
     }
     @Override
     public void onSurfaceCreated() {
-        Log.e(TAG, "onSurfaceCreated: getNativeHandle"+ EGL14.eglGetCurrentContext().getNativeHandle());
         srcTextureID = Utils.loadTexture(mActivity.get().getAssets(),picpath);
         glProgramId=ShaderUtils.createProgram(ShaderUtils.readAssetsTextFile(mActivity.get(),"vertex/transform_vertex_shader.glsl"),
                 ShaderUtils.readAssetsTextFile(mActivity.get(),"fragment/transform_fragment_shader.glsl"));
@@ -117,6 +109,23 @@ public class EffectRender implements GLViewRenderer {
 
     @Override
     public void onDrawFrame() {
+        if (clearLastEffect){
+            int size = pathMap.size();
+            for (int i = 0; i < size; i++) {
+                SparseArray<Float> onePath = pathMap.get(i);
+                if (onePath==null){
+                    break;
+                }
+                int size2 = onePath.size();
+                for (int j = 0; j < size2; j++) {
+                    float x = onePath.get(j);
+                    float y = onePath.get(j+1);
+                    j++;
+                    nativeDrawPath(x,y,radius);
+                }
+            }
+            clearLastEffect = false;
+        }
         nativeDrawFrame();
     }
 }

@@ -64,10 +64,6 @@ public class MainActivity extends Activity implements View.OnClickListener,View.
         } finally {
             bmp.recycle();
         }
-//        int glProgramId= ShaderUtils.createProgram(ShaderUtils.readAssetsTextFile(this,"vertex/transform_vertex_shader.glsl"),
-//                ShaderUtils.readAssetsTextFile(this,"fragment/transform_fragment_shader.glsl"));
-//        Log.e(TAG, "onCreate:glProgramId= "+glProgramId );
-//        mGLTextureView.setTexID(srcTextureID);
         effectRender = new EffectRender(this,width,height,picpath);
         mGLTextureView.setIsCanTouch(true);
         mGLTextureView.setMoveFlag(moveFlag);
@@ -213,11 +209,11 @@ public class MainActivity extends Activity implements View.OnClickListener,View.
     protected void onPause() {
         super.onPause();
         mGLTextureView.onPause();
-//        effectRender.destroy();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        effectRender.destroy();
     }
 }

@@ -1,12 +1,7 @@
 //
 // Created by 000 on 2018/6/11.
 //
-
 #include "textureeffect.h"
-#include <android/log.h>
-#include "include/beautitune.h"
-#define LOG_TAG "textureeffect"
-#define LOGE(fmt, args...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, fmt, ##args)
 
 int checkError(const char* op) {
     int res = 0;
@@ -120,6 +115,8 @@ int textureeffect::copyBuffer() {
     glUniform1i(mTextureLocation, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glDisableVertexAttribArray(mPositionHandle);
+    glDisableVertexAttribArray(mTextureCoordinateHandle);
     return 0;
 }
 // 取消效果后把源纹理内存拷贝到目的纹理
@@ -146,6 +143,8 @@ int textureeffect::copySrcBuffer() {
     glUniform1i(mTextureLocation, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glDisableVertexAttribArray(mPositionHandle);
+    glDisableVertexAttribArray(mTextureCoordinateHandle);
     return 0;
 }
 
@@ -158,9 +157,8 @@ void textureeffect::change(int l, int t, int r, int b,int w,int h) {
     mHeight = h;
     checkError("change");
 }
-int textureeffect::renderCenter(FPOINT center, TFloat radius) {
-    int32_t nRes;
-    LOGE("radius=%lf",radius);
+int textureeffect::initGLEffect() {
+    int32_t nRes = 0;
     if (!initEffect){
         return -1;
     }
@@ -171,38 +169,37 @@ int textureeffect::renderCenter(FPOINT center, TFloat radius) {
         {
             return -2 ;
         }
-        LOGE("init success");
         nRes = BeautiTune_PreProcess(TuneEngine, srcTexure);
         if (nRes)
         {
             return -3;
         }
-        LOGE("prepross success");
     }
+    return nRes;
+}
+int textureeffect::renderCenter(FPOINT center, TFloat radius) {
+    LOGE("startrender");
+    int32_t nRes = 0;
     //3.响应每次涂抹动作，单次涂抹产生的参数有（center，radius），擦除动作也会产生同样的参数
     TypePara Para = { 0 };
     if (ProType == TeethWhite)
     {
-        LOGE("TeethWhite srcTexure=%d,dstTexure=%d,center.x=%lf,center.y=%lf",srcTexure,dstTexure,center.x,center.y);
         Para.BsWork = bsWork;//涂抹还是擦除
         nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, radius,&Para, ImgBuf);
-        LOGE("process success");
     }
     else if (ProType == Smooth)
     {
-        LOGE("Smooth srcTexure=%d,dstTexure=%d,center.x=%lf,center.y=%lf",srcTexure,dstTexure,center.x,center.y);
         Para.IsMoreSmooth = isMoreSmooth;//是否需要更强的模糊
         Para.BsWork = bsWork;
         nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, radius,&Para, ImgBuf);
     }
     else if (ProType == Detail)
     {
-        LOGE("Detail srcTexure=%d,dstTexure=%d,center.x=%lf,center.y=%lf",srcTexure,dstTexure,center.x,center.y);
         Para.BsWork = bsWork;
         nRes = BeautiTune_Process(TuneEngine, srcTexure, dstTexure, &center, radius, &Para, ImgBuf);
     }
     draw();
-    return 0;
+    return nRes;
 }
 int textureeffect::releaseEffect() {
     if (TuneEngine)
@@ -215,6 +212,7 @@ int textureeffect::releaseEffect() {
 }
 
 void textureeffect::draw() {
+    LOGE("startdraw");
     glViewport(left, top, right, bottom);
     if (mCompareFlag==0){
         //render To Texure
@@ -265,7 +263,7 @@ void textureeffect::draw() {
     glDisableVertexAttribArray(mTextureCoordinateHandle);
 }
 
-void textureeffect::destroyTexture() const {
+void textureeffect::destroyTexture() {
     glDeleteFramebuffers(1, &fFrame);
     glDeleteTextures(1,&srcTexure);
     glDeleteTextures(1,&dstTexure);
