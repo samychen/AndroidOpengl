@@ -109,6 +109,7 @@ public class EffectRender implements GLViewRenderer {
 
     @Override
     public void onDrawFrame() {
+        Log.e(TAG, "onDrawFrame: " );
         if (clearLastEffect){
             int size = pathMap.size();
             for (int i = 0; i < size; i++) {

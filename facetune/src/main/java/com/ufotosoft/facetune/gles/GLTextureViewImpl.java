@@ -3,6 +3,7 @@ package com.ufotosoft.facetune.gles;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
+import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;

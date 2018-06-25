@@ -75,10 +75,7 @@ void textureeffect::createFrameBuffer(){
     if(status != GL_FRAMEBUFFER_COMPLETE)
         LOGE( "FBO Initialization Failed.");
     glUseProgram(mPointProgramHandle);
-    mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
-    mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
-    mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
-    mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
+    getAttrLocation();
     glVertexAttribPointer(mPositionHandle, POSITION_SIZE, GL_FLOAT, GL_FALSE, 0, VERTEXPOSITION);
     glEnableVertexAttribArray(mPositionHandle);
     glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
@@ -88,7 +85,7 @@ void textureeffect::createFrameBuffer(){
     glBindTexture(GL_TEXTURE_2D, srcTexure);
     glUniform1i(mTextureLocation, 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
-
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 // 切换效果前把目的纹理内容拷贝到源纹理
 int textureeffect::copyBuffer() {
@@ -101,10 +98,7 @@ int textureeffect::copyBuffer() {
     if(status != GL_FRAMEBUFFER_COMPLETE)
         LOGE( "FBO Initialization Failed.");
     glUseProgram(mPointProgramHandle);
-    mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
-    mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
-    mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
-    mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
+    getAttrLocation();
     glVertexAttribPointer(mPositionHandle, POSITION_SIZE, GL_FLOAT, GL_FALSE, 0, VERTEXPOSITION);
     glEnableVertexAttribArray(mPositionHandle);
     glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
@@ -129,10 +123,7 @@ int textureeffect::copySrcBuffer() {
     if(status != GL_FRAMEBUFFER_COMPLETE)
         LOGE( "FBO Initialization Failed.");
     glUseProgram(mPointProgramHandle);
-    mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
-    mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
-    mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
-    mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
+    getAttrLocation();
     glVertexAttribPointer(mPositionHandle, POSITION_SIZE, GL_FLOAT, GL_FALSE, 0, VERTEXPOSITION);
     glEnableVertexAttribArray(mPositionHandle);
     glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
@@ -217,50 +208,49 @@ void textureeffect::draw() {
     if (mCompareFlag==0){
         //render To Texure
         glBindFramebuffer(GL_FRAMEBUFFER, 0);//绑定到默认纹理，渲染最后的纹理
-        glBindTexture(GL_TEXTURE_2D, 0);
         glClearColor(1, 1, 1, 1);
         //render TO window
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        checkError("draw");
         glUseProgram(mPointProgramHandle);
-        mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
-        mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
-        mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
-        mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
+//        getAttrLocation();
         glVertexAttribPointer(mPositionHandle, POSITION_SIZE, GL_FLOAT, GL_FALSE, 0, VERTEXPOSITION);
         glEnableVertexAttribArray(mPositionHandle);
         glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
         glEnableVertexAttribArray(mTextureCoordinateHandle);
         glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, mOriMartrix);
         glActiveTexture(GL_TEXTURE0);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, dstTexure);
         glUniform1i(mTextureLocation, 0);
     } else {// compare时显示原纹理
-        glBindTexture(GL_TEXTURE_2D, 0);
+//        glBindTexture(GL_TEXTURE_2D, 0);
         glClearColor(1, 1, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(mPointProgramHandle);
-        mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
-        mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
-        mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
-        mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
+//        getAttrLocation();
         glVertexAttribPointer(mPositionHandle, POSITION_SIZE, GL_FLOAT, GL_FALSE, 0, VERTEXPOSITION);
         glEnableVertexAttribArray(mPositionHandle);
         glVertexAttribPointer(mTextureCoordinateHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE, 0, COORDINATEPOSITION);
         glEnableVertexAttribArray(mTextureCoordinateHandle);
         glUniformMatrix3fv(mMVPMatrixHandle, 1, GL_FALSE, mOriMartrix);
         glActiveTexture(GL_TEXTURE0);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glBindTexture(GL_TEXTURE_2D, srcTexure);
-        LOGE("compare");
         glUniform1i(mTextureLocation, 0);
     }
     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
     glDisableVertexAttribArray(mPositionHandle);
     glDisableVertexAttribArray(mTextureCoordinateHandle);
+    LOGE("end Draw");//调用java层render.onDraw
+}
+
+void textureeffect::getAttrLocation() {
+    mMVPMatrixHandle = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_MVPMatrix");
+    mPositionHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_Position");
+    mTextureLocation = (GLuint) glGetUniformLocation(mPointProgramHandle, "u_Texture");
+    mTextureCoordinateHandle = (GLuint) glGetAttribLocation(mPointProgramHandle, "a_TexCoordinate");
 }
 
 void textureeffect::destroyTexture() {

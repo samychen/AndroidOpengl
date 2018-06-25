@@ -16,12 +16,14 @@
 
 package com.android.grafika;
 
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;

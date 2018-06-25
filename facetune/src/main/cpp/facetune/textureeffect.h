@@ -70,6 +70,7 @@ private:
     THandle TuneEngine;
     TByte *ImgBuf;
 
+    void getAttrLocation();
 };
 
 

@@ -182,12 +182,10 @@ public class GLThread extends Thread {
                         if (mShouldExit) {
                             return;
                         }
-
                         if (!mEventQueue.isEmpty() && mHaveEglContext) {
                             event = mEventQueue.remove(0);
                             break;
                         }
-
                         // Update the pause state.
                         boolean pausing = false;
                         if (mPaused != mRequestPaused) {
@@ -234,7 +232,7 @@ public class GLThread extends Thread {
                             mRenderComplete = true;
                             sGLThreadManager.notifyAll();
                         }
-
+                        Log.e(TAG, "guardedRun: readyToDraw()"+readyToDraw() );
                         // Ready to draw?
                         if (readyToDraw()) {
 
@@ -285,7 +283,6 @@ public class GLThread extends Thread {
                                     changeSurface = false;
                                 }
 
-
                                 mRequestRender = false;
                                 sGLThreadManager.notifyAll();
                                 if (mWantRenderNotification) {
@@ -317,7 +314,7 @@ public class GLThread extends Thread {
                 if (event != null) {
                     event.run();
                     event = null;
-                    continue;
+//                    continue;//此处和GLSurfaceView不同，因为需要实时刷新，每次GL线程都确保调用swap函数
                 }
 
                 if (createEglSurface) {
@@ -339,7 +336,6 @@ public class GLThread extends Thread {
                 }
 
                 if (createGlInterface) {
-
                     createGlInterface = false;
                 }
 
@@ -350,7 +346,6 @@ public class GLThread extends Thread {
                     createEglContext = false;
                 }
 
-
                 if (sizeChanged) {
                     FileLogger.w(TAG, "onSurfaceChanged(" + w + ", " + h + ")");
                     mRenderer.onSurfaceChanged(w, h);
@@ -359,7 +354,7 @@ public class GLThread extends Thread {
 
                 if (mChoreographerRenderWrapper.canSwap()) {
                     if (LOG_RENDERER_DRAW_FRAME) {
-                        Log.w(TAG, "onDrawFrame tid=" + getId());
+                        Log.e(TAG, "onDrawFrame tid=" + getId());
                     }
                     mRenderer.onDrawFrame();
                     mEglHelper.setPresentationTime(frameTimeNanos);
@@ -774,7 +769,7 @@ public class GLThread extends Thread {
         }
 
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+        @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
         public android.opengl.EGLConfig chooseConfig(android.opengl.EGLDisplay display, boolean recordable) {
             int renderableType = EGL14.EGL_OPENGL_ES2_BIT;
             if (contextClientVersion >= 3) {
@@ -925,12 +920,11 @@ public class GLThread extends Thread {
         public void destroyContext(EGL10 egl, EGLDisplay display,
                                    EGLContext context) {
             if (!egl.eglDestroyContext(display, context)) {
-                Log.e(TAG, "DefaultContextFactory " + "display:" + display + " context: " + context);
                 EglHelper.throwEglException("eglDestroyContext", egl.eglGetError());
             }
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+        @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
         @Override
         public android.opengl.EGLContext createContextAPI17(android.opengl.EGLDisplay display, android.opengl.EGLConfig eglConfig, android.opengl.EGLContext sharedContext) {
             int[] attrib_list = {
@@ -939,7 +933,7 @@ public class GLThread extends Thread {
             return EGL14.eglCreateContext(display, eglConfig, sharedContext, attrib_list, 0);
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+        @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
         @Override
         public void destroyContext(android.opengl.EGLDisplay display, android.opengl.EGLContext context) {
             if (!EGL14.eglDestroyContext(display, context)) {
@@ -992,14 +986,12 @@ public class GLThread extends Thread {
         @Override
         public void destroySurface(EGL10 egl, EGLDisplay display,
                                    EGLSurface surface) {
-            Log.e(TAG, "destroySurface: 1" );
             egl.eglDestroySurface(display, surface);
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+        @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
         @Override
         public android.opengl.EGLSurface createWindowSurface(android.opengl.EGLDisplay display, android.opengl.EGLConfig config, Object nativeWindow) {
-            Log.e(TAG, "createWindowSurface: 3" );
             int[] surfaceAttribs = {
                     EGL14.EGL_NONE
             };
@@ -1018,10 +1010,9 @@ public class GLThread extends Thread {
             return result;
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+        @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
         @Override
         public void destroySurface(android.opengl.EGLDisplay display, android.opengl.EGLSurface surface) {
-            Log.e(TAG, "destroySurface: 2" );
             EGL14.eglDestroySurface(display, surface);
         }
     }
@@ -1114,14 +1105,14 @@ public class GLThread extends Thread {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     public static class ChoreographerRender implements Choreographer.FrameCallback {
 
         private GLThread glThread;
         // Only used when render mode is RENDERMODE_CONTINUOUSLY
         private boolean canSwap = true;
 
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
         public ChoreographerRender(GLThread glThread) {
             this.glThread = glThread;
         }
@@ -1157,7 +1148,7 @@ public class GLThread extends Thread {
         private ChoreographerRender choreographerRender = null;
 
         public ChoreographerRenderWrapper(GLThread glThread) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                 choreographerRender = new ChoreographerRender(glThread);
             }
         }
